@@ -22,11 +22,4 @@ public class UserDetailService {
         UserDetail userDetail = userDetailRepository.findByUserName(userName);
         return userDetail;
     }
-
-   /* @RequestMapping(value = "user", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public UserDetail getUserDetail() {
-        System.out.println("login service is called");
-        UserDetail userDetail = userDetailRepository.findByUserName("manmay");
-        return userDetail;
-    }*/
 }
