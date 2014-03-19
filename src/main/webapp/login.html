@@ -1,16 +1,17 @@
 <div>
     <fieldset>
         <legend>Login Here</legend>
-    <table>
-        <tr>
-            <td>userName:</td>
-            <td> <input name="input" ng-model="userName" required></td>
-        </tr>
-        <tr>
-            <td>password:</td>
-            <td><input name="password" ng-model="password"></td>
-        </tr>
-    </table>
-    <button ng-click="doLogin()">Login</button>
+        <table>
+            <tr>
+                <td>userName:</td>
+                <td><input name="input" ng-model="userName" required></td>
+            </tr>
+            <tr>
+                <td>password:</td>
+                <td><input name="password" ng-model="password"></td>
+            </tr>
+        </table>
+        <button ng-click="doLogin(userName, password)">Login</button>
+        {{errorMessage}}
     </fieldset>
 </div>

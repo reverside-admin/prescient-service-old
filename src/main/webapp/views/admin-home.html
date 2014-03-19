@@ -1,0 +1,20 @@
+<div ng-controller="adminHomeController">
+    <h2>Admin Application</h2>
+    <hr/>
+    <div>
+        <h6>Header Section</h6>
+        User Name : {{user.userName}} | User Role : Admin
+    </div>
+    <hr/>
+    <div>
+        <h6>Menu Section</h6>
+        <ul>
+            <li><a href="#find-user">Users</a></li>
+            <li><a href="#find-user">Guests</a></li>
+            <li><a href="#find-user">Access Cards</a></li>
+            <li><a href="#find-user">Touch Points</a></li>
+        </ul>
+    </div>
+    <hr/>
+    <div ng-view></div>
+</div>
