@@ -2,7 +2,7 @@ prescient-service
 =================
 Procedure to Run the prescient-service project :
 1> mvn clean
-2> mvn install
+2> mvn package
 3> mvn spring-boot:run
 
 URL to check :
