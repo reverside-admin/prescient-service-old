@@ -18,7 +18,7 @@ public class UserDetailService {
 
     @RequestMapping(value = "user/{userName}", method = RequestMethod.GET)
     public UserDetail getUserDetail(@PathVariable("userName") String userName) {
-        System.out.println("login service is called.");
+        System.out.println("login service is called");
         UserDetail userDetail = userDetailRepository.findByUserName(userName);
         return userDetail;
     }
