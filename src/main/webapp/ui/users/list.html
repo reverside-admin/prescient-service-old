@@ -1,0 +1,33 @@
+
+<div>
+    <h3>User List</h3>
+    <a ng-href="#users/create">Add New User</a>
+    <br/>
+    <br/>
+    <table>
+        <th>
+        <tr>
+            <th>UserName</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Status</th>
+            <th>Type</th>
+        </tr>
+        </th>
+
+        <tr ng-repeat="user in user_list">
+            <td>{{user.userName}}</td>
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{user.userStatus.status}}</td>
+            <td>{{user.userType.type}}</td>
+            <td>
+                <a ng-href="#users/view/{{user.id}}">view</a> |
+                <a ng-href="#users/update/{{user.id}}">edit</a> |
+                <a ng-href="#users/update/{{user.id}}">delete</a>
+            </td>
+        </tr>
+
+    </table>
+
+</div>

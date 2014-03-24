@@ -1,0 +1,29 @@
+<div>
+    <h3>update user view</h3>
+
+    <div>
+
+            <table>
+                <tr>
+                <td>User Name :</td>
+                <td><input name="input" ng-model="user_detail.userName" value={{user_detail.userName}}></td>
+            </tr>
+                <tr>
+                    <td>User First Name :</td>
+                    <td><input name="fname" ng-model="user_detail.firstName" value={{user_detail.firstName}}></td>
+                </tr>
+
+                <tr>
+                    <td>User Last Name :</td>
+                    <td><input name="lname" ng-model="user_detail.lastName" value={{user_detail.lastName}}></td>
+                </tr>
+            </table>
+           <button ng-click="saveUpdateUser()">save</button>
+        {{user_detail.userName}}
+        {{user_detail.firstName}}
+        {{user_detail.lastName}}
+    </div>
+
+    <a ng-href="#users/list">Back</a>
+
+</div>

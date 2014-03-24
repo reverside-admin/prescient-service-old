@@ -1,0 +1,48 @@
+<div style="width: 50%; margin-left: auto;margin-right: auto;">
+    <H2 style="text-decoration: underline">User Registration</H2>
+
+         <table>
+            <tr>
+                <td>Login Id: *</td>
+                <td><input type="text" required></td>
+            </tr>
+            <tr>
+                <td>First Name: *</td>
+                <td><input type="text"  required></td>
+            </tr>
+            <tr>
+                <td>Last Name: *</td>
+                <td><input type="text"  required></td>
+            </tr>
+
+             <tr>
+                 <td>User Type: *</td>
+                 <td>
+                     <select  ng-model="user_type"
+                              ng-options="obj.id as obj.name for obj in user_type_list">
+                     </select>
+                 </td>
+             </tr>
+
+            <tr>
+                <td>Hotel Id: *</td>
+                <td>
+                <select  ng-model="hotel_department_id"
+                        ng-options="obj.id as obj.name for obj in hotel_department_id_list">
+                </select>
+                </td>
+            </tr>
+
+
+             <tr>
+                 <td>Hotel Department: *</td>
+                 <td>
+                     <select multiple ng-model="hotel_department"
+                             ng-options="obj.id as obj.name for obj in hotel_department_list">
+                     </select>
+                 </td>
+             </tr>
+        </table>
+        <button>Save</button>
+    </fieldset>
+</div>

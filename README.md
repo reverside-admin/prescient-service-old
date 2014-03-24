@@ -6,5 +6,9 @@ Procedure to Run the prescient-service project :
 3> mvn spring-boot:run
 
 URL to check :
-1>  For Login Service:
-    http://localhost:8080/service/user/{userName}
+1>  http://localhost:8080/api/users
+    Get all User List
+2>  http://localhost:8080/api/users/{userId}
+    Get a single User Details
+3> http://localhost:8080/api/users/{userName}/login
+    Login

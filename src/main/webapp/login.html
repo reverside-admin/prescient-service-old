@@ -3,15 +3,15 @@
         <legend>Login Here</legend>
         <table>
             <tr>
-                <td>userName:</td>
-                <td><input name="input" ng-model="userName" required></td>
+                <td>User Name :</td>
+                <td><input name="input" ng-model="user_name" required ></td>
             </tr>
             <tr>
-                <td>password:</td>
-                <td><input name="password" ng-model="password"></td>
+                <td>Password :</td>
+                <td><input name="password" ng-model="password" value="secret"></td>
             </tr>
         </table>
-        <button ng-click="doLogin(userName, password)">Login</button>
-        {{errorMessage}}
+        <button ng-click="doLogin(user_name, password)">Login</button>
+        {{error_message}}
     </fieldset>
 </div>
