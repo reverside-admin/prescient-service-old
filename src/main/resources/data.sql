@@ -1,3 +1,6 @@
+insert into hotel (id, name) values (1, 'orion');
+insert into hotel (id, name) values (2, 'taj');
+
 insert into user_status (id, status) values (1,'disable');
 insert into user_status (id, status) values (2,'enable');
 

@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import za.co.prescient.model.UserStatus;
 
 @Repository
-public interface UserStatusRepository extends JpaRepository<UserStatus, Integer> {
+public interface UserStatusRepository extends JpaRepository<UserStatus, Long> {
 }

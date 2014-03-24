@@ -7,12 +7,12 @@ import javax.persistence.*;
 
 @Entity
 @Getter@Setter
-public class UserType {
+public class Hotel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column
-    private String type;
+    private String name;
 }

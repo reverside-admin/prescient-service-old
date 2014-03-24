@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import za.co.prescient.model.UserType;
 
 @Repository
-public interface UserTypeRepository extends JpaRepository<UserType, Integer> {
+public interface UserTypeRepository extends JpaRepository<UserType, Long> {
 }

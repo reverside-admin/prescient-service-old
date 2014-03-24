@@ -16,3 +16,7 @@ URL to check :
     Get All Status
 5>  http://localhost:8080/api/users/roles
     Get All Roles
+6>  http://localhost:8080/api/hotels
+    Get All Hotel list
+7>  http://localhost:8080/api/hotels/{hotelId}
+    Get a single Hotel

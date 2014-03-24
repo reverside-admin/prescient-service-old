@@ -52,6 +52,4 @@ public class UserDetailService {
         return userStatusRepository.findAll();
     }
 
-
-
 }
