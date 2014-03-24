@@ -23,7 +23,7 @@ prescientApp.controller('applicationController', function ($scope, $http, $rootS
     $scope.application = "login.html";
     $scope.errorMessage;
     $scope.doLogin = function (userName, password) {
-        var url = 'http://localhost:8080/service/user/' + userName;
+        var url = 'http://localhost:8080/api/user/' + userName;
         var token = 'Basic ' + $scope.decode(userName + ':' + password);
         console.log(url);
         $http({
