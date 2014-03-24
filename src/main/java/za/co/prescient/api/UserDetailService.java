@@ -4,12 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import za.co.prescient.model.UserDetail;
-import za.co.prescient.model.UserStatus;
-import za.co.prescient.model.UserType;
-import za.co.prescient.repository.UserDetailRepository;
-import za.co.prescient.repository.UserStatusRepository;
-import za.co.prescient.repository.UserTypeRepository;
+import za.co.prescient.model.*;
+import za.co.prescient.repository.*;
 
 import java.util.List;
 
@@ -25,6 +21,15 @@ public class UserDetailService {
 
     @Autowired
     UserStatusRepository userStatusRepository;
+
+    @Autowired
+    HotelRepository hotelRepository;
+
+    @Autowired
+    HotelDepartmentRepository hotelDepartmentRepository;
+
+    @Autowired
+    TouchPointRepository touchPointRepository;
 
     @RequestMapping(value = "{userName}/login")
     public UserDetail login(@PathVariable("userName") String userName) {
@@ -51,5 +56,21 @@ public class UserDetailService {
     public List<UserStatus> getUserStatus() {
         return userStatusRepository.findAll();
     }
+
+    @RequestMapping(value = "/hotel/{hotelId}/departments")
+    public Iterable<HotelDepartment> departments(@PathVariable ("hotelId") Long hotelId) {
+        return hotelDepartmentRepository.findHotelDepartmentByHotelId(hotelId);
+    }
+
+    @RequestMapping(value = "/{departmentId}/touchpoints")
+    public Iterable<TouchPoint> touchpoints(@PathVariable ("departmentId") Long departmentId) {
+        return touchPointRepository.findTouchPointByHotelDepartmentId(departmentId);
+    }
+
+    @RequestMapping(value = "/{hotelId}/{departmentId}/touchpoints")
+    public Iterable<TouchPoint> touchpoints(@PathVariable ("hotelId") Long hotelId, @PathVariable ("departmentId") Long departmentId) {
+        return touchPointRepository.findTouchPointByHotelIdAndHotelDepartmentId(hotelId, departmentId);
+    }
+
 
 }

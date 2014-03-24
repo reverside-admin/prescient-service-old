@@ -1,5 +1,6 @@
 package za.co.prescient.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter@Setter
-public class Hotel {
+public class HotelDepartment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,6 +17,7 @@ public class Hotel {
     @Column
     private String name;
 
-//    @OneToMany(mappedBy = "hotel")
-//    private List<HotelDepartment> hotelDepartment;
+    @ManyToOne
+    @JsonIgnore
+    private Hotel hotel;
 }

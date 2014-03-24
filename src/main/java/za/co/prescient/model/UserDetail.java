@@ -34,4 +34,7 @@ public class UserDetail {
     @ManyToOne
     private UserType userType;
 
+    @OneToOne
+    private Hotel hotel;
+
 }

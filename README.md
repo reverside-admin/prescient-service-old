@@ -20,3 +20,7 @@ URL to check :
     Get All Hotel list
 7>  http://localhost:8080/api/hotels/{hotelId}
     Get a single Hotel
+8>  http://localhost:8080/api/users/hotel/{hotelId}/departments
+    Get department list as per hotelID
+9>  http://localhost:8080/api/hotels/{hotelId}/departments/{departmentId}/touchpoints
+    Touch point list as per hotelId and departmentId
