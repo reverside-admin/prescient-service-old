@@ -1,57 +1,73 @@
-<div style="width: 50%; margin-left: auto;margin-right: auto;">
-    <H2 style="text-decoration: underline">User Registration</H2>
+<head>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<div class="panel panel-info">
+    <div class="panel-heading">
+         <h1 class="panel-title">New User Registration</h1>
+    </div>
 
-         <table>
-            <tr>
-                <td>Login Id: *</td>
-                <td><input type="text" required></td>
-            </tr>
-            <tr>
-                <td>First Name: *</td>
-                <td><input type="text"  required></td>
-            </tr>
-            <tr>
-                <td>Last Name: *</td>
-                <td><input type="text"  required></td>
-            </tr>
+    <div class="panel-body">
+        <div style="width: 50%; margin-left: auto;margin-right: auto;margin-top: 5%" class="container">
+            <fieldset>
+                <legend>Personal Detail</legend>
+                <div class="control-group">
 
-             <tr>
-                 <td>User Type: *</td>
-                 <td>
-                     <select  ng-model="user_type"
-                              ng-options="obj.id as obj.type for obj in user_type_list">
-                     </select>
-                 </td>
-             </tr>
+                    <label class="control-label">Username:</label>
 
-            <tr>
-                <td>Hotel Id: *</td>
-                <td>
-                <select  ng-model="hotel_id"
-                        ng-options="obj.id as obj.id for obj in hotel_id_list">
-                </select>
-                </td>
-            </tr>
+                    <div class="controls">
+                        <input type="text" id="username" name="user_name">
+                    </div>
+
+                </div>
+                <div class="control-group">
+                    <label class="control-label">First Name</label>
+
+                    <div class="controls">
+                        <input type="text" id="firstname" name="fname">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Last Name</label>
+
+                    <div class="controls">
+                        <input type="text" id="lastname" name="lname">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">User Type</label>
+
+                    <div class="controls">
+                        <select  ng-model="user_type"
+                                 ng-options="obj.id as obj.type for obj in user_type_list">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">User Status</label>
+
+                    <div class="controls">
+                        <select ng-model="user_status"
+                                ng-options="obj.id as obj.type for obj in user_type_list">
+                        </select>
+                    </div>
+                </div>
 
 
-             <tr>
-                 <td>Hotel Department: *</td>
-                 <td>
-                     <select multiple ng-model="hotel_department"
-                             ng-options="obj.id as obj.name for obj in hotel_department_list">
-                     </select>
-                 </td>
-             </tr>
+                <div class="control-group">
+                    <label class="control-label"></label>
 
-             <tr>
-                 <td>Touch Point: *</td>
-                 <td>
-                     <select multiple ng-model="touch_point"
-                             ng-options="obj.id as obj.name for obj in touch_point_list">
-                     </select>
-                 </td>
-             </tr>
-        </table>
-        <button>Save</button>
-    </fieldset>
+                    <div class="controls">
+                        <button type="Button" class="btn btn-success">Next</button>
+                    </div>
+                </div>
+            </fieldset>
+
+        </div>
+
+    </div>
 </div>
+

@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -37,10 +36,5 @@ public class UserDetail {
 
     @OneToOne
     private Hotel hotel;
-
-    @OneToMany
-    @JoinTable( joinColumns = @JoinColumn(name = "uid"),
-                inverseJoinColumns = @JoinColumn(name = "did"))
-    private List<Department> department;
 
 }

@@ -1,29 +1,57 @@
-<div>
-    <h3>update user view</h3>
+<div class="panel panel-info">
 
-    <div>
-
-            <table>
-                <tr>
-                <td>User Name :</td>
-                <td><input name="input" ng-model="user_detail.userName" value={{user_detail.userName}}></td>
-            </tr>
-                <tr>
-                    <td>User First Name :</td>
-                    <td><input name="fname" ng-model="user_detail.firstName" value={{user_detail.firstName}}></td>
-                </tr>
-
-                <tr>
-                    <td>User Last Name :</td>
-                    <td><input name="lname" ng-model="user_detail.lastName" value={{user_detail.lastName}}></td>
-                </tr>
-            </table>
-           <button ng-click="saveUpdateUser()">save</button>
-        {{user_detail.userName}}
-        {{user_detail.firstName}}
-        {{user_detail.lastName}}
+    <div class="panel-heading">
+        <h1 class="panel-title">Update User Details</h1>
     </div>
 
-    <a ng-href="#users/list">Back</a>
+
+    <div class="panel-body">
+        <div>
+            <table class="table table-hover table-condensed table-bordered  table-responsive">
+            <tr>
+                <td class="text-right" style="width: 50%;">User Id</td>
+                <td class="text-left"><input name="input" ng-model="user_detail.id" disabled/></td>
+            </tr>
+
+            <tr>
+                <td class="text-right">User Name</td>
+                <td class="text-left"><input name="input" ng-model="user_detail.userName"/></td>
+            </tr>
+            <tr>
+                <td class="text-right">First Name</td>
+                <td class="text-left"><input name="fname" ng-model="user_detail.firstName"/></td>
+            </tr>
+
+            <tr>
+                <td class="text-right">Last Name</td>
+                <td class="text-left"><input name="lname" ng-model="user_detail.lastName"/></td>
+            </tr>
+
+            <tr>
+                <td class="text-right">Status</td>
+                <td class="text-left"><input type="text" ng-model="user_detail.userStatus.status"/></td>
+            </tr>
+
+            <tr>
+                <td class="text-right">Role</td>
+                <td class="text-left"><input type="text" ng-model="user_detail.userType.type"/></td>
+            </tr>
+            <tr>
+                <td class="text-right">Hotel</td>
+                <td class="text-left"><input type="text" ng-model="user_detail.hotel.name"/></td>
+            </tr>
+        </table>
+        </div>
+    </div>
+
+    <div class="panel-footer">
+        <ul class="pager" style="margin: 0px;">
+            <li><a href="#">Cancel</a></li>
+            <li><a href="#">Save</a></li>
+        </ul>
+
+    </div>
 
 </div>
+
+

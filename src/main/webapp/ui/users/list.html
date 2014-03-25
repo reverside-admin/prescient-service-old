@@ -1,10 +1,3 @@
-<head>
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-</head>
-
-
 <div class="panel panel-info">
     <div class="panel-heading">
         <a ng-href="#users/create" style="float: right">Add New User</a>
@@ -13,26 +6,27 @@
 
     </div>
     <div class="panel-body">
-             <input type="search" ng-model="search" placeholder="Search Here">
+        <input type="search" ng-model="search" placeholder="Search Here">
         <table class="table table-hover table-condensed table-striped table-responsive">
             <th>
                 <tr>
-                    <th>UserName</th>
-                    <th>FirstName</th>
-                    <th>LastName</th>
-                    <th>Status</th>
-                    <th>Type</th>
-                    <th>Hotel Name</th>
-                </tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Status</th>
+            <th>Role</th>
+            <th>Hotel Name</th>
+            <th></th>
+            </tr>
             </th>
 
             <tr ng-repeat="user in user_list | filter:search">
-                <td>{{user.userName}}</td>
+
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.userStatus.status}}</td>
                 <td>{{user.userType.type}}</td>
                 <td>{{user.hotel.name}}</td>
+
                 <td>
                     <a ng-href="#users/view/{{user.id}}">view</a> |
                     <a ng-href="#users/update/{{user.id}}">edit</a> |

@@ -1,23 +1,59 @@
- 
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h1 class="panel-title">View User Details</h1>
+    </div>
 
-<div>
-    <table class="table table-hover table-condensed table-striped table-responsive">
-        <tr>
-            <td>User UniqueId:</td>
-            <td>{{user_detail.id}}</td>
-        </tr>
-        <tr>
-            <td>User Name:</td>
-            <td>{{user_detail.userName}}</td>
-        </tr>
-        <tr>
-            <td>First Name:</td>
-            <td>{{user_detail.firstName}}</td>
-        </tr>
-        <tr>
-            <td>Last Name:</td>
-            <td>{{user_detail.lastName}}</td>
-        </tr>
-    </table>
-    <a ng-href="#users/list">Back</a>
+    <div class="panel-body">
+        <div>
+
+            <div>
+
+                <table class="table table-hover table-condensed table-bordered  table-responsive">
+                    <tr>
+                        <td class="text-right" style="width: 50%">Id:</td>
+                        <td class="text-left">{{user_detail.id}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">User Name:</td>
+                        <td class="text-left">{{user_detail.userName}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">First Name:</td>
+                        <td class="text-left">{{user_detail.firstName}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">Last Name:</td>
+                        <td class="text-left">{{user_detail.lastName}}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">Status</td>
+                        <td class="text-left">{{user_detail.userStatus.status}}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-right">Role</td>
+                        <td class="text-left">{{user_detail.userType.type}}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-right">Hotel</td>
+                        <td class="text-left">{{user_detail.hotel.name}}</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="panel-footer"  >
+        <ul class="pager" style="margin: 0px;">
+            <li><a href="#users/list">Back</a></li>
+            <li><a href="#users/update/{{user_detail.id}}">Edit</a></li>
+            <li><a href="#users/update/{{user_detail.id}}">Delete</a></li>
+
+        </ul>
+    </div>
+
 </div>

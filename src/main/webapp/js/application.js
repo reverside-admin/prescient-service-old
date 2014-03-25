@@ -131,13 +131,15 @@ prescientApp.controller('create_users_controller', function ($scope, $http) {
     $scope.first_name;
     $scope.last_name;
     $scope.user_type;
+    $scope.user_status;
     $scope.hotel_id;
     $scope.hotel_department;
     $scope.touch_point;
     $scope.hotel_id_list=[];
     $scope.hotel_department_list=[];
     $scope.touch_point_list=[];
-    $scope.user_type_list;
+    $scope.user_type_list=[];
+    Scope.user_status_list=[];
 
     $http({
         url : 'http://localhost:8080/api/users/roles',
@@ -171,11 +173,6 @@ prescientApp.controller('create_users_controller', function ($scope, $http) {
         .error(function(error){
             console.log(error);
         });
-
-
-
-
-
 });
 
 
