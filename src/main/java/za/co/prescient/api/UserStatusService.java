@@ -8,7 +8,7 @@ import za.co.prescient.model.UserStatus;
 import za.co.prescient.repository.UserStatusRepository;
 
 @RestController
-@RequestMapping(value = "api/users")
+@RequestMapping(value = "api")
 public class UserStatusService {
 
     private static final Logger LOGGER = Logger.getLogger(UserStatusService.class);
@@ -16,7 +16,7 @@ public class UserStatusService {
     @Autowired
     UserStatusRepository userStatusRepository;
 
-    @RequestMapping(value = "/status")
+    @RequestMapping(value = "status")
     public Iterable<UserStatus> getUserStatus() {
         LOGGER.info("Get All Status service");
         return userStatusRepository.findAll();

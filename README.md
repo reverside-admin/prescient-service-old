@@ -22,6 +22,8 @@ Hotel
     Get All Hotel list
 2>  http://localhost:8080/api/hotels/{hotelId}
     Get a single Hotel
+3>  http://localhost:8080/api/hotels/{hotelId}/departments
+    Get department list as per HotelID
 
 Touch Point
 -----------
@@ -30,15 +32,14 @@ Touch Point
 
 User Type
 ---------
-5>  http://localhost:8080/api/users/roles
+5>  http://localhost:8080/api/roles
     Get All Roles
 
 User Status
 -----------
-1>  http://localhost:8080/api/users/status
+1>  http://localhost:8080/api/status
     Get All Status
 
 Department
 ----------
-1>  http://localhost:8080/api/hotels/{hotelId}/departments
-    Get department list as per HotelID
+

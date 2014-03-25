@@ -8,7 +8,7 @@ import za.co.prescient.model.UserType;
 import za.co.prescient.repository.UserTypeRepository;
 
 @RestController
-@RequestMapping(value = "api/users")
+@RequestMapping(value = "api")
 public class UserTypeService {
 
     private static final Logger LOGGER = Logger.getLogger(UserTypeService.class);
@@ -16,7 +16,7 @@ public class UserTypeService {
     @Autowired
     UserTypeRepository userTypeRepository;
 
-    @RequestMapping(value = "/roles")
+    @RequestMapping(value = "roles")
     public Iterable<UserType> getUserRoles() {
         LOGGER.info("Get All Roles service");
         return userTypeRepository.findAll();

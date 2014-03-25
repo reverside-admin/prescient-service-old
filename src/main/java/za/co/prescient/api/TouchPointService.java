@@ -9,7 +9,7 @@ import za.co.prescient.model.TouchPoint;
 import za.co.prescient.repository.TouchPointRepository;
 
 @RestController
-@RequestMapping(value = "api/departments/")
+@RequestMapping(value = "api/departments")
 
 public class TouchPointService {
     private static final Logger LOGGER = Logger.getLogger(TouchPointService.class);

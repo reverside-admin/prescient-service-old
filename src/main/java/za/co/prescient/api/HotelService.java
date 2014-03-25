@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import za.co.prescient.model.Department;
 import za.co.prescient.model.Hotel;
+import za.co.prescient.repository.DepartmentRepository;
 import za.co.prescient.repository.HotelRepository;
 
 @RestController
@@ -15,6 +17,9 @@ public class HotelService {
 
     @Autowired
     HotelRepository hotelRepository;
+
+    @Autowired
+    DepartmentRepository departmentRepository;
 
     @RequestMapping
     public Iterable<Hotel> getHotels() {
@@ -26,5 +31,11 @@ public class HotelService {
     public Hotel getHotel(@PathVariable("hotelId") Long hotelId) {
         LOGGER.info("Get a single Hotel by HotelId service");
         return hotelRepository.findOne(hotelId);
+    }
+
+    @RequestMapping(value = "{hotelId}/departments")
+    public Iterable<Department> departments(@PathVariable ("hotelId") Long hotelId) {
+        LOGGER.info("Get All Departments by HotelId service");
+        return departmentRepository.findDepartmentByHotelId(hotelId);
     }
 }
