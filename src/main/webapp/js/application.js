@@ -127,25 +127,52 @@ prescientApp.controller('update_user_controller', function ($scope, $http, $rout
 
 
 prescientApp.controller('create_users_controller', function ($scope, $http) {
-    $scope.hotel_department_id_list=[
-                                    { id : "100", name: "Hospitality" }
-                                   ,{ id : "200", name: "Food" }
-                                   ,{ id : "300", name: "Transport" }
-                                  ];
-    $scope.hotel_department_list=[];
-    $scope.touch_point_list=[];
-    $scope.user_type_list=[
-                             { id : "1", name: "Admin" }
-                            ,{ id : "2", name: "Manager" }
-                            ,{ id : "3"  , name: "Staff" }
-                         ];
     $scope.user_name;
     $scope.first_name;
     $scope.last_name;
     $scope.user_type;
-    $scope.hotel_department_id;
+    $scope.hotel_id;
     $scope.hotel_department;
     $scope.touch_point;
+    $scope.hotel_id_list=[];
+    $scope.hotel_department_list=[];
+    $scope.touch_point_list=[];
+    $scope.user_type_list;
+
+    $http({
+        url : 'http://localhost:8080/api/users/roles',
+        method : 'get',
+        headers: {}
+    }).
+        success(function (data, status) {
+            if(status == 200){
+                $scope.user_type_list = data;
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function(error){
+            console.log(error);
+        });
+
+
+    $http({
+        url : 'http://localhost:8080/api/hotels',
+        method : 'get',
+        headers: {}
+    }).
+        success(function (data, status) {
+            if(status == 200){
+                $scope.hotel_id_list = data;
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function(error){
+            console.log(error);
+        });
+
+
 
 
 
@@ -178,6 +205,7 @@ prescientApp.controller('list_users_controller', function ($scope, $http,$routeP
     $scope.removeUser=function(){
 
     }
+
 
 
 

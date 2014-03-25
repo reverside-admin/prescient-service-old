@@ -1,33 +1,47 @@
+<head>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
 
-<div>
-    <h3>User List</h3>
-    <a ng-href="#users/create">Add New User</a>
-    <br/>
-    <br/>
-    <table>
-        <th>
-        <tr>
-            <th>UserName</th>
-            <th>FirstName</th>
-            <th>LastName</th>
-            <th>Status</th>
-            <th>Type</th>
-        </tr>
-        </th>
 
-        <tr ng-repeat="user in user_list">
-            <td>{{user.userName}}</td>
-            <td>{{user.firstName}}</td>
-            <td>{{user.lastName}}</td>
-            <td>{{user.userStatus.status}}</td>
-            <td>{{user.userType.type}}</td>
-            <td>
-                <a ng-href="#users/view/{{user.id}}">view</a> |
-                <a ng-href="#users/update/{{user.id}}">edit</a> |
-                <a ng-href="#users/update/{{user.id}}">delete</a>
-            </td>
-        </tr>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <a ng-href="#users/create" style="float: right">Add New User</a>
 
-    </table>
+        <h1 class="panel-title">User List</h1>
 
+    </div>
+    <div class="panel-body">
+             <input type="search" ng-model="search" placeholder="Search Here">
+        <table class="table table-hover table-condensed table-striped table-responsive">
+            <th>
+                <tr>
+                    <th>UserName</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Status</th>
+                    <th>Type</th>
+                    <th>Hotel Name</th>
+                </tr>
+            </th>
+
+            <tr ng-repeat="user in user_list | filter:search">
+                <td>{{user.userName}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.lastName}}</td>
+                <td>{{user.userStatus.status}}</td>
+                <td>{{user.userType.type}}</td>
+                <td>{{user.hotel.name}}</td>
+                <td>
+                    <a ng-href="#users/view/{{user.id}}">view</a> |
+                    <a ng-href="#users/update/{{user.id}}">edit</a> |
+                    <a ng-href="#users/update/{{user.id}}">delete</a>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
+
+
+

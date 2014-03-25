@@ -19,7 +19,7 @@
                  <td>User Type: *</td>
                  <td>
                      <select  ng-model="user_type"
-                              ng-options="obj.id as obj.name for obj in user_type_list">
+                              ng-options="obj.id as obj.type for obj in user_type_list">
                      </select>
                  </td>
              </tr>
@@ -27,8 +27,8 @@
             <tr>
                 <td>Hotel Id: *</td>
                 <td>
-                <select  ng-model="hotel_department_id"
-                        ng-options="obj.id as obj.name for obj in hotel_department_id_list">
+                <select  ng-model="hotel_id"
+                        ng-options="obj.id as obj.id for obj in hotel_id_list">
                 </select>
                 </td>
             </tr>
@@ -39,6 +39,15 @@
                  <td>
                      <select multiple ng-model="hotel_department"
                              ng-options="obj.id as obj.name for obj in hotel_department_list">
+                     </select>
+                 </td>
+             </tr>
+
+             <tr>
+                 <td>Touch Point: *</td>
+                 <td>
+                     <select multiple ng-model="touch_point"
+                             ng-options="obj.id as obj.name for obj in touch_point_list">
                      </select>
                  </td>
              </tr>
