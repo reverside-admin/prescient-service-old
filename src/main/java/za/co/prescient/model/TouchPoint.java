@@ -19,9 +19,5 @@ public class TouchPoint {
 
     @ManyToOne
     @JsonIgnore
-    private HotelDepartment hotelDepartment;
-
-    @ManyToOne
-    @JsonIgnore
-    private Hotel hotel;
+    private Department department;
 }

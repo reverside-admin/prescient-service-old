@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter@Setter
-public class HotelDepartment {
+public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

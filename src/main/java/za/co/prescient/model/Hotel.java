@@ -16,6 +16,4 @@ public class Hotel {
     @Column
     private String name;
 
-//    @OneToMany(mappedBy = "hotel")
-//    private List<HotelDepartment> hotelDepartment;
 }

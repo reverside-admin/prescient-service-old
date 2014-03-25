@@ -8,9 +8,5 @@ import za.co.prescient.model.TouchPoint;
 
 @Repository
 public interface TouchPointRepository extends JpaRepository<TouchPoint, Long> {
-    public Iterable<TouchPoint> findTouchPointByHotelDepartmentId(@Param("departmentId") Long departmentId);
-
-    public Iterable<TouchPoint> findTouchPointByHotelIdAndHotelDepartmentId(@Param("hotelId") Long hotelId, @Param("departmentId")  Long departmentId);
-
-
+    public Iterable<TouchPoint> findTouchPointByDepartmentId(@Param("departmentId") Long departmentId);
 }
