@@ -1,72 +1,44 @@
-<head>
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-</head>
-<div class="panel panel-info">
+<div class="panel panel-success">
     <div class="panel-heading">
-         <h1 class="panel-title">New User Registration</h1>
+        <h1 class="panel-title">New User Registration</h1>
     </div>
 
-    <div class="panel-body">
-        <div style="width: 50%; margin-left: auto;margin-right: auto;margin-top: 5%" class="container">
-            <fieldset>
-                <legend>Personal Detail</legend>
-                <div class="control-group">
+    <div class="panel-body" style="margin-left: 45%">
 
-                    <label class="control-label">Username:</label>
+        <div class="control-group">
 
-                    <div class="controls">
-                        <input type="text" id="username" name="user_name">
-                    </div>
+            <label class="control-label">User ID:</label>
 
-                </div>
-                <div class="control-group">
-                    <label class="control-label">First Name</label>
-
-                    <div class="controls">
-                        <input type="text" id="firstname" name="fname">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">Last Name</label>
-
-                    <div class="controls">
-                        <input type="text" id="lastname" name="lname">
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label class="control-label">User Type</label>
-
-                    <div class="controls">
-                        <select  ng-model="user_type"
-                                 ng-options="obj.id as obj.type for obj in user_type_list">
-                        </select>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label class="control-label">User Status</label>
-
-                    <div class="controls">
-                        <select ng-model="user_status"
-                                ng-options="obj.id as obj.type for obj in user_type_list">
-                        </select>
-                    </div>
-                </div>
-
-
-                <div class="control-group">
-                    <label class="control-label"></label>
-
-                    <div class="controls">
-                        <button type="Button" class="btn btn-success">Next</button>
-                    </div>
-                </div>
-            </fieldset>
+            <div class="controls">
+                <input type="text" id="username" name="user_name" ng-model="new_user.id">
+            </div>
 
         </div>
+        <div class="control-group">
+            <label class="control-label">First Name</label>
+
+            <div class="controls">
+                <input type="text" id="firstname" name="fname" ng-model="new_user.first_name">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Last Name</label>
+
+            <div class="controls">
+                <input type="text" id="lastname" name="lname" ng-model="new_user.last_name">
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+    <div class="panel-footer">
+        <ul class="pager" style="margin: 0px;">
+            <li><button type="Button" class="btn btn-success" ng-click="persistUser()">Next</button></li>
+        </ul>
 
     </div>
 </div>

@@ -1,5 +1,7 @@
-<div class="panel panel-info">
+<div class="panel panel-success">
     <div class="panel-heading">
+        <a href="#users/update/{{user_detail.id}}" style="float: right;margin-left: 10px;">Edit</a>
+        <a href="#users/update/{{user_detail.id}}"style="float: right;">Delete</a>
         <h1 class="panel-title">View User Details</h1>
     </div>
 
@@ -40,6 +42,11 @@
                         <td class="text-left">{{user_detail.hotel.name}}</td>
                     </tr>
 
+                    <tr>
+                        <td class="text-right">Department</td>
+                        <td class="text-left">Hospitality</td>
+                    </tr>
+
                 </table>
             </div>
         </div>
@@ -47,13 +54,11 @@
 
     </div>
 
-    <div class="panel-footer"  >
+    <div class="panel-footer">
         <ul class="pager" style="margin: 0px;">
             <li><a href="#users/list">Back</a></li>
-            <li><a href="#users/update/{{user_detail.id}}">Edit</a></li>
-            <li><a href="#users/update/{{user_detail.id}}">Delete</a></li>
-
         </ul>
+
     </div>
 
 </div>

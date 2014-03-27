@@ -2,9 +2,8 @@ package za.co.prescient.api;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 import za.co.prescient.model.UserDetail;
 import za.co.prescient.repository.UserDetailRepository;
 
@@ -12,7 +11,7 @@ import za.co.prescient.repository.UserDetailRepository;
 @RequestMapping(value = "api/users")
 //@Slf4j
 public class UserDetailService {
-private static final Logger LOGGER = Logger.getLogger(UserDetailService.class);
+private static final Logger LOGGER = Logger.getLogger("UserDetailService");
 
     @Autowired
     UserDetailRepository userDetailRepository;
@@ -22,7 +21,7 @@ private static final Logger LOGGER = Logger.getLogger(UserDetailService.class);
 //        UserDetailService.log.info("SLF4J implementation done");
         LOGGER.info("Login Service Start");
         UserDetail userDetail = userDetailRepository.findByUserName(userName);
-        LOGGER.info("Login Service End.");
+        LOGGER.info("Login Service End......");
         return userDetail;
     }
 

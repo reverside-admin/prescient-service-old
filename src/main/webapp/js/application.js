@@ -18,7 +18,7 @@ prescientApp.config(['$routeProvider',
                 'templateUrl': 'ui/users/view.html',
                 'controller': 'view_user_controller'
             })
-            .when('/users/update/:userName', {
+            .when('/users/update/:userId', {
                 'templateUrl': 'ui/users/update.html',
                 'controller': 'update_user_controller'
             })
@@ -30,12 +30,14 @@ prescientApp.config(['$routeProvider',
 prescientApp.controller('applicationController', function ($scope, $http, $location) {
     $location.path('/');
     $scope.application_page = 'login.html';
-    $scope.application_user = {};
+    $scope.application_user;
     $scope.error_message;
-    $scope.user_name = "mrunmay";
-    $scope.password = "secret";
+    $scope.user_name='mrunmay';
+    $scope.password='secret';
 
     $scope.doLogin = function (user_name, password) {
+        if((user_name!=null) && (password!=null) ){
+
         var url = 'http://' + user_name + ':' + password + '@localhost:8080/api/users/' + user_name + '/login';
         console.log(url);
         $http({
@@ -61,6 +63,11 @@ prescientApp.controller('applicationController', function ($scope, $http, $locat
             console.log(error);
             $scope.error_message = error;
         });
+        }
+        else{
+            console.log('invalid credentials');
+            $scope.error_message='Please Enter Credential Detail !!';
+        }
     };
 });
 
@@ -94,10 +101,10 @@ prescientApp.controller('view_user_controller', function ($scope, $http, $routeP
 });
 
 prescientApp.controller('update_user_controller', function ($scope, $http, $routeParams) {
-    $scope.uname = $routeParams.userName;
+    $scope.uId = $routeParams.userId;
     $scope.user_detail;
     $http({
-        url : 'http://localhost:8080/api/users/' + $scope.uname,
+        url : 'http://localhost:8080/api/users/' + $scope.uId,
         method : 'get',
         headers: {}
     }).
@@ -127,7 +134,7 @@ prescientApp.controller('update_user_controller', function ($scope, $http, $rout
 
 
 prescientApp.controller('create_users_controller', function ($scope, $http) {
-    $scope.user_name;
+    $scope.user_ID;
     $scope.first_name;
     $scope.last_name;
     $scope.user_type;
@@ -139,17 +146,36 @@ prescientApp.controller('create_users_controller', function ($scope, $http) {
     $scope.hotel_department_list=[];
     $scope.touch_point_list=[];
     $scope.user_type_list=[];
-    Scope.user_status_list=[];
+    $scope.user_status_list=[];
+    $scope.new_user={};
 
     $http({
-        url : 'http://localhost:8080/api/users/roles',
+        url : 'http://localhost:8080/api/roles',
         method : 'get',
         headers: {}
     }).
         success(function (data, status) {
             if(status == 200){
                 $scope.user_type_list = data;
-            } else {
+               } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function(error){
+            console.log(error);
+        });
+
+
+
+    $http({
+        url : 'http://localhost:8080/api/status',
+        method : 'get',
+        headers: {}
+    }).
+        success(function (data, status) {
+            if(status == 200){
+                $scope.user_status_list = data;
+             } else {
                 console.log('status:' + status);
             }
         })
@@ -173,10 +199,56 @@ prescientApp.controller('create_users_controller', function ($scope, $http) {
         .error(function(error){
             console.log(error);
         });
+
+
+
+$scope.getDepartments=function(){
+
+     $http({
+        url : 'http://localhost:8080/api/hotels/'+1+'/departments',
+        method : 'get',
+        headers: {}
+    }).
+        success(function (data, status) {
+            if(status == 200){
+                $scope.hotel_department_list = data;
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function(error){
+            console.log(error);
+        });
+}
+
+
+
+
+    $scope.persistUser=function()
+        {
+            console.log('persistUser() is called...')
+            console.log($scope.new_user);
+            $http.post('http://localhost:8080/api/users/test',$scope.new_user
+                ).
+                success(function (data, status) {
+                    if(status == 200){
+                        console.log('post success with status'+status);
+                     } else {
+                        console.log('status:' + status);
+                    }
+                })
+                .error(function(error){
+                    console.log(error);
+                });
+
+        }
 });
 
 
 
+
+
+<!--list user  controller -->
 prescientApp.controller('list_users_controller', function ($scope, $http,$routeParams) {
 
     $scope.user_list = [];
