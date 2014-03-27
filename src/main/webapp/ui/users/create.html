@@ -1,44 +1,29 @@
 <div class="panel panel-success">
     <div class="panel-heading">
-        <h1 class="panel-title">New User Registration</h1>
+        <h1 class="panel-title">User Registration</h1>
     </div>
 
-    <div class="panel-body" style="margin-left: 45%">
-
-        <div class="control-group">
-
-            <label class="control-label">User Name</label>
-
-            <div class="controls">
-                <input type="text" ng-model="user.userName"/>
-            </div>
-
+    <div class="panel-body">
+        <div style="width: 50%; margin-left: auto;margin-right: auto;">
+            <table>
+                <tr>
+                    <td> User Name :&nbsp; </td>
+                    <td><input type="text" id="username" class="form-control" ng-model="user.userName" required></td>
+                </tr>
+                <tr>
+                    <td> First Name :&nbsp; </td>
+                    <td><input type="text" id="userfname" class="form-control" ng-model="user.firstName" required></td>
+                </tr>
+                <tr>
+                    <td> Last Name : &nbsp; </td>
+                    <td><input type="text" id="userlname" class="form-control" ng-model="user.lastName" required></td>
+                </tr>
+            </table>
         </div>
-        <div class="control-group">
-            <label class="control-label">First Name</label>
-
-            <div class="controls">
-                <input type="text" ng-model="user.firstName">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">Last Name</label>
-
-            <div class="controls">
-                <input type="text" ng-model="user.lastName">
-            </div>
-        </div>
-
-
     </div>
 
     <div class="panel-footer">
-        <ul class="pager" style="margin: 0px;">
-            <li>
-                <button type="Button" class="btn btn-success" ng-click="create()">Next</button>
-            </li>
-        </ul>
-
+        <button type="button" class="btn btn-success" ng-click="create()">Next</button>
     </div>
-</div>
 
+</div>
