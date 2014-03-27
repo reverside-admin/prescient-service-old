@@ -101,7 +101,7 @@ prescientApp.controller('view_user_controller', function ($scope, $http, $routeP
 
 prescientApp.controller('update_user_controller', function ($scope, $http, $routeParams) {
     $scope.uId = $routeParams.userId;
-    $scope.user_detail;
+    $scope.user={};
     $http({
         url: 'http://localhost:8080/api/users/' + $scope.uId,
         method: 'get',
@@ -109,7 +109,7 @@ prescientApp.controller('update_user_controller', function ($scope, $http, $rout
     }).
         success(function (data, status) {
             if (status == 200) {
-                $scope.user_detail = data;
+                $scope.user = data;
             } else {
                 console.log('status:' + status);
             }
@@ -117,15 +117,26 @@ prescientApp.controller('update_user_controller', function ($scope, $http, $rout
         .error(function (error) {
             console.log(error);
         });
-    $scope.saveUpdateUser = function () {
-        console.log('updated successfully');
-        $http.post("uri", $scope.user_detail).success(function (data, status, header) {
-            alert('post success');
-        })
+
+    $scope.update = function () {
+        console.log('update');
+
+        $http({
+            url: 'http://localhost:8080/api/users/update/'+$scope.uId,
+            method: 'put',
+            headers: { 'Content-Type': 'application/json'},
+            data: $scope.user
+        }).
+            success(function (data, status) {
+                if (status == 201) {
+                    console.log('User updated successfully');
+                } else {
+                    console.log('status:' + status);
+                }
+            })
             .error(function (error) {
                 console.log(error);
             });
-
     }
 });
 
@@ -211,7 +222,7 @@ prescientApp.controller('create_users_controller', function ($scope, $http) {
 
 
     $scope.create = function () {
-
+            console.log($scope.user);
         $http({
             url: 'http://localhost:8080/api/users',
             method: 'post',
@@ -256,13 +267,6 @@ prescientApp.controller('list_users_controller', function ($scope, $http, $route
         .error(function (error) {
             console.log(error);
         });
-
-
-    $scope.removeUser = function () {
-
-    }
-
-
 });
 
 

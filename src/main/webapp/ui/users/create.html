@@ -18,6 +18,12 @@
                     <td> Last Name : &nbsp; </td>
                     <td><input type="text" id="userlname" class="form-control" ng-model="user.lastName" required></td>
                 </tr>
+                <tr>
+                    <td>Status : &nbsp; </td>
+                    <select ng-model="user.userStatus.id"
+                            ng-options="obj.id as obj.status for obj in user_status_list">
+                    </select>
+                </tr>
             </table>
         </div>
     </div>
