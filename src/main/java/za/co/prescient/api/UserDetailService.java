@@ -45,4 +45,14 @@ public class UserDetailService {
         userDetailRepository.save(user);
     }
 
+    @RequestMapping(value="update/{id}",method = RequestMethod.PUT, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void putComputer(@PathVariable Long id, @RequestBody UserDetail user) {
+
+        UserDetail userDetail = userDetailRepository.findOne(id);
+        userDetail.setFirstName(user.getFirstName());
+        userDetail.setLastName(user.getLastName());
+        userDetailRepository.save(userDetail);
+    }
+
 }

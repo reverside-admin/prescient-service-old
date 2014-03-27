@@ -16,7 +16,7 @@ public class UserDetail {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
 
-    @Column
+    @Column(unique = true)
     private String userName;
 
     @JsonIgnore
