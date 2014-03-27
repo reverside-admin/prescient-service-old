@@ -32,41 +32,41 @@ prescientApp.controller('applicationController', function ($scope, $http, $locat
     $scope.application_page = 'login.html';
     $scope.application_user;
     $scope.error_message;
-    $scope.user_name='mrunmay';
-    $scope.password='secret';
+    $scope.user_name = 'mrunmay';
+    $scope.password = 'secret';
 
     $scope.doLogin = function (user_name, password) {
-        if((user_name!=null) && (password!=null) ){
+        if ((user_name != null) && (password != null)) {
 
-        var url = 'http://' + user_name + ':' + password + '@localhost:8080/api/users/' + user_name + '/login';
-        console.log(url);
-        $http({
-            method: 'GET',
-            url: url,
-            headers: {}
-        }).success(function (data, status) {
-            console.log('status:' + status + ' response:' + data);
-            if (status == 200) {
-                $scope.application_user = data;
-                if (data.userType.type == 'ROLE_ADMIN') {
-                    $scope.application_page = "ui/admin-home.html";
+            var url = 'http://' + user_name + ':' + password + '@localhost:8080/api/users/' + user_name + '/login';
+            console.log(url);
+            $http({
+                method: 'GET',
+                url: url,
+                headers: {}
+            }).success(function (data, status) {
+                console.log('status:' + status + ' response:' + data);
+                if (status == 200) {
+                    $scope.application_user = data;
+                    if (data.userType.type == 'ROLE_ADMIN') {
+                        $scope.application_page = "ui/admin-home.html";
+                    }
+                    if (data.userType.type == 'ROLE_STAFF') {
+                        $scope.application_page = "ui/staff-home.html";
+                    }
+                    if (data.userType.type == 'ROLE_MANAGER') {
+                        $scope.application_page = "ui/manager-home.html";
+                    }
                 }
-                if (data.userType.type == 'ROLE_STAFF') {
-                    $scope.application_page = "ui/staff-home.html";
-                }
-                if (data.userType.type == 'ROLE_MANAGER') {
-                    $scope.application_page = "ui/manager-home.html";
-                }
-            }
 
-        }).error(function (error) {
-            console.log(error);
-            $scope.error_message = error;
-        });
+            }).error(function (error) {
+                console.log(error);
+                $scope.error_message = error;
+            });
         }
-        else{
+        else {
             console.log('invalid credentials');
-            $scope.error_message='Please Enter Credential Detail !!';
+            $scope.error_message = 'Please Enter Credential Detail !!';
         }
     };
 });
@@ -77,25 +77,24 @@ prescientApp.controller('adminHomeController', function ($scope, $http, $rootSco
 });
 
 
-
 prescientApp.controller('view_user_controller', function ($scope, $http, $routeParams) {
     $scope.uId = $routeParams.userId;
     $scope.user_detail;
 
 
     $http({
-        url : 'http://localhost:8080/api/users/' + $scope.uId,
-        method : 'get',
+        url: 'http://localhost:8080/api/users/' + $scope.uId,
+        method: 'get',
         headers: {}
     }).
         success(function (data, status) {
-            if(status == 200){
+            if (status == 200) {
                 $scope.user_detail = data;
             } else {
                 console.log('status:' + status);
             }
         })
-        .error(function(error){
+        .error(function (error) {
             console.log(error);
         });
 });
@@ -104,28 +103,26 @@ prescientApp.controller('update_user_controller', function ($scope, $http, $rout
     $scope.uId = $routeParams.userId;
     $scope.user_detail;
     $http({
-        url : 'http://localhost:8080/api/users/' + $scope.uId,
-        method : 'get',
+        url: 'http://localhost:8080/api/users/' + $scope.uId,
+        method: 'get',
         headers: {}
     }).
         success(function (data, status) {
-            if(status == 200){
-                $scope.user_detail=data;
-             } else {
+            if (status == 200) {
+                $scope.user_detail = data;
+            } else {
                 console.log('status:' + status);
             }
         })
-        .error(function(error){
+        .error(function (error) {
             console.log(error);
         });
-    $scope.saveUpdateUser=function()
-    {
+    $scope.saveUpdateUser = function () {
         console.log('updated successfully');
-        $http.post("uri",$scope.user_detail).success(function(data,status,header)
-        {
+        $http.post("uri", $scope.user_detail).success(function (data, status, header) {
             alert('post success');
         })
-            .error(function(error){
+            .error(function (error) {
                 console.log(error);
             });
 
@@ -134,148 +131,136 @@ prescientApp.controller('update_user_controller', function ($scope, $http, $rout
 
 
 prescientApp.controller('create_users_controller', function ($scope, $http) {
-    $scope.user_ID;
-    $scope.first_name;
-    $scope.last_name;
-    $scope.user_type;
-    $scope.user_status;
-    $scope.hotel_id;
-    $scope.hotel_department;
-    $scope.touch_point;
-    $scope.hotel_id_list=[];
-    $scope.hotel_department_list=[];
-    $scope.touch_point_list=[];
-    $scope.user_type_list=[];
-    $scope.user_status_list=[];
-    $scope.new_user={};
+
+    $scope.hotel_id_list = [];
+    $scope.hotel_department_list = [];
+    $scope.touch_point_list = [];
+    $scope.user_type_list = [];
+    $scope.user_status_list = [];
+    $scope.user = {};
 
     $http({
-        url : 'http://localhost:8080/api/roles',
-        method : 'get',
+        url: 'http://localhost:8080/api/roles',
+        method: 'get',
         headers: {}
     }).
         success(function (data, status) {
-            if(status == 200){
+            if (status == 200) {
                 $scope.user_type_list = data;
-               } else {
+            } else {
                 console.log('status:' + status);
             }
         })
-        .error(function(error){
+        .error(function (error) {
             console.log(error);
         });
 
 
-
     $http({
-        url : 'http://localhost:8080/api/status',
-        method : 'get',
+        url: 'http://localhost:8080/api/status',
+        method: 'get',
         headers: {}
     }).
         success(function (data, status) {
-            if(status == 200){
+            if (status == 200) {
                 $scope.user_status_list = data;
-             } else {
+            } else {
                 console.log('status:' + status);
             }
         })
-        .error(function(error){
+        .error(function (error) {
             console.log(error);
         });
 
 
     $http({
-        url : 'http://localhost:8080/api/hotels',
-        method : 'get',
+        url: 'http://localhost:8080/api/hotels',
+        method: 'get',
         headers: {}
     }).
         success(function (data, status) {
-            if(status == 200){
+            if (status == 200) {
                 $scope.hotel_id_list = data;
             } else {
                 console.log('status:' + status);
             }
         })
-        .error(function(error){
+        .error(function (error) {
             console.log(error);
         });
 
 
+    $scope.getDepartments = function () {
 
-$scope.getDepartments=function(){
-
-     $http({
-        url : 'http://localhost:8080/api/hotels/'+1+'/departments',
-        method : 'get',
-        headers: {}
-    }).
-        success(function (data, status) {
-            if(status == 200){
-                $scope.hotel_department_list = data;
-            } else {
-                console.log('status:' + status);
-            }
-        })
-        .error(function(error){
-            console.log(error);
-        });
-}
-
+        $http({
+            url: 'http://localhost:8080/api/hotels/' + 1 + '/departments',
+            method: 'get',
+            headers: {}
+        }).
+            success(function (data, status) {
+                if (status == 200) {
+                    $scope.hotel_department_list = data;
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+    };
 
 
+    $scope.create = function () {
 
-    $scope.persistUser=function()
-        {
-            console.log('persistUser() is called...')
-            console.log($scope.new_user);
-            $http.post('http://localhost:8080/api/users/test',$scope.new_user
-                ).
-                success(function (data, status) {
-                    if(status == 200){
-                        console.log('post success with status'+status);
-                     } else {
-                        console.log('status:' + status);
-                    }
-                })
-                .error(function(error){
-                    console.log(error);
-                });
+        $http({
+            url: 'http://localhost:8080/api/users',
+            method: 'post',
+            headers: { 'Content-Type': 'application/json'},
+            data: $scope.user
+        }).
+            success(function (data, status) {
+                if (status == 201) {
+                    console.log('User created successfully');
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
 
-        }
+    };
+
+
 });
 
 
-
-
-
 <!--list user  controller -->
-prescientApp.controller('list_users_controller', function ($scope, $http,$routeParams) {
+prescientApp.controller('list_users_controller', function ($scope, $http, $routeParams) {
 
     $scope.user_list = [];
-    $scope.name=$routeParams.userName;
+    $scope.name = $routeParams.userName;
 
     $http({
-        url : 'http://localhost:8080/api/users',
-        method : 'get',
+        url: 'http://localhost:8080/api/users',
+        method: 'get',
         headers: {}
     }).
         success(function (data, status) {
-            if(status == 200){
+            if (status == 200) {
                 $scope.user_list = data;
             } else {
                 console.log('status:' + status);
             }
         })
-        .error(function(error){
+        .error(function (error) {
             console.log(error);
         });
 
 
-    $scope.removeUser=function(){
+    $scope.removeUser = function () {
 
     }
-
-
 
 
 });

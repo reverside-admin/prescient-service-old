@@ -6,10 +6,10 @@ insert into department (id, name, hotel_id) values (2, 'travel', 1);
 insert into department (id, name, hotel_id) values (3, 'hospitality', 1)
 insert into department (id, name, hotel_id) values (4, 'food', 2);
 
-insert into touch_point(id, name, hotel_id, department_id) values(1, 'dining', 1, 1);
-insert into touch_point(id, name, hotel_id, department_id) values(2, 'kitchen', 1, 1);
-insert into touch_point(id, name, hotel_id, department_id) values(3, 'parking', 1, 2);
-insert into touch_point(id, name, hotel_id, department_id) values(4, 'reception', 1, 3);
+insert into touch_point(id, name,  department_id) values(1, 'dining',  1);
+insert into touch_point(id, name,  department_id) values(2, 'kitchen', 1);
+insert into touch_point(id, name,  department_id) values(3, 'parking', 2);
+insert into touch_point(id, name,  department_id) values(4, 'reception', 3);
 
 insert into user_status (id, status) values (1,'disable');
 insert into user_status (id, status) values (2,'enable');
