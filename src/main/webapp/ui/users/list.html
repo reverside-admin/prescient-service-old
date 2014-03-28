@@ -14,9 +14,7 @@
             <th>Last Name</th>
             <th>Status</th>
             <th>Role</th>
-            <th>Hotel Name</th>
-            <th></th>
-            </tr>
+             </tr>
             </th>
 
             <tr ng-repeat="user in user_list | filter:search">
@@ -25,12 +23,10 @@
                 <td>{{user.lastName}}</td>
                 <td>{{user.userStatus.status}}</td>
                 <td>{{user.userType.type}}</td>
-                <td>{{user.hotel.name}}</td>
-
                 <td>
                     <a ng-href="#users/view/{{user.id}}">view</a> |
                     <a ng-href="#users/update/{{user.id}}">edit</a> |
-                    <a ng-href="#users/update/{{user.id}}">delete</a>
+                    <a ng-href="#users/delete/{{user.id}}">delete</a>
                 </td>
             </tr>
         </table>

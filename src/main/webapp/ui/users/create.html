@@ -20,10 +20,33 @@
                 </tr>
                 <tr>
                     <td>Status : &nbsp; </td>
+                    <td>
                     <select ng-model="user.userStatus.id"
                             ng-options="obj.id as obj.status for obj in user_status_list">
                     </select>
+                    </td>
                 </tr>
+
+                <tr>
+                    <td>Type : &nbsp; </td>
+                    <td>
+                        <select ng-model="user.userType.id"
+                                ng-options="obj.id as obj.type for obj in user_type_list">
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Hotel : &nbsp; </td>
+                    <td>
+                        <select ng-model="user.hotel.id"
+                                ng-options="obj.id as obj.name for obj in hotel_list">
+                        </select>
+                    </td>
+                </tr>
+
+
+
             </table>
         </div>
     </div>

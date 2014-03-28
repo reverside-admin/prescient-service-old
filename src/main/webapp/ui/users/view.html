@@ -1,50 +1,51 @@
 <div class="panel panel-success">
     <div class="panel-heading">
         <a href="#users/update/{{user_detail.id}}" style="float: right;margin-left: 10px;">Edit</a>
-        <a href="#users/update/{{user_detail.id}}"style="float: right;">Delete</a>
+        <a href="#users/update/{{user_detail.id}}" style="float: right;">Delete</a>
+
         <h1 class="panel-title">View User Details</h1>
     </div>
 
     <div class="panel-body">
-                <table class="table table-hover table-condensed table-bordered  table-responsive">
-                    <tr>
-                        <td class="text-right" style="width: 50%">Id:</td>
-                        <td class="text-left">{{user_detail.id}}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-right" style="width: 50%">User Name:</td>
-                        <td class="text-left">{{user_detail.userName}}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-right">First Name:</td>
-                        <td class="text-left">{{user_detail.firstName}}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-right">Last Name:</td>
-                        <td class="text-left">{{user_detail.lastName}}</td>
-                    </tr>
-                    <tr>
-                        <td class="text-right">Status</td>
-                        <td class="text-left">{{user_detail.userStatus.status}}</td>
-                    </tr>
+        <table class="table table-hover table-condensed table-bordered  table-responsive">
+            <tr>
+                <td class="text-right" style="width: 50%">User Name:</td>
+                <td class="text-left">{{user_detail.userName}}</td>
+            </tr>
+            <tr>
+                <td class="text-right">First Name:</td>
+                <td class="text-left">{{user_detail.firstName}}</td>
+            </tr>
+            <tr>
+                <td class="text-right">Last Name:</td>
+                <td class="text-left">{{user_detail.lastName}}</td>
+            </tr>
+            <tr>
+                <td class="text-right">Status</td>
+                <td class="text-left">{{user_detail.userStatus.status}}</td>
+            </tr>
 
-                    <tr>
-                        <td class="text-right">Role</td>
-                        <td class="text-left">{{user_detail.userType.type}}</td>
-                    </tr>
+            <tr>
+                <td class="text-right">Role</td>
+                <td class="text-left">{{user_detail.userType.type}}</td>
+            </tr>
 
-                    <tr>
-                        <td class="text-right">Hotel</td>
-                        <td class="text-left">{{user_detail.hotel.name}}</td>
-                    </tr>
+            <tr>
+                <td class="text-right">Hotel</td>
+                <td class="text-left">{{user_detail.hotel.name}}</td>
+            </tr>
 
-                    <tr>
-                        <td class="text-right">Department</td>
-                        <td class="text-left">Hospitality</td>
-                    </tr>
-
-                </table>
+            <tr>
+                <td class="text-right">Department</td>
+                <td>
+                    <div ng-repeat="dept in user_detail.department">
+                       {{dept.name}}
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
+
 
     <div class="panel-footer">
         <ul class="pager" style="margin: 0px;">

@@ -22,6 +22,10 @@ prescientApp.config(['$routeProvider',
                 'templateUrl': 'ui/users/update.html',
                 'controller': 'update_user_controller'
             })
+            .when('/users/delete/:userId', {
+                'templateUrl': 'ui/users/delete.html',
+                'controller': 'delete_users_controller'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -101,7 +105,7 @@ prescientApp.controller('view_user_controller', function ($scope, $http, $routeP
 
 prescientApp.controller('update_user_controller', function ($scope, $http, $routeParams) {
     $scope.uId = $routeParams.userId;
-    $scope.user={};
+    $scope.user = {};
     $http({
         url: 'http://localhost:8080/api/users/' + $scope.uId,
         method: 'get',
@@ -122,7 +126,7 @@ prescientApp.controller('update_user_controller', function ($scope, $http, $rout
         console.log('update');
 
         $http({
-            url: 'http://localhost:8080/api/users/update/'+$scope.uId,
+            url: 'http://localhost:8080/api/users/update/' + $scope.uId,
             method: 'put',
             headers: { 'Content-Type': 'application/json'},
             data: $scope.user
@@ -143,7 +147,7 @@ prescientApp.controller('update_user_controller', function ($scope, $http, $rout
 
 prescientApp.controller('create_users_controller', function ($scope, $http) {
 
-    $scope.hotel_id_list = [];
+    $scope.hotel_list = [];
     $scope.hotel_department_list = [];
     $scope.touch_point_list = [];
     $scope.user_type_list = [];
@@ -191,7 +195,7 @@ prescientApp.controller('create_users_controller', function ($scope, $http) {
     }).
         success(function (data, status) {
             if (status == 200) {
-                $scope.hotel_id_list = data;
+                $scope.hotel_list = data;
             } else {
                 console.log('status:' + status);
             }
@@ -222,7 +226,7 @@ prescientApp.controller('create_users_controller', function ($scope, $http) {
 
 
     $scope.create = function () {
-            console.log($scope.user);
+        console.log($scope.user);
         $http({
             url: 'http://localhost:8080/api/users',
             method: 'post',
@@ -251,6 +255,7 @@ prescientApp.controller('list_users_controller', function ($scope, $http, $route
 
     $scope.user_list = [];
     $scope.name = $routeParams.userName;
+    $scope.user = {};
 
     $http({
         url: 'http://localhost:8080/api/users',
@@ -267,7 +272,58 @@ prescientApp.controller('list_users_controller', function ($scope, $http, $route
         .error(function (error) {
             console.log(error);
         });
+
 });
+
+<!-- Delete user controller -->
+
+prescientApp.controller('delete_users_controller', function ($scope, $http, $routeParams) {
+    console.log('delete user controller is loaded');
+    $scope.uId = $routeParams.userId;
+    $scope.user = {};
+    $http({
+        url: 'http://localhost:8080/api/users/' + $scope.uId,
+        method: 'get',
+        headers: {}
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.user = data;
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+
+    $scope.delete = function () {
+        console.log('delete');
+
+        $http({
+            url: 'http://localhost:8080/api/users/delete/' + $scope.uId,
+            method: 'put',
+            headers: { 'Content-Type': 'application/json'},
+            data: $scope.user
+        }).
+            success(function (data, status) {
+                if (status == 201) {
+                    console.log('User updated successfully');
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+    }
+
+
+});
+
+
+
 
 
 
