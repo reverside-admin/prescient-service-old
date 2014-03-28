@@ -6,16 +6,21 @@
 
     </div>
     <div class="panel-body">
-        <input type="search" ng-model="search" placeholder="Search Here">
-        <table class="table table-hover table-condensed table-striped table-responsive">
+        <table class="table table-hover table-condensed  table-striped table-responsive">
             <th>
                 <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Status</th>
-            <th>Role</th>
-             </tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Status</th>
+                  <th>Role</th>
+                 </tr>
             </th>
+            <tr>
+                <td><input type="search" ng-model="search.firstName" placeholder="firstname"> </td>
+                <td><input type="search" ng-model="search.lastName" placeholder="lastname"> </td>
+                <td><input type="search" ng-model="search.userStatus.status" placeholder="status"> </td>
+                <td><input type="search" ng-model="search.userType.type" placeholder="type"> </td>
+            </tr>
 
             <tr ng-repeat="user in user_list | filter:search">
 
