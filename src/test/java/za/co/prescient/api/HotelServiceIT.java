@@ -61,5 +61,4 @@ public class HotelServiceIT {
                 .andExpect(status().isOk())
                 .andExpect(content().string("[{\"id\":1,\"name\":\"hotel1\"},{\"id\":2,\"name\":\"hotel2\"},{\"id\":3,\"name\":\"hotel3\"}]"));
     }
-
 }
