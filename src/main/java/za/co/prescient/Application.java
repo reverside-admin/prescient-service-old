@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @ComponentScan
 @EnableAutoConfiguration
 @ImportResource("classpath:security.xml")
-@PropertySource("classpath:data-source.properties")
 @EnableJpaRepositories
 public class Application extends WebMvcConfigurerAdapter {
 

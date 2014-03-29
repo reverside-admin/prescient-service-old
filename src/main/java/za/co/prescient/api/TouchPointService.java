@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import za.co.prescient.model.TouchPoint;
 import za.co.prescient.repository.TouchPointRepository;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "api/departments")
 
@@ -18,7 +20,7 @@ public class TouchPointService {
     TouchPointRepository touchPointRepository;
 
     @RequestMapping(value = "{departmentId}/touchpoints")
-    public Iterable<TouchPoint> touchpoints(@PathVariable ("departmentId") Long departmentId) {
+    public List<TouchPoint> touchpoints(@PathVariable ("departmentId") Long departmentId) {
         LOGGER.info("Get All Touch Points by DepartmentId service");
         return touchPointRepository.findTouchPointByDepartmentId(departmentId);
     }

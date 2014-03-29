@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import za.co.prescient.model.UserStatus;
 import za.co.prescient.repository.UserStatusRepository;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "api")
 public class UserStatusService {
@@ -17,7 +19,7 @@ public class UserStatusService {
     UserStatusRepository userStatusRepository;
 
     @RequestMapping(value = "status")
-    public Iterable<UserStatus> getUserStatus() {
+    public List<UserStatus> getUserStatus() {
         LOGGER.info("Get All Status service");
         return userStatusRepository.findAll();
     }

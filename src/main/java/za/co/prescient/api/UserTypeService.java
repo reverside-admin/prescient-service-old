@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 import za.co.prescient.model.UserType;
 import za.co.prescient.repository.UserTypeRepository;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "api")
 public class UserTypeService {
@@ -17,7 +19,7 @@ public class UserTypeService {
     UserTypeRepository userTypeRepository;
 
     @RequestMapping(value = "roles")
-    public Iterable<UserType> getUserRoles() {
+    public List<UserType> getUserRoles() {
         LOGGER.info("Get All Roles service");
         return userTypeRepository.findAll();
     }
