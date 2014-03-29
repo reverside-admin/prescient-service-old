@@ -31,13 +31,15 @@ prescientApp.config(['$routeProvider',
             });
     }]);
 
-prescientApp.controller('applicationController', function ($scope, $http, $location) {
+prescientApp.controller('applicationController', function ($scope, $http, $location,$window) {
     $location.path('/');
     $scope.application_page = 'login.html';
     $scope.application_user;
     $scope.error_message;
     $scope.user_name = 'mrunmay';
     $scope.password = 'secret';
+    console.log('hash'+$window.location.hash);
+    console.log('search'+$window.location.search);
 
     $scope.doLogin = function (user_name, password) {
         if ((user_name != null) && (password != null)) {
@@ -103,7 +105,7 @@ prescientApp.controller('view_user_controller', function ($scope, $http, $routeP
         });
 });
 
-prescientApp.controller('update_user_controller', function ($scope, $http, $routeParams) {
+prescientApp.controller('update_user_controller', function ($scope, $http, $routeParams,$location) {
     $scope.uId = $routeParams.userId;
     $scope.user = {};
     $http({
@@ -142,10 +144,15 @@ prescientApp.controller('update_user_controller', function ($scope, $http, $rout
                 console.log(error);
             });
     }
+
+    $scope.cancel=function()
+    {
+        $location.url('/users/list');
+    }
 });
 
 
-prescientApp.controller('create_users_controller', function ($scope, $http) {
+prescientApp.controller('create_users_controller', function ($scope, $http,$location) {
 
     $scope.hotel_list = [];
     $scope.hotel_department_list = [];
@@ -236,6 +243,7 @@ prescientApp.controller('create_users_controller', function ($scope, $http) {
             success(function (data, status) {
                 if (status == 201) {
                     console.log('User created successfully');
+                    $location.url('/users/list');
                 } else {
                     console.log('status:' + status);
                 }
@@ -245,6 +253,11 @@ prescientApp.controller('create_users_controller', function ($scope, $http) {
             });
 
     };
+
+    $scope.cancel=function()
+    {
+        $location.url('/users/list');
+    }
 
 
 });
@@ -272,12 +285,11 @@ prescientApp.controller('list_users_controller', function ($scope, $http, $route
         .error(function (error) {
             console.log(error);
         });
-
 });
 
 <!-- Delete user controller -->
 
-prescientApp.controller('delete_users_controller', function ($scope, $http, $routeParams) {
+prescientApp.controller('delete_users_controller', function ($scope, $http, $routeParams,$location) {
     console.log('delete user controller is loaded');
     $scope.uId = $routeParams.userId;
     $scope.user = {};
@@ -309,7 +321,7 @@ prescientApp.controller('delete_users_controller', function ($scope, $http, $rou
         }).
             success(function (data, status) {
                 if (status == 201) {
-                    console.log('User updated successfully');
+                   $location.url('users/list');
                 } else {
                     console.log('status:' + status);
                 }

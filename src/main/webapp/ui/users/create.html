@@ -5,46 +5,48 @@
 
     <div class="panel-body">
         <div style="width: 50%; margin-left: auto;margin-right: auto;">
-            <table>
+            <table class=" table table-responsive">
                 <tr>
-                    <td> User Name :&nbsp; </td>
-                    <td><input type="text" id="username" class="form-control" ng-model="user.userName" required></td>
+                    <td> User Name</td>
+                    <td><input type="text" id="username" ng-model="user.userName" placeholder="username" style="width: 100%" required></td>
                 </tr>
                 <tr>
-                    <td> First Name :&nbsp; </td>
-                    <td><input type="text" id="userfname" class="form-control" ng-model="user.firstName" required></td>
+                    <td> First Name </td>
+                    <td><input type="text" id="userfname" ng-model="user.firstName" placeholder="firstname" style="width: 100%" required></td>
                 </tr>
                 <tr>
-                    <td> Last Name : &nbsp; </td>
-                    <td><input type="text" id="userlname" class="form-control" ng-model="user.lastName" required></td>
+                    <td> Last Name </td>
+                    <td><input type="text" id="userlname" ng-model="user.lastName"  placeholder="lastname" style="width: 100%" required></td>
                 </tr>
                 <tr>
-                    <td>Status : &nbsp; </td>
+                    <td>Status </td>
                     <td>
-                    <select ng-model="user.userStatus.id"
-                            ng-options="obj.id as obj.status for obj in user_status_list">
-                    </select>
+                        <select ng-model="user.userStatus.id"
+                                ng-options="obj.id as obj.status for obj in user_status_list">
+                            <option value="">Select Status</option>
+                        </select>
                     </td>
                 </tr>
 
                 <tr>
-                    <td>Type : &nbsp; </td>
+                    <td>Role </td>
                     <td>
                         <select ng-model="user.userType.id"
                                 ng-options="obj.id as obj.type for obj in user_type_list">
+                            <option value="">Select Role</option>
                         </select>
                     </td>
                 </tr>
 
                 <tr>
-                    <td>Hotel : &nbsp; </td>
+                    <td>Hotel</td>
                     <td>
                         <select ng-model="user.hotel.id"
                                 ng-options="obj.id as obj.name for obj in hotel_list">
+                            <option value="">Select Hotel</option>
                         </select>
                     </td>
                 </tr>
-
 
 
             </table>
@@ -52,7 +54,11 @@
     </div>
 
     <div class="panel-footer">
-        <button type="button" class="btn btn-success" ng-click="create()">Save</button>
+        <ul class="pager " style="margin: 0px;">
+            <li><a href="#users/list" style="float: left;">Back</a></li>
+            <button type="button" class="btn btn-success" ng-click="create()" style="float: right;margin-left: 10px;">Save</button>
+            <button type="button" class="btn btn-success" ng-click="cancel()" style="float: right;">Cancel</button>
+        </ul>
     </div>
 
 </div>
