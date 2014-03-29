@@ -1,0 +1,28 @@
+<html ng-app = "login_app">
+<head>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="lib/angular.js"></script>
+    <script src="lib/angular-route.js"></script>
+    <script src="lib/angular-cookies.js"></script>
+    <script src="lib/jquery-1.11.0.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="js/login-app.js"></script>
+</head>
+<body >
+<div ng-controller="login_app_controller" style="width: 20%; margin-left: auto;margin-right: auto;margin-top: 10%;">
+    <fieldset>
+        <legend>Login</legend>
+        <div class="form-group">
+            <input type="text" class="form-control" id="inputId" placeholder="User Name" ng-model="user_name" required>
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="password"
+                   required>
+        </div>
+        <button type="button" class="btn btn-primary" ng-click="login(user_name, password)">Login</button>
+        <h2>{{error}}</h2>
+    </fieldset>
+</div>
+</body>
+</html>
+

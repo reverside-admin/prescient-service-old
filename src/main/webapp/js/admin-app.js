@@ -1,9 +1,9 @@
 /**
  * Created by Bibhuti on 2014/03/19.
  */
-var prescientApp = angular.module('prescientApp', ['ngRoute']);
+var admin_app = angular.module('admin_app', ['ngRoute', 'ngCookies']);
 
-prescientApp.config(['$routeProvider',
+admin_app.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider
             .when('/users/list', {
@@ -16,11 +16,11 @@ prescientApp.config(['$routeProvider',
             })
             .when('/users/view/:userId', {
                 'templateUrl': 'ui/users/view.html',
-                'controller': 'view_user_controller'
+                'controller': 'view_users_controller'
             })
             .when('/users/update/:userId', {
                 'templateUrl': 'ui/users/update.html',
-                'controller': 'update_user_controller'
+                'controller': 'update_users_controller'
             })
             .when('/users/delete/:userId', {
                 'templateUrl': 'ui/users/delete.html',
@@ -31,59 +31,72 @@ prescientApp.config(['$routeProvider',
             });
     }]);
 
-prescientApp.controller('applicationController', function ($scope, $http, $location,$window) {
-    $location.path('/');
-    $scope.application_page = 'login.html';
-    $scope.application_user;
-    $scope.error_message;
-    $scope.user_name = 'mrunmay';
-    $scope.password = 'secret';
-    console.log('hash'+$window.location.hash);
-    console.log('search'+$window.location.search);
 
-    $scope.doLogin = function (user_name, password) {
-        if ((user_name != null) && (password != null)) {
+admin_app.controller('admin_app_controller', function ($scope, $http, $location, $cookieStore, $window) {
 
-            var url = 'http://' + user_name + ':' + password + '@localhost:8080/api/users/' + user_name + '/login';
-            console.log(url);
-            $http({
-                method: 'GET',
-                url: url,
-                headers: {}
-            }).success(function (data, status) {
-                console.log('status:' + status + ' response:' + data);
+    $scope.user;
+
+    if ($cookieStore.get("user") == null) {
+        console.log("User is not authenticated");
+        $window.location.replace("login-app.html?admin-app.html" + $window.location.hash);
+    } else {
+        console.log("User is authenticated");
+        $scope.user = $cookieStore.get("user");
+        if ($scope.user.userType.type != "ROLE_ADMIN") {
+            $window.location.replace("index.html");
+        }
+    }
+
+
+    $scope.logout = function () {
+        $http({
+            url: "http://localhost:8080/j_spring_security_logout",
+            method: "get",
+            headers: {}
+        })
+            .success(function (data, status) {
                 if (status == 200) {
-                    $scope.application_user = data;
-                    if (data.userType.type == 'ROLE_ADMIN') {
-                        $scope.application_page = "ui/admin-home.html";
-                    }
-                    if (data.userType.type == 'ROLE_STAFF') {
-                        $scope.application_page = "ui/staff-home.html";
-                    }
-                    if (data.userType.type == 'ROLE_MANAGER') {
-                        $scope.application_page = "ui/manager-home.html";
-                    }
+                    $cookieStore.remove("user");
+                    $window.location.replace("login-app.html");
+                }else{
+                    console.log("Failed to logout");
                 }
 
-            }).error(function (error) {
-                console.log(error);
-                $scope.error_message = error;
+            })
+            .error(function () {
+                console.log("Failed to logout");
             });
-        }
-        else {
-            console.log('invalid credentials');
-            $scope.error_message = 'Please Enter Credential Detail !!';
-        }
+
     };
+
+});
+
+<!--list user  controller -->
+admin_app.controller('list_users_controller', function ($scope, $http, $routeParams) {
+
+    $scope.user_list = [];
+    $scope.name = $routeParams.userName;
+    $scope.user = {};
+
+    $http({
+        url: 'http://mrunmay:secret@localhost:8080/api/users',
+        method: 'get',
+        headers: {}
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.user_list = data;
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
 });
 
 
-prescientApp.controller('adminHomeController', function ($scope, $http, $rootScope) {
-    $scope.user = $rootScope.user;
-});
-
-
-prescientApp.controller('view_user_controller', function ($scope, $http, $routeParams) {
+admin_app.controller('view_users_controller', function ($scope, $http, $routeParams) {
     $scope.uId = $routeParams.userId;
     $scope.user_detail;
 
@@ -105,7 +118,7 @@ prescientApp.controller('view_user_controller', function ($scope, $http, $routeP
         });
 });
 
-prescientApp.controller('update_user_controller', function ($scope, $http, $routeParams,$location) {
+admin_app.controller('update_users_controller', function ($scope, $http, $routeParams, $location) {
     $scope.uId = $routeParams.userId;
     $scope.user = {};
     $http({
@@ -145,14 +158,13 @@ prescientApp.controller('update_user_controller', function ($scope, $http, $rout
             });
     }
 
-    $scope.cancel=function()
-    {
+    $scope.cancel = function () {
         $location.url('/users/list');
     }
 });
 
 
-prescientApp.controller('create_users_controller', function ($scope, $http,$location) {
+admin_app.controller('create_users_controller', function ($scope, $http, $location) {
 
     $scope.hotel_list = [];
     $scope.hotel_department_list = [];
@@ -254,8 +266,7 @@ prescientApp.controller('create_users_controller', function ($scope, $http,$loca
 
     };
 
-    $scope.cancel=function()
-    {
+    $scope.cancel = function () {
         $location.url('/users/list');
     }
 
@@ -263,36 +274,12 @@ prescientApp.controller('create_users_controller', function ($scope, $http,$loca
 });
 
 
-<!--list user  controller -->
-prescientApp.controller('list_users_controller', function ($scope, $http, $routeParams) {
-
-    $scope.user_list = [];
-    $scope.name = $routeParams.userName;
-    $scope.user = {};
-
-    $http({
-        url: 'http://localhost:8080/api/users',
-        method: 'get',
-        headers: {}
-    }).
-        success(function (data, status) {
-            if (status == 200) {
-                $scope.user_list = data;
-            } else {
-                console.log('status:' + status);
-            }
-        })
-        .error(function (error) {
-            console.log(error);
-        });
-});
-
 <!-- Delete user controller -->
 
-prescientApp.controller('delete_users_controller', function ($scope, $http, $routeParams,$location) {
+admin_app.controller('delete_users_controller', function ($scope, $http, $routeParams, $location) {
     console.log('delete user controller is loaded');
     $scope.uId = $routeParams.userId;
-    $scope.user = {};
+    $scope.user_detail = {};
     $http({
         url: 'http://localhost:8080/api/users/' + $scope.uId,
         method: 'get',
@@ -300,7 +287,7 @@ prescientApp.controller('delete_users_controller', function ($scope, $http, $rou
     }).
         success(function (data, status) {
             if (status == 200) {
-                $scope.user = data;
+                $scope.user_detail = data;
             } else {
                 console.log('status:' + status);
             }
@@ -312,7 +299,6 @@ prescientApp.controller('delete_users_controller', function ($scope, $http, $rou
 
     $scope.delete = function () {
         console.log('delete');
-
         $http({
             url: 'http://localhost:8080/api/users/delete/' + $scope.uId,
             method: 'put',
@@ -321,7 +307,7 @@ prescientApp.controller('delete_users_controller', function ($scope, $http, $rou
         }).
             success(function (data, status) {
                 if (status == 201) {
-                   $location.url('users/list');
+                    $location.url('users/list');
                 } else {
                     console.log('status:' + status);
                 }
@@ -330,12 +316,6 @@ prescientApp.controller('delete_users_controller', function ($scope, $http, $rou
                 console.log(error);
             });
     }
-
-
 });
-
-
-
-
 
 

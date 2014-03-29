@@ -17,15 +17,6 @@ public class UserDetailService {
     @Autowired
     UserDetailRepository userDetailRepository;
 
-    @RequestMapping(value = "{userName}/login")
-    public UserDetail login(@PathVariable("userName") String userName) {
-//        UserDetailService.log.info("SLF4J implementation done");
-        LOGGER.info("Login Service Start");
-        UserDetail userDetail = userDetailRepository.findByUserName(userName);
-        LOGGER.info("Login Service End.");
-        return userDetail;
-    }
-
     @RequestMapping
     public Iterable<UserDetail> get() {
         LOGGER.info("Get All UserDetails service");

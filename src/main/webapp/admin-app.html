@@ -1,0 +1,31 @@
+<html ng-app="admin_app">
+<head>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="lib/angular.js"></script>
+    <script src="lib/angular-route.js"></script>
+    <script src="lib/angular-cookies.js"></script>
+    <script src="lib/jquery-1.11.0.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="js/admin-app.js"></script>
+</head>
+<body>
+<div ng-controller="admin_app_controller">
+    <button ng-click="logout()">Logout</button>
+    <div style="width: 20%;height: 100%;float:left;border:groove;%">
+        <ul>
+
+            <li><a href="#users/list">User Management</a></li>
+            <li><a href="#find-user">Guest Management</a></li>
+            <li><a href="#find-user">Access Card Management</a></li>
+            <li><a href="#find-user">Touch Points Management</a></li>
+        </ul>
+    </div>
+
+
+    <div ng-view style="width: 79%;height: 100%;float:left;border:groove;">
+
+    </div>
+
+</div>
+</body>
+</html>

@@ -3,6 +3,7 @@ package za.co.prescient.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,32 +11,33 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@ToString
 public class UserDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
 
-    @Column(unique = true)
+    @Column//(unique = true)
     private String userName;
 
     @JsonIgnore
-    @Column
+    @Column//(nullable = false)
     private String password;
 
-    @Column
+    @Column//(nullable = false)
     private String firstName;
 
-    @Column
+    @Column//(nullable = false)
     private String lastName;
 
-    @ManyToOne
+    @ManyToOne//(optional = false)
     private UserStatus userStatus;
 
-    @ManyToOne
+    @ManyToOne//(optional = false)
     private UserType userType;
 
-    @OneToOne
+    @OneToOne//(optional = false)
     private Hotel hotel;
 
     @OneToMany

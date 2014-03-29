@@ -1,38 +1,15 @@
 <html ng-app="prescientApp">
 <head>
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <script src="js/angular.min.js"></script>
-    <script src="js/angular-route.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
-    <script src="js/application.js"></script>
-    <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="lib/angular.js"></script>
+    <script src="lib/angular-route.js"></script>
+    <script src="lib/angular-cookies.js"></script>
+    <script src="lib/jquery-1.11.0.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
 </head>
 <body>
 <!--TODO : make off line of java script links-->
-<div ng-controller="applicationController">
-    <table style="width: 100%; background-color: #678197;">
-        <tr>
-            <td style="width: 50%;">
-                <div>
-                    <h1>&nbsp;&nbsp;Prescient Application</h1>
-                </div>
-            </td>
-            <td style="width: 50%; text-align: right;">
-                <div ng-show="application_user">
-                  WelCome &nbsp; {{application_user.userName}} &nbsp; || &nbsp;&nbsp;
-                  Role- &nbsp;{{application_user.userType.type}} &nbsp;&nbsp;
-                </div>
-            </td>
-        </tr>
-    </table>
-
-    <div ng-include="application_page">
-        <!-- Load Role Specific Application Here -->
-    </div>
-
-</div>
+<a href="admin-app.html">Admin Application</a>
 </body>
 </html>
 

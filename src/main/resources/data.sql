@@ -24,7 +24,7 @@ insert into  user_detail(id, user_name, password, first_name, last_name, user_st
                   values(2,  'mrunmay', 'secret',  'Mrunmay', 'Mohanty',               2,            1,         1);
 
 insert into  user_detail(id, user_name, password, first_name, last_name, user_status_id , user_type_id, hotel_id)
-                  values(3,  'santosh', 'secret',  'Santosh', 'Kunatha',               2,                 3,         1);
+                  values(3,  'santosh', 'secret',  'Santosh', 'Kunatha',               2,           3,         1);
 
 insert into  user_detail(id, user_name, password, first_name, last_name, user_status_id , user_type_id, hotel_id)
                   values(4,  'subhash', 'secret',  'Subhash', 'Goel',               2,               2,         1);

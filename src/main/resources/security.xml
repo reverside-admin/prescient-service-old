@@ -8,10 +8,8 @@
        http://www.springframework.org/schema/security
        http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <security:http use-expressions="true">
-        <security:intercept-url pattern="/j_spring_security_logout" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/api/**" access="hasAnyRole('ROLE_ADMIN, ROLE_MANAGER, ROLE_STAFF')"/>
-        <security:intercept-url pattern="/ui/**" access="hasAnyRole('ROLE_ADMIN, ROLE_MANAGER, ROLE_STAFF')"/>
+    <security:http pattern="/**" use-expressions="true" create-session="never">
+        <security:intercept-url pattern="/api/**" access="hasAnyRole('ROLE_ADMIN')"/>
         <security:http-basic/>
         <security:logout />
     </security:http>
