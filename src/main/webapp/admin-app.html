@@ -8,11 +8,15 @@
     <script src="lib/bootstrap.min.js"></script>
     <script src="js/admin-app.js"></script>
 </head>
-<body>
-<div ng-controller="admin_app_controller">
-    <button ng-click="logout()">Logout</button>
-    <div style="width: 20%;height: 100%;float:left;border:groove;%">
-        <ul>
+<body ng-controller="admin_app_controller">
+<div style="width:100%;height:5%;border:groove;text-align: right">
+    welcome {{user.userName}}
+    <a ng-click="logout()" style="margin: 10px;">Logout</a>
+</div>
+<div>
+
+    <div style="width: 15%;height: 100%;float:left;border:groove;">
+        <ul style="margin-top: 15px;">
 
             <li><a href="#users/list">User Management</a></li>
             <li><a href="#find-user">Guest Management</a></li>
@@ -22,7 +26,7 @@
     </div>
 
 
-    <div ng-view style="width: 79%;height: 100%;float:left;border:groove;">
+    <div ng-view style="width: 84%;height: 100%;float:left;border:groove;">
 
     </div>
 

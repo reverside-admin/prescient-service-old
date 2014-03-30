@@ -139,7 +139,6 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
 
     $scope.update = function () {
         console.log('update');
-
         $http({
             url: 'http://localhost:8080/api/users/update/' + $scope.uId,
             method: 'put',
@@ -278,6 +277,7 @@ admin_app.controller('create_users_controller', function ($scope, $http, $locati
 
 admin_app.controller('delete_users_controller', function ($scope, $http, $routeParams, $location) {
     console.log('delete user controller is loaded');
+    $scope.confirm_flag=false;
     $scope.uId = $routeParams.userId;
     $scope.user_detail = {};
     $http({
@@ -315,6 +315,14 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
             .error(function (error) {
                 console.log(error);
             });
+    }
+    $scope.cancel = function () {
+        $location.url('/users/update/'+$scope.uId);
+     }
+
+    $scope.showDialog=function()
+    {
+         $scope.confirm_flag=true;
     }
 });
 

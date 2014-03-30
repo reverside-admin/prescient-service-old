@@ -1,9 +1,7 @@
 <div class="panel panel-success">
     <div class="panel-heading">
         <a href="#users/update/{{user_detail.id}}" style="float: right;margin-left: 10px;">Edit</a>
-        <a href="#users/delete/{{user_detail.id}}" style="float: right;margin-left: 10px;">Delete</a>
         <a ng-href="#users/create" style="float: right">New User</a>
-
 
         <h1 class="panel-title">Delete User</h1>
     </div>
@@ -41,21 +39,25 @@
                 <td class="text-right">Department</td>
                 <td>
                     <div ng-repeat="dept in user_detail.department">
-                        {{dept.name}}
-                    </div>
+                     </div>
                 </td>
             </tr>
         </table>
+    </div>
+
+    <div class="alert-warning"  ng-show="confirm_flag" style="height: 5%;width: 30%;text-align: center;margin-left: 30%">
+                 Are you sure to delete?
+        <button type="button" class="small" ng-click="delete()" style="float: right;margin-left: 10px;">Ok</button>
+        <button type="button" class="small" ng-click="cancel()" style="float: right;">Cancel</button>
     </div>
 
 
     <div class="panel-footer">
         <ul class="pager" style="margin: 0px;">
             <li><a href="#users/list" style="float: left;">Back</a></li>
-            <button type="button" class="btn btn-success" ng-click="update()" style="float: right;margin-left: 10px;">Delete</button>
+            <button type="button" class="btn btn-success" ng-click="showDialog()" style="float: right;margin-left: 10px;">Delete</button>
             <button type="button" class="btn btn-success" ng-click="cancel()" style="float: right;">Cancel</button>
         </ul>
-
     </div>
 
 </div>
