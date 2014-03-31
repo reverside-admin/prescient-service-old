@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.test.SpringApplicationContextLoader;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ContextConfiguration;
@@ -28,12 +29,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = Application.class, loader = SpringApplicationContextLoader.class)
 @WebAppConfiguration
-@Slf4j
+@ConfigurationProperties("classpath:/application-test.properties")
 @Profile("test")
+@Slf4j
 public class HotelServiceIT {
 
     @Autowired
     private WebApplicationContext context;
+
 
     private MockMvc mvc;
 
@@ -42,6 +45,7 @@ public class HotelServiceIT {
 
     @Before
     public void setUp() {
+        log.info(">>>>>>" +         this.context.getEnvironment()        );
         this.mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
     }
 
@@ -60,5 +64,6 @@ public class HotelServiceIT {
         this.mvc.perform(get("/api/hotels"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("[{\"id\":1,\"name\":\"hotel1\"},{\"id\":2,\"name\":\"hotel2\"},{\"id\":3,\"name\":\"hotel3\"}]"));
+//                .andExpect(content().string("[{\"id\":1,\"name\":\"orion\"},{\"id\":2,\"name\":\"taj\"},{\"id\":3,\"name\":\"hotel1\"},{\"id\":4,\"name\":\"hotel2\"},{\"id\":5,\"name\":\"hotel3\"}]"));
     }
 }

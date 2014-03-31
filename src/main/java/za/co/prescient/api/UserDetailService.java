@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/users")
-//@Slf4j
 public class UserDetailService {
     private static final Logger LOGGER = Logger.getLogger(UserDetailService.class);
 
@@ -21,7 +20,6 @@ public class UserDetailService {
 
     @RequestMapping(value = "{userName}/login")
     public UserDetail login(@PathVariable("userName") String userName) {
-//        UserDetailService.log.info("SLF4J implementation done");
         LOGGER.info("Login Service Start");
         UserDetail userDetail = userDetailRepository.findByUserName(userName);
         LOGGER.info("Login Service End.");
