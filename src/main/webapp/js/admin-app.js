@@ -120,6 +120,9 @@ admin_app.controller('view_users_controller', function ($scope, $http, $routePar
 
 admin_app.controller('update_users_controller', function ($scope, $http, $routeParams, $location) {
     $scope.uId = $routeParams.userId;
+    $scope.user_status_list = [];
+    $scope.user_type_list = [];
+    $scope.hotel_list = [];
     $scope.user = {};
     $http({
         url: 'http://localhost:8080/api/users/' + $scope.uId,
@@ -137,8 +140,63 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
             console.log(error);
         });
 
+<!-- get status -->
+    $http({
+        url: 'http://localhost:8080/api/status',
+        method: 'get',
+        headers: {}
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.user_status_list = data;
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+    <!-- get user type -->
+
+    $http({
+        url: 'http://localhost:8080/api/roles',
+        method: 'get',
+        headers: {}
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.user_type_list = data;
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+    <!-- get hotel list -->
+
+    $http({
+        url: 'http://localhost:8080/api/hotels',
+        method: 'get',
+        headers: {}
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.hotel_list = data;
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+
     $scope.update = function () {
         console.log('update');
+        console.log($scope.user);
         $http({
             url: 'http://localhost:8080/api/users/update/' + $scope.uId,
             method: 'put',
@@ -148,6 +206,7 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
             success(function (data, status) {
                 if (status == 201) {
                     console.log('User updated successfully');
+                    $location.url('/users/list');
                 } else {
                     console.log('status:' + status);
                 }
@@ -158,7 +217,7 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
     }
 
     $scope.cancel = function () {
-        $location.url('/users/list');
+        $location.url('/users/view/'+$scope.uId);
     }
 });
 
@@ -317,7 +376,7 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
             });
     }
     $scope.cancel = function () {
-        $location.url('/users/update/'+$scope.uId);
+        $location.url('/users/view/'+$scope.uId);
      }
 
     $scope.showDialog=function()

@@ -24,6 +24,27 @@
                     <td>Last Name</td>
                     <td class="text-left"><input name="lname" ng-model="user.lastName" style="width: 100%;"/></td>
                 </tr>
+
+                <tr>
+                    <td>Status</td>
+                    <td><select ng-model="user.userStatus.id"
+                                ng-options="obj.id as obj.status for obj in user_status_list">
+                     </select></td>
+                </tr>
+
+                <tr>
+                    <td>Type</td>
+                    <td><select ng-model="user.userType.id"
+                                ng-options="obj.id as obj.type for obj in user_type_list">
+                    </select></td>
+                </tr>
+
+                <tr>
+                    <td>Hotel</td>
+                    <td><select ng-model="user.hotel.id"
+                                ng-options="obj.id as obj.name for obj in hotel_list">
+                    </select></td>
+                </tr>
             </table>
         </div>
     </div>

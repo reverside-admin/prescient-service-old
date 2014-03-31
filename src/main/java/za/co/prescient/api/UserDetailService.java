@@ -4,8 +4,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import za.co.prescient.model.Hotel;
 import za.co.prescient.model.UserDetail;
 import za.co.prescient.model.UserStatus;
+import za.co.prescient.model.UserType;
 import za.co.prescient.repository.UserDetailRepository;
 
 import java.util.List;
@@ -50,8 +52,18 @@ public class UserDetailService {
     @ResponseStatus(HttpStatus.CREATED)
     public void update(@PathVariable Long id, @RequestBody UserDetail user) {
         UserDetail userDetail = userDetailRepository.findOne(id);
+        UserStatus userStatus=new UserStatus();
+        userStatus.setId(user.getUserStatus().getId());
+        UserType userType=new UserType();
+        userType.setId(user.getUserType().getId());
+        Hotel hotel=new Hotel();
+        hotel.setId(user.getHotel().getId());
+
         userDetail.setFirstName(user.getFirstName());
         userDetail.setLastName(user.getLastName());
+        userDetail.setUserStatus(userStatus);
+        userDetail.setUserType(userType);
+        userDetail.setHotel(hotel);
         userDetailRepository.save(userDetail);
     }
 
