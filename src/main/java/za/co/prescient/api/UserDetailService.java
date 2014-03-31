@@ -8,17 +8,26 @@ import za.co.prescient.model.UserDetail;
 import za.co.prescient.model.UserStatus;
 import za.co.prescient.repository.UserDetailRepository;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "api/users")
-//@Slf4j
 public class UserDetailService {
     private static final Logger LOGGER = Logger.getLogger(UserDetailService.class);
 
     @Autowired
     UserDetailRepository userDetailRepository;
 
+    @RequestMapping(value = "{userName}/login")
+    public UserDetail login(@PathVariable("userName") String userName) {
+        LOGGER.info("Login Service Start");
+        UserDetail userDetail = userDetailRepository.findByUserName(userName);
+        LOGGER.info("Login Service End.");
+        return userDetail;
+    }
+
     @RequestMapping
-    public Iterable<UserDetail> get() {
+    public List<UserDetail> get() {
         LOGGER.info("Get All UserDetails service");
         return userDetailRepository.findAll();
     }

@@ -10,6 +10,8 @@ import za.co.prescient.model.Hotel;
 import za.co.prescient.repository.DepartmentRepository;
 import za.co.prescient.repository.HotelRepository;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "api/hotels")
 public class HotelService {
@@ -22,20 +24,22 @@ public class HotelService {
     DepartmentRepository departmentRepository;
 
     @RequestMapping
-    public Iterable<Hotel> getHotels() {
+    public List<Hotel> get() {
         LOGGER.info("Get All Hotel service");
         return hotelRepository.findAll();
     }
 
     @RequestMapping(value = "{hotelId}")
-    public Hotel getHotel(@PathVariable("hotelId") Long hotelId) {
+    public Hotel get(@PathVariable("hotelId") Long hotelId) {
         LOGGER.info("Get a single Hotel by HotelId service");
         return hotelRepository.findOne(hotelId);
     }
 
+
+
     @RequestMapping(value = "{hotelId}/departments")
-    public Iterable<Department> departments(@PathVariable ("hotelId") Long hotelId) {
+    public List<Department> getDepartments(@PathVariable ("hotelId") Long hotelId) {
         LOGGER.info("Get All Departments by HotelId service");
-        return departmentRepository.findDepartmentByHotelId(hotelId);
+        return departmentRepository.findByHotelId(hotelId);
     }
 }

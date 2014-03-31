@@ -6,7 +6,9 @@ import org.springframework.data.repository.query.Param;
 
 import za.co.prescient.model.TouchPoint;
 
+import java.util.List;
+
 @Repository
 public interface TouchPointRepository extends JpaRepository<TouchPoint, Long> {
-    public Iterable<TouchPoint> findTouchPointByDepartmentId(@Param("departmentId") Long departmentId);
+    public List<TouchPoint> findTouchPointByDepartmentId(@Param("departmentId") Long departmentId);
 }
