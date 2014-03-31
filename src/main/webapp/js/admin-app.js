@@ -49,24 +49,9 @@ admin_app.controller('admin_app_controller', function ($scope, $http, $location,
 
 
     $scope.logout = function () {
-        $http({
-            url: "http://localhost:8080/j_spring_security_logout",
-            method: "get",
-            headers: {}
-        })
-            .success(function (data, status) {
-                if (status == 200) {
-                    $cookieStore.remove("user");
-                    $window.location.replace("login-app.html");
-                }else{
-                    console.log("Failed to logout");
-                }
-
-            })
-            .error(function () {
-                console.log("Failed to logout");
-            });
-
+        console.log('logout method is called');
+        $cookieStore.remove("user");
+        $window.location.replace("login-app.html");
     };
 
 });
@@ -77,7 +62,7 @@ admin_app.controller('list_users_controller', function ($scope, $http, $routePar
     $scope.user_list = [];
     $scope.name = $routeParams.userName;
     $scope.user = {};
-
+    <!-- TODO: get username and password from cookies and replace hardcoded value in the url-->
     $http({
         url: 'http://mrunmay:secret@localhost:8080/api/users',
         method: 'get',
@@ -140,7 +125,7 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
             console.log(error);
         });
 
-<!-- get status -->
+    <!-- get status -->
     $http({
         url: 'http://localhost:8080/api/status',
         method: 'get',
@@ -217,7 +202,7 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
     }
 
     $scope.cancel = function () {
-        $location.url('/users/view/'+$scope.uId);
+        $location.url('/users/view/' + $scope.uId);
     }
 });
 
@@ -336,7 +321,7 @@ admin_app.controller('create_users_controller', function ($scope, $http, $locati
 
 admin_app.controller('delete_users_controller', function ($scope, $http, $routeParams, $location) {
     console.log('delete user controller is loaded');
-    $scope.confirm_flag=false;
+    $scope.confirm_flag = false;
     $scope.uId = $routeParams.userId;
     $scope.user_detail = {};
     $http({
@@ -376,12 +361,11 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
             });
     }
     $scope.cancel = function () {
-        $location.url('/users/view/'+$scope.uId);
-     }
+        $location.url('/users/view/' + $scope.uId);
+    }
 
-    $scope.showDialog=function()
-    {
-         $scope.confirm_flag=true;
+    $scope.showDialog = function () {
+        $scope.confirm_flag = true;
     }
 });
 
