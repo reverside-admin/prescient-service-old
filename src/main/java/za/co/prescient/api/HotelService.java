@@ -12,6 +12,7 @@ import za.co.prescient.repository.DepartmentRepository;
 import za.co.prescient.repository.HotelRepository;
 import za.co.prescient.repository.UserDetailRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -41,16 +42,31 @@ public class HotelService {
     }
 
     @RequestMapping(value = "{hotelId}/departments")
-    public List<Department> getDepartments(@PathVariable ("hotelId") Long hotelId) {
+    public List<Department> getDepartments(@PathVariable("hotelId") Long hotelId) {
         LOGGER.info("Get All Departments by HotelId service");
         return departmentRepository.findByHotelId(hotelId);
     }
 
-    @RequestMapping(value = "{userId}/dept/notHaving")
+
+    @RequestMapping(value = "{userId}/dept/all")
     public List<Department> getAllDepartments(@PathVariable("userId") Long userId) {
         UserDetail userDetail = userDetailRepository.findOne(userId);
-        LOGGER.info("Hotel Name : "+userDetail.getHotel().getName());
+        departmentRepository.findByHotelId(userDetail.getHotel().getId());
         return departmentRepository.findByHotelId(userDetail.getHotel().getId());
+    }
+
+    @RequestMapping(value = "{userId}/dept/notHaving")
+    public List<Department> getNotAllottedDepartments(@PathVariable("userId") Long userId) {
+        UserDetail userDetail = userDetailRepository.findOne(userId);
+
+        List<Department> superSet = new ArrayList(departmentRepository.findByHotelId(userDetail.getHotel().getId()));
+        List<Department> subSet = new ArrayList(userDetailRepository.findOne(userId).getDepartment());
+
+        superSet.removeAll(subSet);
+        for (Department obj : superSet) {
+            LOGGER.info("Dept Not Allotted till now : " + obj.getName());
+        }
+        return superSet;
     }
 
     @RequestMapping(value = "{userId}/dept/having")
