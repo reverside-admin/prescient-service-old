@@ -32,3 +32,6 @@ insert into  user_detail(id, user_name, password, first_name, last_name, user_st
 insert into user_detail_department (uid, did) values (1,1);
 insert into user_detail_department (uid, did) values (1,2);
 insert into user_detail_department (uid, did) values (1,3);
+insert into user_detail_department (uid, did) values (2,1);
+insert into user_detail_department (uid, did) values (2,2);
+

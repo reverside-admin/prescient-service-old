@@ -40,7 +40,7 @@ public class UserDetail {
     @OneToOne//(optional = false)
     private Hotel hotel;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable( joinColumns = @JoinColumn(name = "uid"),
             inverseJoinColumns = @JoinColumn(name = "did"))
     private List<Department> department;

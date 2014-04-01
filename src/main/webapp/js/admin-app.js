@@ -26,6 +26,10 @@ admin_app.config(['$routeProvider',
                 'templateUrl': 'ui/users/delete.html',
                 'controller': 'delete_users_controller'
             })
+            .when('/users/add/departments/:userName', {
+                'templateUrl': 'ui/users/add-department.html',
+                'controller': 'add_department_controller'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -57,16 +61,17 @@ admin_app.controller('admin_app_controller', function ($scope, $http, $location,
 });
 
 <!--list user  controller -->
-admin_app.controller('list_users_controller', function ($scope, $http, $routeParams) {
+admin_app.controller('list_users_controller', function ($scope, $http, $routeParams,$cookieStore) {
 
     $scope.user_list = [];
     $scope.name = $routeParams.userName;
     $scope.user = {};
-    <!-- TODO: get username and password from cookies and replace hardcoded value in the url-->
-    $http({
-        url: 'http://mrunmay:secret@localhost:8080/api/users',
+     $http({
+        url: 'http://localhost:8080/api/users',
         method: 'get',
-        headers: {}
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
     }).
         success(function (data, status) {
             if (status == 200) {
@@ -81,7 +86,7 @@ admin_app.controller('list_users_controller', function ($scope, $http, $routePar
 });
 
 
-admin_app.controller('view_users_controller', function ($scope, $http, $routeParams) {
+admin_app.controller('view_users_controller', function ($scope, $http, $routeParams,$cookieStore) {
     $scope.uId = $routeParams.userId;
     $scope.user_detail;
 
@@ -89,7 +94,10 @@ admin_app.controller('view_users_controller', function ($scope, $http, $routePar
     $http({
         url: 'http://localhost:8080/api/users/' + $scope.uId,
         method: 'get',
-        headers: {}
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+
+        }
     }).
         success(function (data, status) {
             if (status == 200) {
@@ -103,7 +111,7 @@ admin_app.controller('view_users_controller', function ($scope, $http, $routePar
         });
 });
 
-admin_app.controller('update_users_controller', function ($scope, $http, $routeParams, $location) {
+admin_app.controller('update_users_controller', function ($scope, $http, $routeParams, $location,$cookieStore) {
     $scope.uId = $routeParams.userId;
     $scope.user_status_list = [];
     $scope.user_type_list = [];
@@ -112,7 +120,10 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
     $http({
         url: 'http://localhost:8080/api/users/' + $scope.uId,
         method: 'get',
-        headers: {}
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+
+        }
     }).
         success(function (data, status) {
             if (status == 200) {
@@ -129,7 +140,10 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
     $http({
         url: 'http://localhost:8080/api/status',
         method: 'get',
-        headers: {}
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+
+        }
     }).
         success(function (data, status) {
             if (status == 200) {
@@ -147,7 +161,10 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
     $http({
         url: 'http://localhost:8080/api/roles',
         method: 'get',
-        headers: {}
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+
+        }
     }).
         success(function (data, status) {
             if (status == 200) {
@@ -165,7 +182,10 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
     $http({
         url: 'http://localhost:8080/api/hotels',
         method: 'get',
-        headers: {}
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+
+        }
     }).
         success(function (data, status) {
             if (status == 200) {
@@ -186,7 +206,9 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
             url: 'http://localhost:8080/api/users/update/' + $scope.uId,
             method: 'put',
             headers: { 'Content-Type': 'application/json'},
-            data: $scope.user
+            data: $scope.user,
+            'Authorization': $cookieStore.get("auth")
+
         }).
             success(function (data, status) {
                 if (status == 201) {
@@ -207,7 +229,7 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
 });
 
 
-admin_app.controller('create_users_controller', function ($scope, $http, $location) {
+admin_app.controller('create_users_controller', function ($scope, $http, $location,$cookieStore) {
 
     $scope.hotel_list = [];
     $scope.hotel_department_list = [];
@@ -219,7 +241,10 @@ admin_app.controller('create_users_controller', function ($scope, $http, $locati
     $http({
         url: 'http://localhost:8080/api/roles',
         method: 'get',
-        headers: {}
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+
+        }
     }).
         success(function (data, status) {
             if (status == 200) {
@@ -236,7 +261,10 @@ admin_app.controller('create_users_controller', function ($scope, $http, $locati
     $http({
         url: 'http://localhost:8080/api/status',
         method: 'get',
-        headers: {}
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+
+        }
     }).
         success(function (data, status) {
             if (status == 200) {
@@ -253,7 +281,10 @@ admin_app.controller('create_users_controller', function ($scope, $http, $locati
     $http({
         url: 'http://localhost:8080/api/hotels',
         method: 'get',
-        headers: {}
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+
+        }
     }).
         success(function (data, status) {
             if (status == 200) {
@@ -267,38 +298,22 @@ admin_app.controller('create_users_controller', function ($scope, $http, $locati
         });
 
 
-    $scope.getDepartments = function () {
-
-        $http({
-            url: 'http://localhost:8080/api/hotels/' + 1 + '/departments',
-            method: 'get',
-            headers: {}
-        }).
-            success(function (data, status) {
-                if (status == 200) {
-                    $scope.hotel_department_list = data;
-                } else {
-                    console.log('status:' + status);
-                }
-            })
-            .error(function (error) {
-                console.log(error);
-            });
-    };
-
-
     $scope.create = function () {
         console.log($scope.user);
         $http({
             url: 'http://localhost:8080/api/users',
             method: 'post',
             headers: { 'Content-Type': 'application/json'},
-            data: $scope.user
+            data: $scope.user,
+            'Authorization': $cookieStore.get("auth")
+
         }).
             success(function (data, status) {
                 if (status == 201) {
                     console.log('User created successfully');
-                    $location.url('/users/list');
+                    console.log($scope.user.userName);
+                    $location.url('/users/add/departments/' + $scope.user.userName);
+
                 } else {
                     console.log('status:' + status);
                 }
@@ -317,9 +332,42 @@ admin_app.controller('create_users_controller', function ($scope, $http, $locati
 });
 
 
-<!-- Delete user controller -->
+admin_app.controller('add_department_controller', function ($scope, $http, $routeParams, $location,$cookieStore) {
+    console.log('add department controller is loaded');
+    console.log('user name passed from create controller is::' + $routeParams.userName);
+    $scope.user_name = $routeParams.userName;
+    $scope.user;
+    $scope.hotel_id;
+    console.log('http://localhost:8080/api/users/' + $scope.user_name + '/login');
+    $http({
+        url: 'http://localhost:8080/api/users/' + $scope.user_name + '/login',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
 
-admin_app.controller('delete_users_controller', function ($scope, $http, $routeParams, $location) {
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                console.log('add department service is successfull');
+                $scope.user = data;
+                $scope.hotel_id = data.hotel.id;
+                console.log('hotel id' + $scope.hotel_id);
+
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+
+        });
+
+
+});
+
+
+admin_app.controller('delete_users_controller', function ($scope, $http, $routeParams, $location,$cookieStore) {
     console.log('delete user controller is loaded');
     $scope.confirm_flag = false;
     $scope.uId = $routeParams.userId;
@@ -327,7 +375,10 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
     $http({
         url: 'http://localhost:8080/api/users/' + $scope.uId,
         method: 'get',
-        headers: {}
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+
+        }
     }).
         success(function (data, status) {
             if (status == 200) {
@@ -347,7 +398,9 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
             url: 'http://localhost:8080/api/users/delete/' + $scope.uId,
             method: 'put',
             headers: { 'Content-Type': 'application/json'},
-            data: $scope.user
+            data: $scope.user,
+            'Authorization': $cookieStore.get("auth")
+
         }).
             success(function (data, status) {
                 if (status == 201) {
