@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import za.co.prescient.model.Department;
 import za.co.prescient.model.Hotel;
+import za.co.prescient.model.UserDetail;
 import za.co.prescient.repository.DepartmentRepository;
 import za.co.prescient.repository.HotelRepository;
+import za.co.prescient.repository.UserDetailRepository;
 
 import java.util.List;
 
@@ -23,6 +25,9 @@ public class HotelService {
     @Autowired
     DepartmentRepository departmentRepository;
 
+    @Autowired
+    UserDetailRepository userDetailRepository;
+
     @RequestMapping
     public List<Hotel> get() {
         LOGGER.info("Get All Hotel service");
@@ -35,11 +40,23 @@ public class HotelService {
         return hotelRepository.findOne(hotelId);
     }
 
-
-
     @RequestMapping(value = "{hotelId}/departments")
     public List<Department> getDepartments(@PathVariable ("hotelId") Long hotelId) {
         LOGGER.info("Get All Departments by HotelId service");
         return departmentRepository.findByHotelId(hotelId);
     }
+
+    @RequestMapping(value = "{userId}/dept/notHaving")
+    public List<Department> getAllDepartments(@PathVariable("userId") Long userId) {
+        UserDetail userDetail = userDetailRepository.findOne(userId);
+        LOGGER.info("Hotel Name : "+userDetail.getHotel().getName());
+        return departmentRepository.findByHotelId(userDetail.getHotel().getId());
+    }
+
+    @RequestMapping(value = "{userId}/dept/having")
+    public List<Department> getAllottedDepartments(@PathVariable("userId") Long userId) {
+        LOGGER.info("Allotted Departments : " + userDetailRepository.findOne(userId).getDepartment());
+        return userDetailRepository.findOne(userId).getDepartment();
+    }
+
 }
