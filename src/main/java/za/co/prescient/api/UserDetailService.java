@@ -8,6 +8,7 @@ import za.co.prescient.model.*;
 import za.co.prescient.repository.TouchPointRepository;
 import za.co.prescient.repository.UserDetailRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -84,6 +85,56 @@ public class UserDetailService {
         UserDetail userDetail = userDetailRepository.findOne(id);
         userDetail.setDepartments(departments);
         userDetailRepository.save(userDetail);
+    }
+
+    @RequestMapping(value = "{userId}/tp/all")
+    public List<TouchPoint> getAllDepartments(@PathVariable("userId") Long userId) {
+        UserDetail userDetail = userDetailRepository.findOne(userId);
+        List<Department> departments = userDetail.getDepartments();
+        LOGGER.info(departments.size());
+        List<TouchPoint> touchPoints = new ArrayList<TouchPoint>();
+        List<TouchPoint> allTouchPoints = new ArrayList<TouchPoint>();
+        for (Department obj : departments) {
+            LOGGER.info("Dept  : " + obj.getId() + " " + obj.getName());
+            touchPoints = touchPointRepository.findTouchPointByDepartmentId(obj.getId());
+            allTouchPoints.addAll(touchPoints);
+            LOGGER.info("touchPoints : "+touchPoints);
+            LOGGER.info("touchPoints 1 : "+ allTouchPoints);
+        }
+        LOGGER.info("touchPoints1 : "+ touchPoints);
+
+        return allTouchPoints;
+    }
+
+    @RequestMapping(value = "{userId}/tp/notHaving")
+    public List<TouchPoint> getNotAllottedTouchpoints(@PathVariable("userId") Long userId) {
+        UserDetail userDetail = userDetailRepository.findOne(userId);
+        List<Department> departments = userDetail.getDepartments();
+        LOGGER.info(departments.size());
+        List<TouchPoint> touchPoints = new ArrayList<TouchPoint>();
+        List<TouchPoint> allTouchPoints = new ArrayList<TouchPoint>();
+        for (Department obj : departments) {
+            LOGGER.info("Dept  : " + obj.getId() + " " + obj.getName());
+            touchPoints = touchPointRepository.findTouchPointByDepartmentId(obj.getId());
+            allTouchPoints.addAll(touchPoints);
+            LOGGER.info("touchPoints : "+touchPoints);
+            LOGGER.info("touchPoints 1 : "+ allTouchPoints);
+        }
+
+        List<TouchPoint> superSet = new ArrayList(allTouchPoints);
+        List<TouchPoint> subSet = new ArrayList(userDetailRepository.findOne(userId).getTouchPoints());
+
+        superSet.removeAll(subSet);
+        for (TouchPoint obj : superSet) {
+            LOGGER.info("TP Not Allotted till now : " + obj.getId() + " " + obj.getName());
+        }
+        return superSet;
+    }
+
+    @RequestMapping(value = "{userId}/tp/having")
+    public List<TouchPoint> getAllottedTouchpoints(@PathVariable("userId") Long userId) {
+        LOGGER.info("Allotted Departments : " + userDetailRepository.findOne(userId).getTouchPoints());
+        return userDetailRepository.findOne(userId).getTouchPoints();
     }
 
 }
