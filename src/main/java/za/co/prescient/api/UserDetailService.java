@@ -4,10 +4,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import za.co.prescient.model.Hotel;
-import za.co.prescient.model.UserDetail;
-import za.co.prescient.model.UserStatus;
-import za.co.prescient.model.UserType;
+import za.co.prescient.model.*;
+import za.co.prescient.repository.TouchPointRepository;
 import za.co.prescient.repository.UserDetailRepository;
 
 import java.util.List;
@@ -19,6 +17,9 @@ public class UserDetailService {
 
     @Autowired
     UserDetailRepository userDetailRepository;
+
+    @Autowired
+    TouchPointRepository touchPointRepository;
 
     @RequestMapping(value = "{userName}/login")
     public UserDetail login(@PathVariable("userName") String userName) {
@@ -77,6 +78,12 @@ public class UserDetailService {
         userDetailRepository.save(userDetail);
     }
 
-
+    @RequestMapping(value="assignDept/{id}",method = RequestMethod.PUT, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void assignDept(@PathVariable Long id, @RequestBody List<Department> departments) {
+        UserDetail userDetail = userDetailRepository.findOne(id);
+        userDetail.setDepartments(departments);
+        userDetailRepository.save(userDetail);
+    }
 
 }

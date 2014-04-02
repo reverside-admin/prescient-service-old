@@ -43,5 +43,10 @@ public class UserDetail {
     @ManyToMany
     @JoinTable( joinColumns = @JoinColumn(name = "uid"),
             inverseJoinColumns = @JoinColumn(name = "did"))
-    private List<Department> department;
+    private List<Department> departments;
+
+    @ManyToMany
+    @JoinTable( joinColumns = @JoinColumn(name = "uid"),
+            inverseJoinColumns = @JoinColumn(name = "tid"))
+    private List<TouchPoint> touchPoints;
 }

@@ -51,7 +51,6 @@ public class HotelService {
     @RequestMapping(value = "{userId}/dept/all")
     public List<Department> getAllDepartments(@PathVariable("userId") Long userId) {
         UserDetail userDetail = userDetailRepository.findOne(userId);
-        departmentRepository.findByHotelId(userDetail.getHotel().getId());
         return departmentRepository.findByHotelId(userDetail.getHotel().getId());
     }
 
@@ -60,19 +59,19 @@ public class HotelService {
         UserDetail userDetail = userDetailRepository.findOne(userId);
 
         List<Department> superSet = new ArrayList(departmentRepository.findByHotelId(userDetail.getHotel().getId()));
-        List<Department> subSet = new ArrayList(userDetailRepository.findOne(userId).getDepartment());
+        List<Department> subSet = new ArrayList(userDetailRepository.findOne(userId).getDepartments());
 
         superSet.removeAll(subSet);
         for (Department obj : superSet) {
-            LOGGER.info("Dept Not Allotted till now : " + obj.getName());
+            LOGGER.info("Dept Not Allotted till now : " + obj.getId() + " " + obj.getName());
         }
         return superSet;
     }
 
     @RequestMapping(value = "{userId}/dept/having")
     public List<Department> getAllottedDepartments(@PathVariable("userId") Long userId) {
-        LOGGER.info("Allotted Departments : " + userDetailRepository.findOne(userId).getDepartment());
-        return userDetailRepository.findOne(userId).getDepartment();
+        LOGGER.info("Allotted Departments : " + userDetailRepository.findOne(userId).getDepartments());
+        return userDetailRepository.findOne(userId).getDepartments();
     }
 
 }
