@@ -10,6 +10,14 @@ admin_app.config(['$routeProvider',
                 'templateUrl': 'ui/users/list.html',
                 'controller': 'list_users_controller'
             })
+            .when('/users/accesscard', {
+                'templateUrl': 'ui/users/access-card.html',
+                'controller': 'access_card_controller'
+            })
+            .when('/users/touchpoint', {
+                'templateUrl': 'ui/users/touch-point.html',
+                'controller': 'touch_point_controller'
+            })
             .when('/users/create', {
                 'templateUrl': 'ui/users/create.html',
                 'controller': 'create_users_controller'
@@ -26,9 +34,9 @@ admin_app.config(['$routeProvider',
                 'templateUrl': 'ui/users/delete.html',
                 'controller': 'delete_users_controller'
             })
-            .when('/users/add/departments/:userName', {
+            .when('/users/:uId/departments/add', {
                 'templateUrl': 'ui/users/add-department.html',
-                'controller': 'add_department_controller'
+                'controller': 'add_departments_controller'
             })
             .otherwise({
                 redirectTo: '/'
@@ -55,18 +63,19 @@ admin_app.controller('admin_app_controller', function ($scope, $http, $location,
     $scope.logout = function () {
         console.log('logout method is called');
         $cookieStore.remove("user");
+        $cookieStore.remove("auth");
         $window.location.replace("login-app.html");
     };
 
 });
 
 <!--list user  controller -->
-admin_app.controller('list_users_controller', function ($scope, $http, $routeParams,$cookieStore) {
+admin_app.controller('list_users_controller', function ($scope, $http, $routeParams, $cookieStore) {
 
     $scope.user_list = [];
     $scope.name = $routeParams.userName;
     $scope.user = {};
-     $http({
+    $http({
         url: 'http://localhost:8080/api/users',
         method: 'get',
         headers: {
@@ -86,7 +95,7 @@ admin_app.controller('list_users_controller', function ($scope, $http, $routePar
 });
 
 
-admin_app.controller('view_users_controller', function ($scope, $http, $routeParams,$cookieStore) {
+admin_app.controller('view_users_controller', function ($scope, $http, $routeParams, $cookieStore) {
     $scope.uId = $routeParams.userId;
     $scope.user_detail;
 
@@ -111,7 +120,7 @@ admin_app.controller('view_users_controller', function ($scope, $http, $routePar
         });
 });
 
-admin_app.controller('update_users_controller', function ($scope, $http, $routeParams, $location,$cookieStore) {
+admin_app.controller('update_users_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
     $scope.uId = $routeParams.userId;
     $scope.user_status_list = [];
     $scope.user_type_list = [];
@@ -229,7 +238,7 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
 });
 
 
-admin_app.controller('create_users_controller', function ($scope, $http, $location,$cookieStore) {
+admin_app.controller('create_users_controller', function ($scope, $http, $location, $cookieStore) {
 
     $scope.hotel_list = [];
     $scope.hotel_department_list = [];
@@ -312,7 +321,8 @@ admin_app.controller('create_users_controller', function ($scope, $http, $locati
                 if (status == 201) {
                     console.log('User created successfully');
                     console.log($scope.user.userName);
-                    $location.url('/users/add/departments/' + $scope.user.userName);
+
+                    $location.url('/users/list');
 
                 } else {
                     console.log('status:' + status);
@@ -332,15 +342,18 @@ admin_app.controller('create_users_controller', function ($scope, $http, $locati
 });
 
 
-admin_app.controller('add_department_controller', function ($scope, $http, $routeParams, $location,$cookieStore) {
+admin_app.controller('add_departments_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
+    $scope.dept_list_assigned = [];
+    $scope.dept_list_not_assigned = [];
+    $scope.selected_assigned_dept;
+    $scope.selected_not_assigned_dept;
+
+
     console.log('add department controller is loaded');
-    console.log('user name passed from create controller is::' + $routeParams.userName);
-    $scope.user_name = $routeParams.userName;
-    $scope.user;
-    $scope.hotel_id;
-    console.log('http://localhost:8080/api/users/' + $scope.user_name + '/login');
+    console.log('user id passed from URL is::' + $routeParams.uId);
+
     $http({
-        url: 'http://localhost:8080/api/users/' + $scope.user_name + '/login',
+        url: 'http://localhost:8080/api/hotels/' + $routeParams.uId + '/dept/notHaving',
         method: 'get',
         headers: {
             'Authorization': $cookieStore.get("auth")
@@ -349,25 +362,88 @@ admin_app.controller('add_department_controller', function ($scope, $http, $rout
     }).
         success(function (data, status) {
             if (status == 200) {
-                console.log('add department service is successfull');
-                $scope.user = data;
-                $scope.hotel_id = data.hotel.id;
-                console.log('hotel id' + $scope.hotel_id);
-
+                $scope.dept_list_not_assigned = data;
+                console.log('department list not assigned:' + $scope.dept_list_not_assigned);
             } else {
                 console.log('status:' + status);
             }
         })
         .error(function (error) {
             console.log(error);
-
         });
 
+
+    $http({
+        url: 'http://localhost:8080/api/hotels/' + $routeParams.uId + '/dept/having',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.dept_list_assigned = data;
+                console.log('department list assigned:' + $scope.dept_list_assigned);
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+    $scope.pushDataFromLeft = function () {
+        console.log($scope.selected_not_assigned_dept);
+        if ($scope.selected_not_assigned_dept != null) {
+            $scope.dept_list_assigned.push($scope.selected_not_assigned_dept);
+            $scope.dept_list_not_assigned.pop($scope.selected_not_assigned_dept);
+        }
+
+    }
+
+    $scope.pushDataFromRight = function () {
+        console.log($scope.selected_assigned_dept);
+        if($scope.selected_assigned_dept != null ){
+            $scope.dept_list_not_assigned.push($scope.selected_assigned_dept);
+            $scope.dept_list_assigned.pop($scope.selected_assigned_dept);
+        }
+    }
+
+
+    $scope.view = function () {
+        console.log('assigned list result::'+$scope.dept_list_assigned);
+
+    };
+
+
+    $scope.addDepartments=function()
+    {
+        console.log('add departments......');
+        $http({
+            url: 'http://localhost:8080/api/users/assignDept/' + $routeParams.uId,
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            data:$scope.dept_list_assigned ,
+            'Authorization': $cookieStore.get("auth")
+
+        }).
+            success(function (data, status) {
+                if (status == 201) {
+
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+    }
 
 });
 
 
-admin_app.controller('delete_users_controller', function ($scope, $http, $routeParams, $location,$cookieStore) {
+admin_app.controller('delete_users_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
     console.log('delete user controller is loaded');
     $scope.confirm_flag = false;
     $scope.uId = $routeParams.userId;
@@ -422,4 +498,11 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
     }
 });
 
+admin_app.controller('access_card_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
+
+});
+
+admin_app.controller('touch_point_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
+
+});
 
