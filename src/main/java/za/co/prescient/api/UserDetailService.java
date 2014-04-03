@@ -47,6 +47,7 @@ public class UserDetailService {
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody UserDetail user) {
         LOGGER.info("request received to create user : " + user);
+        user.setPassword("password");
         userDetailRepository.save(user);
     }
 
@@ -106,7 +107,7 @@ public class UserDetailService {
         return allTouchPoints;
     }
 
-    @RequestMapping(value = "{userId}/tp/notHaving")
+    @RequestMapping(value = "{userId}/tp/ ")
     public List<TouchPoint> getNotAllottedTouchpoints(@PathVariable("userId") Long userId) {
         UserDetail userDetail = userDetailRepository.findOne(userId);
         List<Department> departments = userDetail.getDepartments();
@@ -136,5 +137,30 @@ public class UserDetailService {
         LOGGER.info("Allotted Departments : " + userDetailRepository.findOne(userId).getTouchPoints());
         return userDetailRepository.findOne(userId).getTouchPoints();
     }
+
+    @RequestMapping(value="resetPasswordAdmin/{id}",method = RequestMethod.PUT, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void resetPasswordByAdmin(@PathVariable Long id, @RequestBody UserDetail user) {
+        UserDetail userDetail = userDetailRepository.findOne(id);
+        userDetail.setPassword("password");
+        userDetailRepository.save(userDetail);
+    }
+
+    @RequestMapping(value="resetPasswordUser/{id}",method = RequestMethod.PUT, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void resetPasswordByUser(@PathVariable Long id, @RequestBody UserDetail user) {
+        UserDetail userDetail = userDetailRepository.findOne(id);
+        userDetail.setPassword(user.getPassword());
+        userDetailRepository.save(userDetail);
+    }
+
+    @RequestMapping(value="assignTP/{id}",method = RequestMethod.PUT, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void assignTP(@PathVariable Long id, @RequestBody List<TouchPoint> touchPoints) {
+        UserDetail userDetail = userDetailRepository.findOne(id);
+        userDetail.setTouchPoints(touchPoints);
+        userDetailRepository.save(userDetail);
+    }
+
 
 }
