@@ -1,0 +1,37 @@
+<html ng-app="manager_app">
+<head>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <script src="lib/angular.js"></script>
+    <script src="lib/angular-route.js"></script>
+    <script src="lib/angular-cookies.js"></script>
+    <script src="lib/jquery-1.11.0.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="js/manager-app.js"></script>
+</head>
+<body ng-controller="manager_app_controller">
+<div style="width:100%;height:5%;border:groove;text-align: right">
+    WelCome {{user.userName}}
+    <a ng-click="logout()" style="margin: 10px;">Logout</a>
+</div>
+
+
+<div style="width: 15%;height: 100%;float:left;border:groove;text-align: center;">
+    <div class="container" style="width: 100%;margin-top: 10px;">
+        <div class="row">
+            <a href="#">Find Guest(H)</a>
+        </div>
+        <div class="row">
+            <a href="#">Find Guest List(TP)</a>
+        </div>
+        <div class="row">
+            <a href="#">Touch Point Management</a>
+        </div>
+    </div>
+</div>
+
+<div ng-view style="width: 84%;height: 100%;float:left;border:groove;">
+
+</div>
+
+</body>
+</html>
