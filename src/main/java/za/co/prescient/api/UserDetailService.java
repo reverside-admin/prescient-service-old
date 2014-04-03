@@ -107,7 +107,7 @@ public class UserDetailService {
         return allTouchPoints;
     }
 
-    @RequestMapping(value = "{userId}/tp/ ")
+    @RequestMapping(value = "{userId}/tp/notHaving")
     public List<TouchPoint> getNotAllottedTouchpoints(@PathVariable("userId") Long userId) {
         UserDetail userDetail = userDetailRepository.findOne(userId);
         List<Department> departments = userDetail.getDepartments();
