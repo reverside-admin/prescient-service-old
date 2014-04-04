@@ -37,3 +37,6 @@ insert into user_detail_touch_points (uid, tid) values (1, 1);
 insert into user_detail_touch_points (uid, tid) values (1, 3);
 insert into user_detail_touch_points (uid, tid) values (2, 3);
 
+
+insert into guest_profile_detail (id, hotel_id)
+values (1, 1);
