@@ -8,18 +8,21 @@
             <table class=" table table-responsive">
                 <tr>
                     <td> User Name</td>
-                    <td><input type="text" id="username" ng-model="user.userName" placeholder="username" style="width: 100%" required></td>
+                    <td><input type="text" id="username" ng-model="user.userName" placeholder="username"
+                               style="width: 100%" required></td>
                 </tr>
                 <tr>
-                    <td> First Name </td>
-                    <td><input type="text" id="userfname" ng-model="user.firstName" placeholder="firstname" style="width: 100%" required></td>
+                    <td> First Name</td>
+                    <td><input type="text" id="userfname" ng-model="user.firstName" placeholder="firstname"
+                               style="width: 100%" required></td>
                 </tr>
                 <tr>
-                    <td> Last Name </td>
-                    <td><input type="text" id="userlname" ng-model="user.lastName"  placeholder="lastname" style="width: 100%" required></td>
+                    <td> Last Name</td>
+                    <td><input type="text" id="userlname" ng-model="user.lastName" placeholder="lastname"
+                               style="width: 100%" required></td>
                 </tr>
                 <tr>
-                    <td>Status </td>
+                    <td>Status</td>
                     <td>
                         <select ng-model="user.userStatus.id"
                                 ng-options="obj.id as obj.status for obj in user_status_list">
@@ -29,7 +32,7 @@
                 </tr>
 
                 <tr>
-                    <td>Role </td>
+                    <td>Role</td>
                     <td>
                         <select ng-model="user.userType.id"
                                 ng-options="obj.id as obj.type for obj in user_type_list">
@@ -41,14 +44,42 @@
                 <tr>
                     <td>Hotel</td>
                     <td>
-                        <select ng-model="user.hotel.id"
+                        <select ng-model="user.hotel.id" ng-change="getDepartmentByHotelId()"
                                 ng-options="obj.id as obj.name for obj in hotel_list">
                             <option value="">Select Hotel</option>
                         </select>
                     </td>
                 </tr>
+                  <tr>
+                    <td>Department</td>
+                    <td>
+                        <!--<select size="4" style="width: 200px;" ng-model="user.departments" multiple-->
+                                <!--ng-options="department as department.name for department in hotel_department_list">-->
+                            <!--<option value=""><b>Departments To Assign</b></option>-->
+                        <!--</select>-->
+                        <ul >
+                           <li ng-repeat="department in hotel_department_list" >
+                               <input type="checkbox" ng-click="onDepartmentSelection(department)" /> {{department.name}} {{$index}}
+                           </li>
+                        </ul>
+                    </td>
 
+                </tr>
 
+                <tr>
+                    <td>TouchPoint</td>
+                    <td>
+                        <!--<select size="3" style="width: 200px;" ng-model="user.touchPoints" multiple-->
+                                <!--ng-options="touchPoint as touchPoint.name for touchPoint in touch_point_list">-->
+                            <!--<option value=""><b>TouchPoint  To Assign</b></option>-->
+                        <!--</select>-->
+                        <ul >
+                            <li ng-repeat="touchPoint in touch_point_list">
+                                <input type="checkbox" ng-click="onTouchPointSelection(touchPoint)" /> {{touchPoint.name}}
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
@@ -56,8 +87,12 @@
     <div class="panel-footer">
         <ul class="pager " style="margin: 0px;">
             <li><a href="#users/list" style="float: left;">Back</a></li>
-            <button type="button" class="btn btn-success" ng-click="create()" style="float: right;margin-left: 10px;">Save</button>
+            <button type="button" class="btn btn-success" ng-click="create()" style="float: right;margin-left: 10px;">
+                Save
+            </button>
             <button type="button" class="btn btn-success" ng-click="cancel()" style="float: right;">Cancel</button>
+            <button type="button" class="btn btn-success" ng-click="verify()" style="float: right;">verify</button>
+
         </ul>
     </div>
 

@@ -62,7 +62,6 @@ public class Services {
     }
 
     @RequestMapping(value = "departments/tp/all", method = RequestMethod.POST, consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
     public List<TouchPoint> getAllTouchPointsByDepts(@RequestBody List<Department> departments) {
         LOGGER.info("Get All TPs by DeptIDs");
         List<TouchPoint> touchPoints;

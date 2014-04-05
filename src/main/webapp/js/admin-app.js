@@ -219,9 +219,11 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
         $http({
             url: 'http://localhost:8080/api/users/update/' + $scope.uId,
             method: 'put',
-            headers: { 'Content-Type': 'application/json'},
-            data: $scope.user,
-            'Authorization': $cookieStore.get("auth")
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")
+            },
+            data: $scope.user
+
 
         }).
             success(function (data, status) {
@@ -237,27 +239,7 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
             });
     }
 
-    $scope.resetPassword=function()
-    {
-        $http({
-            url: 'http://localhost:8080/api/users/resetPasswordAdmin/' + $scope.uId,
-            method: 'put',
-            headers: { 'Content-Type': 'application/json'},
-            data: $scope.user,
-            'Authorization': $cookieStore.get("auth")
 
-        }).
-            success(function (data, status) {
-                if (status == 201) {
-                    console.log('password is reset successfully');
-                } else {
-                    console.log('status:' + status);
-                }
-            })
-            .error(function (error) {
-                console.log(error);
-            });
-    }
 
     $scope.cancel = function () {
         $location.url('/users/view/' + $scope.uId);
@@ -272,8 +254,38 @@ admin_app.controller('create_users_controller', function ($scope, $http, $locati
     $scope.touch_point_list = [];
     $scope.user_type_list = [];
     $scope.user_status_list = [];
+    $scope.selected_hotel_flag=true;
     $scope.user = {};
+    $scope.checked_departments=[];
+    $scope.checked_touch_points=[];
 
+$scope.onDepartmentSelection=function(department)
+{
+    for(var i=0; i < $scope.checked_departments.length; i++){
+        if($scope.checked_departments[i].id == department.id){
+            $scope.checked_departments.splice(i, 1);
+            $scope.getTouchPointsFromDepartments();
+            return;
+        }
+    }
+    $scope.checked_departments.push(department);
+    $scope.getTouchPointsFromDepartments();
+};
+
+
+    $scope.onTouchPointSelection=function(touch_point)
+    {
+        for(var i=0; i < $scope.checked_touch_points.length; i++){
+            if($scope.checked_touch_points[i].id == touch_point.id){
+                $scope.checked_touch_points.splice(i, 1);
+
+            }
+        }
+        $scope.checked_touch_points.push(touch_point);
+
+    };
+
+<!-- Get Role -->
     $http({
         url: 'http://localhost:8080/api/roles',
         method: 'get',
@@ -293,7 +305,7 @@ admin_app.controller('create_users_controller', function ($scope, $http, $locati
             console.log(error);
         });
 
-
+<!--Get Status-->
     $http({
         url: 'http://localhost:8080/api/status',
         method: 'get',
@@ -313,7 +325,7 @@ admin_app.controller('create_users_controller', function ($scope, $http, $locati
             console.log(error);
         });
 
-
+<!--Get Hotel-->
     $http({
         url: 'http://localhost:8080/api/hotels',
         method: 'get',
@@ -333,16 +345,85 @@ admin_app.controller('create_users_controller', function ($scope, $http, $locati
             console.log(error);
         });
 
+    <!-- Get Departments -->
+
+    $scope.getDepartmentByHotelId=function()
+    {
+        $scope.checked_departments = [];
+        $scope.hotel_department_list=[];
+        $scope.touch_point_list = [];
+        if($scope.user.hotel.id==null) return;
+
+         $http({
+            url: 'http://localhost:8080/api/hotels/'+$scope.user.hotel.id+'/departments',
+            method: 'get',
+            headers: {
+                'Authorization': $cookieStore.get("auth")
+            }
+        }).
+            success(function (data, status) {
+                if (status == 200) {
+                    $scope.hotel_department_list = data;
+                    console.log('Response data::'+data);
+                    console.log('department list::'+$scope.hotel_department_list);
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+     };
+
+<!-- get touchPoint list  of all selected departments-->
+    $scope.getTouchPointsFromDepartments=function()
+    {
+        $scope.checked_touch_points=[];
+        $http({
+            url: 'http://localhost:8080/api/departments/tp/all',
+            method: 'post',
+            headers: {
+                'Authorization': $cookieStore.get("auth")
+            },
+            data:$scope.checked_departments
+        }).
+            success(function (data, status) {
+                if (status == 200) {
+                    $scope.touch_point_list = data;
+                    console.log('got touch point list:'+$scope.touch_point_list);
+
+                } else {
+                    console.log('status:' + status);
+                    console.log('data coming::'+data);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+    }
+
+    $scope.verify=function()
+    {
+         console.log('Got user details::'+$scope.user.departments);
+        console.log(' user departments details::'+$scope.user.departments.length);
+        console.log(' user touchpoint details::'+$scope.user.touchPoints.length);
+
+
+    }
 
     $scope.create = function () {
         console.log($scope.user);
+        $scope.user.departments=$scope.checked_departments;
+        $scope.user.touchPoints=$scope.checked_touch_points;
+
         $http({
             url: 'http://localhost:8080/api/users',
             method: 'post',
-            headers: { 'Content-Type': 'application/json'},
-            data: $scope.user,
-            'Authorization': $cookieStore.get("auth")
-
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")
+            },
+            data: $scope.user
         }).
             success(function (data, status) {
                 if (status == 201) {
@@ -444,10 +525,9 @@ admin_app.controller('add_departments_controller', function ($scope, $http, $rou
         $http({
             url: 'http://localhost:8080/api/users/assignDept/' + $routeParams.uId,
             method: 'put',
-            headers: {'Content-Type': 'application/json'},
-            data:$scope.dept_list_assigned ,
-            'Authorization': $cookieStore.get("auth")
-
+            headers: {'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")},
+            data:$scope.dept_list_assigned
         }).
             success(function (data, status) {
                 if (status == 201) {
@@ -494,10 +574,10 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
         $http({
             url: 'http://localhost:8080/api/users/delete/' + $scope.uId,
             method: 'put',
-            headers: { 'Content-Type': 'application/json'},
-            data: $scope.user,
-            'Authorization': $cookieStore.get("auth")
-
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")
+            },
+            data: $scope.user
         }).
             success(function (data, status) {
                 if (status == 201) {
@@ -601,9 +681,10 @@ admin_app.controller('add_touch_points_controller', function ($scope, $http, $ro
         $http({
             url: 'http://localhost:8080/api/users/assignTP/' + $routeParams.uId,
             method: 'put',
-            headers: {'Content-Type': 'application/json'},
-            data:$scope.touchpoint_list_assigned ,
-            'Authorization': $cookieStore.get("auth")
+            headers: {'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")
+            },
+            data:$scope.touchpoint_list_assigned
         }).
             success(function (data, status) {
                 if (status == 201) {
