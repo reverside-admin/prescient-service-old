@@ -1,37 +1,76 @@
 <html ng-app="manager_app">
 <head>
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <script src="lib/angular.js"></script>
-    <script src="lib/angular-route.js"></script>
-    <script src="lib/angular-cookies.js"></script>
-    <script src="lib/jquery-1.11.0.min.js"></script>
-    <script src="lib/bootstrap.min.js"></script>
-    <script src="js/manager-app.js"></script>
+    <title>Admin App</title>
+    <meta charset="utf-8">
+    <title>Bootstrap, from Twitter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/lib/angular.js"></script>
+    <script src="/lib/angular-cookies.js"></script>
+    <script src="/lib/angular-route.js"></script>
+    <script src="/lib/jquery-1.11.0.min.js"></script>
+    <script src="/lib/bootstrap.min.js"></script>
+    <script src="/js/manager-app.js"></script>
+    <script type="text/javascript">
+
+        var applyContainerHeight = function () {
+            console.log($(window).height());
+            console.log(document.getElementById('manmay'));
+            var height = $(window).height();
+            document.getElementById('manmay').style.height = ($(window).height()-150)+"px";
+        };
+
+        window.addEventListener('load', function() { applyContainerHeight(); }, false);
+
+        $(window).resize(function () {
+            applyContainerHeight();
+        });
+
+    </script>
+
 </head>
-<body ng-controller="manager_app_controller">
-<div style="width:100%;height:5%;border:groove;text-align: right">
-    WelCome {{user.userName}}
-    <a ng-click="logout()" style="margin: 10px;">Logout</a>
-</div>
+
+<body ng-controller='manager_app_controller' ng-init="init()" onload="applyContainerHeight" style="height:100%;">
 
 
-<div style="width: 15%;height: 100%;float:left;border:groove;text-align: center;">
-    <div class="container" style="width: 100%;margin-top: 10px;">
-        <div class="row">
-            <a href="#">Find Guest(H)</a>
-        </div>
-        <div class="row">
-            <a href="#">Find Guest List(TP)</a>
-        </div>
-        <div class="row">
-            <a href="#">Touch Point Management</a>
+<div class="container" style="height:100%;">
+    <div class="row" style="height:99%;">
+        <div class="col-md-12" style="height:100%;">
+            <div class="panel panel-primary" style="background: #d9e2dd; height: 100%;">
+                <div class="panel-heading  clearfix">
+                    <div class="col-md-6 text-left">
+                        <h3 class="panel-title">Manager Application</h3>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <a class="btn btn-primary btn-xs" ng-click="logout()">Logout</a>
+                    </div>
+                </div>
+                <div class="panel-body" style="height:100%;">
+                    <div class="col-md-12">
+                        <ul class="nav nav-pills ">
+                            <li>
+                                <a href="#">Find Guest</a>
+                            </li>
+                            <li>
+                                <a href="#">Guest List</a>
+                            </li>
+                            <li>
+                                <a href="#">TouchPoints</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- NG ViEW Start -->
+                    <div id="manmay" name="manmay" class="row" style="height:100%;" ng-view>
+                    </div>
+                    <!-- NG ViEW End -->
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<div ng-view style="width: 84%;height: 100%;float:left;border:groove;">
-
-</div>
-
 </body>
+
 </html>

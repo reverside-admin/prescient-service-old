@@ -1,11 +1,21 @@
-<div class="panel panel-success">
-    <div class="panel-heading">
-        <a ng-href="#users/create" style="float: right">New User</a>
-        <h1 class="panel-title">User List</h1>
-    </div>
-    <div class="panel-body">
-        <table class="table table-hover table-condensed  table-striped table-responsive">
+<div class="col-md-12">
 
+    <div class="col-md-12 text-right">
+        <div class="btn-group btn-group-sm">
+            <a ng-href="#users/create"  class="btn btn-primary">Create</a>
+        </div>
+    </div>
+
+    <div class="col-md-12 text-left">
+        <h4 class="text-primary"><b>User List</b></h4>
+    </div>
+
+    <div class="col-md-12 text-left">
+        Search: <input type="text" ng-model="search" />
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-hover table-condensed table-striped table-responsive">
             <tr>
                 <th>First Name</th>
                 <th>Last Name</th>
@@ -13,18 +23,17 @@
                 <th>Role</th>
                 <th></th>
             </tr>
-
-            <tr>
+          <!--   <tr>
                 <td><input type="search" ng-model="search.firstName" placeholder="firstname"></td>
                 <td><input type="search" ng-model="search.lastName" placeholder="lastname"></td>
                 <td><input type="search" ng-model="search.userStatus" placeholder="status"></td>
                 <td><input type="search" ng-model="search.userType" placeholder="type"></td>
                 <td></td>
             </tr>
+            -->
 
             <tr ng-repeat="user in user_list | filter:search">
-
-                <td>{{user.firstName}}</td>
+                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
                 <td>{{user.userStatus.status}}</td>
                 <td>{{user.userType.type}}</td>

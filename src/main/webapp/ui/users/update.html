@@ -1,27 +1,26 @@
-<div class="panel panel-success">
-
-    <div class="panel-heading">
+<div class="col-md-12">
+    <div class="col-md-12 text-left">
         <a  ng-click="resetPassword()" style="float: right;margin-left: 10px;">ResetPassword</a>
         <a ng-href="#users/delete/{{user.id}}" style="float: right;margin-left: 10px;">Delete</a>
         <a ng-href="#users/create" style="float: right">New User</a>
-        <h1 class="panel-title">Update User Details</h1>
+        <h4 class="text-primary">Update User Details</h4>
     </div>
 
-    <div class="panel-body">
+    <div>
         <div style="width: 50%; margin-left: auto;margin-right: auto;">
             <table class="table table-responsive">
                 <tr>
                     <td>User Name</td>
-                    <td class="text-left"><input name="input" ng-model="user.userName" style="width: 100%;" disabled/></td>
+                    <td><input name="input" ng-model="user.userName" style="width: 50%" disabled/></td>
                 </tr>
                 <tr>
                     <td>First Name</td>
-                    <td class="text-left"><input name="fname" ng-model="user.firstName" style="width: 100%;"/></td>
+                    <td><input name="fname" ng-model="user.firstName"style="width: 50%" required/></td>
                 </tr>
 
                 <tr>
                     <td>Last Name</td>
-                    <td class="text-left"><input name="lname" ng-model="user.lastName" style="width: 100%;"/></td>
+                    <td><input name="lname" ng-model="user.lastName" style="width: 50%" required/></td>
                 </tr>
 
                 <tr>
@@ -49,11 +48,11 @@
         </div>
     </div>
 
-    <div class="panel-footer">
+    <div>
         <ul class="pager " style="margin: 0px;">
             <li><a href="#users/list" style="float: left;">Back</a></li>
-            <button type="button" class="btn btn-success" ng-click="update()" style="float: right;margin-left: 10px;">Update</button>
-            <button type="button" class="btn btn-success" ng-click="cancel()" style="float: right;">Cancel</button>
+            <button type="button" class="btn btn-primary" ng-click="update()" style="float: right;margin-left: 10px;">Update</button>
+            <button type="button" class="btn btn-primary" ng-click="cancel()" style="float: right;">Cancel</button>
         </ul>
     </div>
 

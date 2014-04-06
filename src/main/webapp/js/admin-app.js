@@ -400,19 +400,18 @@ $scope.onDepartmentSelection=function(department)
             .error(function (error) {
                 console.log(error);
             });
-    }
-
-    $scope.verify=function()
-    {
-         console.log('Got user details::'+$scope.user.departments);
-        console.log(' user departments details::'+$scope.user.departments.length);
-        console.log(' user touchpoint details::'+$scope.user.touchPoints.length);
+    };
 
 
-    }
+    $scope.create = function (my_form) {
 
-    $scope.create = function () {
+        console.log('verified'+my_form);
+        console.log(my_form.$valid);
+
+        if(!my_form.$valid) return;
+
         console.log($scope.user);
+
         $scope.user.departments=$scope.checked_departments;
         $scope.user.touchPoints=$scope.checked_touch_points;
 

@@ -1,63 +1,72 @@
-<div class="panel panel-success">
-    <div class="panel-heading">
-        <a href="#users/update/{{user_detail.id}}" style="float: right;margin-left: 10px;">Edit</a>
-        <a ng-href="#users/create" style="float: right">New User</a>
+<div class="col-md-12">
 
-        <h1 class="panel-title">Delete User</h1>
+    <div class="col-md-12 text-right">
+        <div class="btn-group btn-group-sm">
+            <a href="#users/create" class="btn btn-primary">Create</a>
+             <a href="#users/view/{{user_detail.id}}" class="btn btn-primary">Back</a>
+       </div>
+   </div>
+
+
+    <div class="col-md-12 text-left">
+        <h4 class="text-primary"><b>Delete User</b></h4>
     </div>
 
-    <div class="panel-body">
+    <div class="col-md-12 text-center">
+        <b style="color: RED;">Are you sure to delete? </b>
+    </div>
+
+    <div style="width: 50%; margin-left: auto;margin-right: auto;">
         <table class="table table-hover table-condensed table-bordered  table-responsive">
             <tr>
-                <td class="text-right" style="width: 50%">User Name:</td>
-                <td class="text-left">{{user_detail.userName}}</td>
+                <td style="width: 50%">User Name:</td>
+                <td>{{user_detail.userName}}</td>
             </tr>
             <tr>
-                <td class="text-right">First Name:</td>
-                <td class="text-left">{{user_detail.firstName}}</td>
+                <td>First Name:</td>
+                <td>{{user_detail.firstName}}</td>
             </tr>
             <tr>
-                <td class="text-right">Last Name:</td>
-                <td class="text-left">{{user_detail.lastName}}</td>
+                <td>Last Name:</td>
+                <td>{{user_detail.lastName}}</td>
             </tr>
             <tr>
-                <td class="text-right">Status</td>
-                <td class="text-left">{{user_detail.userStatus.status}}</td>
-            </tr>
-
-            <tr>
-                <td class="text-right">Role</td>
-                <td class="text-left">{{user_detail.userType.type}}</td>
+                <td>Status</td>
+                <td>{{user_detail.userStatus.status}}</td>
             </tr>
 
             <tr>
-                <td class="text-right">Hotel</td>
-                <td class="text-left">{{user_detail.hotel.name}}</td>
+                <td>Role</td>
+                <td>{{user_detail.userType.type}}</td>
             </tr>
 
             <tr>
-                <td class="text-right">Department</td>
+                <td>Hotel</td>
+                <td>{{user_detail.hotel.name}}</td>
+            </tr>
+
+            <tr>
+                <td>Department</td>
                 <td>
-                    <div ng-repeat="dept in user_detail.department">
+                    <div ng-repeat="dept in user_detail.departments">
+                        {{dept.name}}
                      </div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>TouchPoint</td>
+                <td>
+                    <div ng-repeat="touchpoint in user_detail.touchPoints">
+                        {{touchpoint.name}}
+                    </div>
                 </td>
             </tr>
         </table>
     </div>
 
-    <div class="alert-warning"  ng-show="confirm_flag" style="height: 5%;width: 30%;text-align: center;margin-left: 30%">
-                 Are you sure to delete?
-        <button type="button" class="small" ng-click="delete()" style="float: right;margin-left: 10px;">Ok</button>
-        <button type="button" class="small" ng-click="cancel()" style="float: right;">Cancel</button>
-    </div>
-
-
-    <div class="panel-footer">
-        <ul class="pager" style="margin: 0px;">
-            <li><a href="#users/list" style="float: left;">Back</a></li>
-            <button type="button" class="btn btn-success" ng-click="showDialog()" style="float: right;margin-left: 10px;">Delete</button>
-            <button type="button" class="btn btn-success" ng-click="cancel()" style="float: right;">Cancel</button>
-        </ul>
-    </div>
-
+    <div class="col-md-12 text-right">
+         <button type="button" class="btn btn-primary" ng-click="delete()">Delete</button>
+     </div>
 </div>

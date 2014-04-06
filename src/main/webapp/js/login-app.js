@@ -6,9 +6,16 @@ var login_app = angular.module('login_app', ['ngRoute', 'ngCookies']);
 login_app.controller("login_app_controller", function ($scope, $http, $cookieStore, $window) {
 
     $scope.error;
+    $scope.validatelogin=function(loginform,user,password)
+    {
+        if(loginform.$valid)
+        {
+            $scope.login(user,password);
+        }
+    }
 
     $scope.login = function (user_name, password) {
-        var url = 'http://localhost:8080/login/' + user_name + '/' + password;
+          var url = 'http://localhost:8080/login/' + user_name + '/' + password;
         console.log(url);
           $http({
             method: 'GET',
@@ -21,22 +28,34 @@ login_app.controller("login_app_controller", function ($scope, $http, $cookieSto
                 var token = 'Basic ' + $scope.decode( user_name + ':' + password );
                 $cookieStore.put("user", data);
                 $cookieStore.put("auth",token);
-                var redirect_url = $window.location.search.replace('?','') + $window.location.hash;
-                if(redirect_url == ""){
-                   redirect_url = "index.html";
+               <!--  var redirect_url = $window.location.search.replace('?','') + $window.location.hash;-->
+
+                if(data.userType.type=='ROLE_ADMIN'){
+                   redirect_url = "admin-app.html";
+                }
+                if(data.userType.type=='ROLE_STAFF'){
+                    redirect_url = "staff-app.html";
+                }
+                if(data.userType.type=='ROLE_MANAGER'){
+                    redirect_url = "manager-app.html";
                 }
                 console.log("Redirect To URL : " + redirect_url);
                 $window.location.replace(redirect_url);
+
+
+
+
             } else {
                 $scope.error = "Invalid Username or Password";
             }
+
         }).error(function (error,status) {
             <!--console.log(error);-->
             <!--$scope.error = error;-->
               console.log('status code::'+status);
               if(status==500)
               {
-                  $scope.error='Invalid UserName and Password';
+                  $scope.error='Invalid UserName or Password';
                }
         });
     };
