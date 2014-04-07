@@ -11,7 +11,7 @@
     <name>Prescient Services</name>
 
     <properties>
-        <spring.boot.version>1.0.0.RELEASE</spring.boot.version>
+        <spring.boot.version>1.0.1.RELEASE</spring.boot.version>
         <junit.version>4.10</junit.version>
         <lombok.version>1.12.2</lombok.version>
         <hsqldb.version>2.3.1</hsqldb.version>

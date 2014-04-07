@@ -37,17 +37,33 @@
                     </select></td>
                 </tr>
 
-                <tr>
-                    <td>Hotel</td>
-                    <td><select ng-model="user.hotel.id"
-                                ng-options="obj.id as obj.name for obj in hotel_list">
-                    </select></td>
-                </tr>
+                <!--<tr>-->
+                    <!--<td>Hotel</td>-->
+                    <!--<td><select ng-model="user.hotel.id"-->
+                                <!--ng-options="obj.id as obj.name for obj in hotel_list">-->
+                    <!--</select></td>-->
+                <!--</tr>-->
                 <tr>
                     <td>Departments</td>
-                    <td><select  ng-mode="user.departments" multiple
-                                ng-options="obj.id as obj.name for obj in user.departments">
-                    </select></td>
+                    <td>
+                        <ul>
+                            <li ng-repeat="department in user.departments">
+                                <input type="checkbox" ng-click="onDepartmentSelection(department)" ng-checked="true"/>
+                                {{department.name}}
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>TouchPoints</td>
+                    <td>
+                        <ul>
+                            <li ng-repeat="touchPoint in user.touchPoints">
+                                <input type="checkbox" ng-click="onTouchPointSelection(touchPoint)" ng-checked="true"/>
+                                {{touchPoint.name}}
+                            </li>
+                        </ul>
+                    </td>
                 </tr>
 
             </table>
