@@ -43,6 +43,12 @@
                                 ng-options="obj.id as obj.name for obj in hotel_list">
                     </select></td>
                 </tr>
+                <tr>
+                    <td>Departments</td>
+                    <td><select  ng-mode="user.departments" multiple
+                                ng-options="obj.id as obj.name for obj in user.departments">
+                    </select></td>
+                </tr>
 
             </table>
         </div>

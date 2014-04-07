@@ -26,6 +26,10 @@ admin_app.config(['$routeProvider',
                 'templateUrl': 'ui/users/view.html',
                 'controller': 'view_users_controller'
             })
+            .when('/users/reset/:userId', {
+                'templateUrl': 'ui/users/reset-password.html',
+                'controller': 'reset_users_controller'
+            })
             .when('/users/update/:userId', {
                 'templateUrl': 'ui/users/update.html',
                 'controller': 'update_users_controller'
@@ -605,6 +609,62 @@ admin_app.controller('access_card_controller', function ($scope, $http, $routePa
 admin_app.controller('touch_point_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
 
 });
+
+
+
+
+
+admin_app.controller('reset_users_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
+console.log('reset user controller is loaded');
+    $scope.user_detail={};
+    $scope.uId = $routeParams.userId;
+    $http({
+        url: 'http://localhost:8080/api/users/' + $scope.uId,
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.user_detail = data;
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+    $scope.reset=function()
+    {
+        console.log('password is reset');
+        $http({
+            url: 'http://localhost:8080/api/users/resetPasswordAdmin/' + $scope.uId,
+            method: 'put',
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")
+            },
+            data: $scope.user_detail
+
+        }).
+            success(function (data, status) {
+                if (status == 201) {
+                    $location.url('users/view/'+$scope.uId);
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+    }
+});
+
+
+
+
 
 admin_app.controller('add_touch_points_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
 
