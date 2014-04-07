@@ -38,27 +38,31 @@ public class Services {
 
 
     @RequestMapping(value = "status")
-    public List<UserStatus> getUserStatus() {
+    public List<UserStatus> getAllUserStatus() {
         LOGGER.info("Get All Status service");
-        return userStatusRepository.findAll();
+        List<UserStatus> userStatuses = userStatusRepository.findAll();
+        return userStatuses;
     }
 
     @RequestMapping(value = "roles")
-    public List<UserType> getUserRoles() {
+    public List<UserType> getAllUserRoles() {
         LOGGER.info("Get All Roles service");
-        return userTypeRepository.findAll();
+        List<UserType> userTypes = userTypeRepository.findAll();
+        return userTypes;
     }
 
     @RequestMapping(value = "hotels")
     public List<Hotel> getAllHotels() {
         LOGGER.info("Get All Hotel service");
-        return hotelRepository.findAll();
+        List<Hotel> hotels = hotelRepository.findAll();
+        return hotels;
     }
 
     @RequestMapping(value = "hotels/{hotelId}/departments")
     public List<Department> getDepartments(@PathVariable("hotelId") Long hotelId) {
         LOGGER.info("Get All Departments by HotelId service");
-        return departmentRepository.findByHotelId(hotelId);
+        List<Department> departments = departmentRepository.findByHotelId(hotelId);
+        return departments;
     }
 
     @RequestMapping(value = "departments/tp/all", method = RequestMethod.POST, consumes = "application/json")
@@ -71,6 +75,22 @@ public class Services {
             allTouchPoints.addAll(touchPoints);
         }
         return allTouchPoints;
+    }
+
+    @RequestMapping(value = "users", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@RequestBody UserDetail user) {
+        LOGGER.info("request received to create user : " + user);
+        user.setPassword("password");
+        userDetailRepository.save(user);
+    }
+
+    @RequestMapping(value = "users/resetPasswordAdmin/{id}", method = RequestMethod.PUT, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void resetPasswordByAdmin(@PathVariable Long id, @RequestBody UserDetail user) {
+        UserDetail userDetail = userDetailRepository.findOne(id);
+        userDetail.setPassword("password");
+        userDetailRepository.save(userDetail);
     }
 
 
@@ -99,30 +119,35 @@ public class Services {
         return userDetailRepository.findOne(userId);
     }
 
-
-    @RequestMapping(value = "users", method = RequestMethod.POST, consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody UserDetail user) {
-        LOGGER.info("request received to create user : " + user);
-        user.setPassword("password");
-        userDetailRepository.save(user);
-    }
-
     @RequestMapping(value = "users/update/{id}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public void update(@PathVariable Long id, @RequestBody UserDetail user) {
         UserDetail userDetail = userDetailRepository.findOne(id);
-        UserStatus userStatus = new UserStatus();
-        userStatus.setId(user.getUserStatus().getId());
-        UserType userType = new UserType();
-        userType.setId(user.getUserType().getId());
-        Hotel hotel = new Hotel();
-        hotel.setId(user.getHotel().getId());
+
+
         userDetail.setFirstName(user.getFirstName());
         userDetail.setLastName(user.getLastName());
+
+        UserStatus userStatus = new UserStatus();
+        userStatus.setId(user.getUserStatus().getId());
         userDetail.setUserStatus(userStatus);
+
+        UserType userType = new UserType();
+        userType.setId(user.getUserType().getId());
         userDetail.setUserType(userType);
-        userDetail.setHotel(hotel);
+
+        List<Department> departments = new ArrayList<Department>();
+        departments.addAll(user.getDepartments());
+        userDetail.setDepartments(departments);
+
+        List<TouchPoint> touchPoints = new ArrayList<TouchPoint>();
+        touchPoints.addAll(user.getTouchPoints());
+        userDetail.setTouchPoints(touchPoints);
+
+//        Hotel hotel = new Hotel();
+//        hotel.setId(user.getHotel().getId());
+//        userDetail.setHotel(hotel);
+
         userDetailRepository.save(userDetail);
     }
 
@@ -135,7 +160,6 @@ public class Services {
         userDetail.setUserStatus(userStatus);
         userDetailRepository.save(userDetail);
     }
-
 
     @RequestMapping(value = "users/assignDept/{id}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
@@ -187,14 +211,6 @@ public class Services {
     public List<TouchPoint> getAllottedTouchPoints(@PathVariable("userId") Long userId) {
         LOGGER.info("Allotted Departments : " + userDetailRepository.findOne(userId).getTouchPoints());
         return userDetailRepository.findOne(userId).getTouchPoints();
-    }
-
-    @RequestMapping(value = "users/resetPasswordAdmin/{id}", method = RequestMethod.PUT, consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void resetPasswordByAdmin(@PathVariable Long id, @RequestBody UserDetail user) {
-        UserDetail userDetail = userDetailRepository.findOne(id);
-        userDetail.setPassword("password");
-        userDetailRepository.save(userDetail);
     }
 
     @RequestMapping(value = "users/resetPasswordUser/{id}", method = RequestMethod.PUT, consumes = "application/json")
