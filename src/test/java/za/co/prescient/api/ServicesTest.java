@@ -2,6 +2,7 @@ package za.co.prescient.api;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -38,6 +39,9 @@ public class ServicesTest {
     @Mock
     TouchPointRepository touchPointRepository;
 
+    @Mock
+    UserDetailRepository userDetailRepository;
+
     Services services;
     Long hotelId;
 
@@ -46,6 +50,7 @@ public class ServicesTest {
     List<Hotel> hotelList;
     List<Department> departmentList;
     List<TouchPoint> touchPointList;
+    List<UserDetail> userDetailList;
 
     @Before
     public void setup() {
@@ -58,6 +63,7 @@ public class ServicesTest {
         setField(services, "hotelRepository", hotelRepository);
         setField(services, "departmentRepository", departmentRepository);
         setField(services, "touchPointRepository", touchPointRepository);
+        setField(services, "userDetailRepository", userDetailRepository);
 
 
         userStatusList =  asList(mock(UserStatus.class), mock(UserStatus.class), mock(UserStatus.class));
@@ -65,7 +71,7 @@ public class ServicesTest {
         hotelList = asList(mock(Hotel.class), mock(Hotel.class), mock(Hotel.class));
         departmentList = asList(mock(Department.class), mock(Department.class), mock(Department.class));
         touchPointList = asList(mock(TouchPoint.class), mock(TouchPoint.class), mock(TouchPoint.class));
-
+        userDetailList = asList(mock(UserDetail.class), mock(UserDetail.class), mock(UserDetail.class));
     }
 
     @Test
@@ -237,7 +243,14 @@ public class ServicesTest {
         assertEquals(0, result.size());
     }
 
+    @Ignore
+    @Test
+    public void shouldCallUserDetailRepositoryForGetAssignedTouchPoints() {
+        when(userDetailRepository.findOne(1L).getTouchPoints()).thenReturn(touchPointList);
 
+        services.getAssignedTouchPoints(1L);
 
+        verify(userDetailRepository, times(1)).findOne(1L).getTouchPoints();
+    }
 
 }

@@ -36,6 +36,9 @@ public class Services {
     @Autowired
     GuestProfileDetailRepository guestProfileDetailRepository;
 
+    @Autowired
+    ItcsTagReadRepository itcsTagReadRepository;
+
 
     @RequestMapping(value = "status")
     public List<UserStatus> getAllUserStatus() {
@@ -85,45 +88,10 @@ public class Services {
         userDetailRepository.save(user);
     }
 
-    @RequestMapping(value = "users/resetPasswordAdmin/{id}", method = RequestMethod.PUT, consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void resetPasswordByAdmin(@PathVariable Long id, @RequestBody UserDetail user) {
-        UserDetail userDetail = userDetailRepository.findOne(id);
-        userDetail.setPassword("password");
-        userDetailRepository.save(userDetail);
-    }
-
-
-
-
-
-    /////////////////////////////////
-
-    @RequestMapping(value = "users/{userName}/login")
-    public UserDetail login(@PathVariable("userName") String userName) {
-        LOGGER.info("Login Service Start");
-        UserDetail userDetail = userDetailRepository.findByUserName(userName);
-        LOGGER.info("Login Service End.");
-        return userDetail;
-    }
-
-    @RequestMapping(value = "users")
-    public List<UserDetail> get() {
-        LOGGER.info("Get All UserDetails service");
-        return userDetailRepository.findAll();
-    }
-
-    @RequestMapping(value = "users/{userId}")
-    public UserDetail get(@PathVariable("userId") Long userId) {
-        LOGGER.info("Get a single UserDetail service");
-        return userDetailRepository.findOne(userId);
-    }
-
     @RequestMapping(value = "users/update/{id}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public void update(@PathVariable Long id, @RequestBody UserDetail user) {
         UserDetail userDetail = userDetailRepository.findOne(id);
-
 
         userDetail.setFirstName(user.getFirstName());
         userDetail.setLastName(user.getLastName());
@@ -149,6 +117,58 @@ public class Services {
 //        userDetail.setHotel(hotel);
 
         userDetailRepository.save(userDetail);
+    }
+
+    @RequestMapping(value = "users/resetPasswordAdmin/{id}", method = RequestMethod.PUT, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void resetPasswordByAdmin(@PathVariable Long id, @RequestBody UserDetail user) {
+        UserDetail userDetail = userDetailRepository.findOne(id);
+        userDetail.setPassword("password");
+        userDetailRepository.save(userDetail);
+    }
+
+    @RequestMapping(value = "users/resetPasswordUser/{id}", method = RequestMethod.PUT, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void resetPasswordByUser(@PathVariable Long id, @RequestBody UserDetail user) {
+        UserDetail userDetail = userDetailRepository.findOne(id);
+        userDetail.setPassword(user.getPassword());
+        userDetailRepository.save(userDetail);
+    }
+
+    @RequestMapping(value = "users/{userId}/tp/having")
+    public List<TouchPoint> getAssignedTouchPoints(@PathVariable("userId") Long userId) {
+        LOGGER.info("Allotted TouchPoints size : " + userDetailRepository.findOne(userId).getTouchPoints().size());
+        List<TouchPoint> touchPoints = userDetailRepository.findOne(userId).getTouchPoints();
+        return touchPoints;
+    }
+
+
+
+
+
+
+
+
+    /////////////////////////////////
+
+    @RequestMapping(value = "users/{userName}/login")
+    public UserDetail login(@PathVariable("userName") String userName) {
+        LOGGER.info("Login Service Start");
+        UserDetail userDetail = userDetailRepository.findByUserName(userName);
+        LOGGER.info("Login Service End.");
+        return userDetail;
+    }
+
+    @RequestMapping(value = "users")
+    public List<UserDetail> get() {
+        LOGGER.info("Get All UserDetails service");
+        return userDetailRepository.findAll();
+    }
+
+    @RequestMapping(value = "users/{userId}")
+    public UserDetail get(@PathVariable("userId") Long userId) {
+        LOGGER.info("Get a single UserDetail service");
+        return userDetailRepository.findOne(userId);
     }
 
     @RequestMapping(value = "users/delete/{id}", method = RequestMethod.PUT, consumes = "application/json")
@@ -207,13 +227,11 @@ public class Services {
         return superSet;
     }
 
-    @RequestMapping(value = "users/{userId}/tp/having")
-    public List<TouchPoint> getAllottedTouchPoints(@PathVariable("userId") Long userId) {
-        LOGGER.info("Allotted Departments : " + userDetailRepository.findOne(userId).getTouchPoints());
-        return userDetailRepository.findOne(userId).getTouchPoints();
-    }
-
-
+//    @RequestMapping(value = "users/{userId}/tp/having")
+//    public List<TouchPoint> getAllottedTouchPoints(@PathVariable("userId") Long userId) {
+//        LOGGER.info("Allotted Departments : " + userDetailRepository.findOne(userId).getTouchPoints());
+//        return userDetailRepository.findOne(userId).getTouchPoints();
+//    }
 
     @RequestMapping(value = "users/assignTP/{id}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
@@ -273,7 +291,14 @@ public class Services {
 
     // Test
 
+    @RequestMapping(value = "touchpoints/guestCardIds/all")
+    public List<ItcsTagRead> getGuestIds() {
+        return itcsTagReadRepository.findAll();
+    }
 
-
+    @RequestMapping(value = "touchpoints/{tpId}/guestCards")
+    public List<ItcsTagRead> getGuestIdsByZoneId(@PathVariable("tpId") Integer zoneId) {
+        return itcsTagReadRepository.findByZone(zoneId);
+    }
 
 }
