@@ -6,4 +6,8 @@ import za.co.prescient.model.GuestCardAllocation;
 
 @Repository
 public interface GuestCardAllocationRepository extends JpaRepository<GuestCardAllocation, Long> {
+
+
+    GuestCardAllocation findByGuestCardId(Integer guestCard);
+
 }

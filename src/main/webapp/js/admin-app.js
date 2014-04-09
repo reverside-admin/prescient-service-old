@@ -664,21 +664,22 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
         console.log('delete');
         $http({
             url: 'http://localhost:8080/api/users/delete/' + $scope.uId,
-            method: 'put',
+            method: 'get',
             headers: { 'Content-Type': 'application/json',
                 'Authorization': $cookieStore.get("auth")
-            },
-            data: $scope.user
+            }
         }).
             success(function (data, status) {
-                if (status == 201) {
-                    $location.url('users/list');
+                if (status == 200) {
+                    $scope.delete_message='User Deleted Successfully';
                 } else {
                     console.log('status:' + status);
                 }
             })
             .error(function (error) {
                 console.log(error);
+                console.log(error.message);
+                $scope.delete_message=error.message;
             });
     }
     $scope.cancel = function () {

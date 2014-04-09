@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import za.co.prescient.model.*;
 import za.co.prescient.repository.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,9 @@ public class Services {
 
     @Autowired
     ItcsTagReadRepository itcsTagReadRepository;
+
+    @Autowired
+    GuestCardAllocationRepository guestCardAllocationRepository;
 
 
     @RequestMapping(value = "status")
@@ -142,6 +146,23 @@ public class Services {
         return touchPoints;
     }
 
+    @RequestMapping(value = "users/delete/{id}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteUser(@PathVariable("id")Long id, Principal principal) {
+
+        UserDetail userDetail = userDetailRepository.findOne(id);
+
+        if(userDetail.getUserName() == (principal.getName())){
+            throw new RuntimeException("User Can't delete himself");
+        }
+        else {
+            UserStatus userStatus = new UserStatus();
+            userStatus.setId(Long.valueOf(1));
+            userDetail.setUserStatus(userStatus);
+            userDetailRepository.save(userDetail);
+        }
+    }
+
 
 
 
@@ -171,7 +192,7 @@ public class Services {
         return userDetailRepository.findOne(userId);
     }
 
-    @RequestMapping(value = "users/delete/{id}", method = RequestMethod.PUT, consumes = "application/json")
+    @RequestMapping(value = "users/deleteuser/{id}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public void delete(@PathVariable Long id, @RequestBody UserDetail user) {
         UserDetail userDetail = userDetailRepository.findOne(id);
@@ -298,7 +319,14 @@ public class Services {
 
     @RequestMapping(value = "touchpoints/{tpId}/guestCards")
     public List<ItcsTagRead> getGuestIdsByZoneId(@PathVariable("tpId") Integer zoneId) {
-        return itcsTagReadRepository.findByZone(zoneId);
+
+        List<ItcsTagRead> itcsTagReadList =itcsTagReadRepository.findTagsInZone(zoneId);
+
+        return itcsTagReadList;
     }
+
+
+
+
 
 }

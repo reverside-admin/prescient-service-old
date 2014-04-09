@@ -13,7 +13,7 @@ public interface ItcsTagReadRepository extends JpaRepository<ItcsTagRead, Long> 
 
     List<ItcsTagRead> findByZone(int zoneId);
 
-    @Query("select t from ItcsTagRead t where t.zone = ?1")
+    @Query("select  distinct t.guestCard from ItcsTagRead t where t.zone = ?1")
     List<ItcsTagRead> findTagsInZone(int zoneId);
 
 }

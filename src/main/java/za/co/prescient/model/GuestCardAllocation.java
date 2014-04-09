@@ -14,10 +14,10 @@ public class GuestCardAllocation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
-    private GuestCard guestCard;
+    @Column
+    private Integer guestCardId;
 
-    @OneToOne
+    @ManyToOne
     private GuestProfileDetail guestProfileDetail ;
 
 }

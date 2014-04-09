@@ -38,16 +38,11 @@ insert into user_detail_touch_points (uid, tid) values (1, 3);
 insert into user_detail_touch_points (uid, tid) values (2, 3);
 
 
-insert into guest_profile_detail (id, hotel_id, first_name)
-values (1, 1, 'chinmay');
-insert into guest_profile_detail (id, hotel_id, first_name)
-values (2, 1, 'braj');
-insert into guest_profile_detail (id, hotel_id, first_name)
-values (3, 1, 'surya');
-insert into guest_profile_detail (id, hotel_id, first_name)
-values (4, 1, 'twinkle');
-insert into guest_profile_detail (id, hotel_id, first_name)
-values (5, 1, 'deb');
+insert into guest_profile_detail (id, hotel_id, first_name) values (1, 1, 'chinmay');
+insert into guest_profile_detail (id, hotel_id, first_name) values (2, 1, 'braj');
+insert into guest_profile_detail (id, hotel_id, first_name) values (3, 1, 'surya');
+insert into guest_profile_detail (id, hotel_id, first_name) values (4, 1, 'twinkle');
+insert into guest_profile_detail (id, hotel_id, first_name) values (5, 1, 'deb');
 
 
 insert into guest_card (id, hotel_key, rfid_key) values (1, 101, 1001);
@@ -68,8 +63,8 @@ insert into itcs_tag_read (id, guest_card, zone) values (8, 21, 2);
 insert into itcs_tag_read (id, guest_card, zone) values (9, 22, 2);
 insert into itcs_tag_read (id, guest_card, zone) values (10, 22, 2);
 
-insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (1, 1, 1);
-insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (2, 2, 2);
-insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (3, 3, 3);
-insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (4, 4, 4);
-insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (5, 5, 5);
+insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (1, 11, 1);
+insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (2, 12, 2);
+insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (3, 13, 3);
+insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (4, 21, 4);
+insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (5, 22, 5);
