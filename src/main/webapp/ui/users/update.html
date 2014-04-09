@@ -47,25 +47,26 @@
                     <td>Departments</td>
                     <td>
                         <ul>
-                            <li ng-repeat="department in user.departments">
+                            <li ng-repeat="department in assigned_department_list">
                                 <input type="checkbox" ng-click="onDepartmentSelection(department)" ng-checked="true"/>
                                 {{department.name}}
                             </li>
                         </ul>
                     </td>
-                </tr>
-                <tr>
-                    <td>TouchPoints</td>
+
+
                     <td>
                         <ul>
-                            <li ng-repeat="touchPoint in user.touchPoints">
-                                <input type="checkbox" ng-click="onTouchPointSelection(touchPoint)" ng-checked="true"/>
-                                {{touchPoint.name}}
+                            <li ng-repeat="department in not_assigned_department_list">
+                                <input type="checkbox" ng-click="onDepartmentSelection(department)"/>
+                                {{department.name}}
                             </li>
                         </ul>
                     </td>
-                </tr>
 
+
+
+                </tr>
             </table>
         </div>
     </div>

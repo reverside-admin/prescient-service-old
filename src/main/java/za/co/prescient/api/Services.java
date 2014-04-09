@@ -213,13 +213,7 @@ public class Services {
         return userDetailRepository.findOne(userId).getTouchPoints();
     }
 
-    @RequestMapping(value = "users/resetPasswordUser/{id}", method = RequestMethod.PUT, consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void resetPasswordByUser(@PathVariable Long id, @RequestBody UserDetail user) {
-        UserDetail userDetail = userDetailRepository.findOne(id);
-        userDetail.setPassword(user.getPassword());
-        userDetailRepository.save(userDetail);
-    }
+
 
     @RequestMapping(value = "users/assignTP/{id}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)

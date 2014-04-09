@@ -2,8 +2,7 @@
 
     <div class="col-md-12 text-right">
         <div class="btn-group btn-group-sm">
-            <a href="#users/create" class="btn btn-primary">Create</a>
-             <a href="#users/view/{{user_detail.id}}" class="btn btn-primary">Back</a>
+              <a href="#users/view/{{user_detail.id}}" class="btn btn-primary">Back</a>
        </div>
    </div>
 
@@ -12,9 +11,7 @@
         <h4 class="text-primary"><b>Delete User</b></h4>
     </div>
 
-    <div class="col-md-12 text-center">
-        <b style="color: RED;">Are you sure to delete? </b>
-    </div>
+
 
     <div style="width: 50%; margin-left: auto;margin-right: auto;">
         <table class="table table-hover table-condensed table-bordered  table-responsive">
@@ -66,7 +63,11 @@
         </table>
     </div>
 
+    <div class="col-md-12 text-center">
+        <b style="color: RED;">{{delete_message}} </b>
+    </div>
+
     <div class="col-md-12 text-right">
-         <button type="button" class="btn btn-primary" ng-click="delete()">Delete</button>
+         <button type="button" class="btn btn-primary" ng-click="delete()" ng-disabled="delete_button_status">Delete</button>
      </div>
 </div>

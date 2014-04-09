@@ -46,9 +46,13 @@ admin_app.config(['$routeProvider',
                 'templateUrl': 'ui/users/add-touchpoint.html',
                 'controller': 'add_touch_points_controller'
             })
+            .when('/welcome', {
+                'templateUrl': '/welcome.html'
+
+            })
 
             .otherwise({
-                redirectTo: '/'
+                redirectTo: '/welcome'
             });
     }]);
 
@@ -64,7 +68,7 @@ admin_app.controller('admin_app_controller', function ($scope, $http, $location,
         console.log("User is authenticated");
         $scope.user = $cookieStore.get("user");
         if ($scope.user.userType.type != "ROLE_ADMIN") {
-            $window.location.replace("index.html");
+            $window.location.replace("login-app.html");
         }
     }
 
@@ -107,6 +111,8 @@ admin_app.controller('list_users_controller', function ($scope, $http, $routePar
 admin_app.controller('view_users_controller', function ($scope, $http, $routeParams, $cookieStore) {
     $scope.uId = $routeParams.userId;
     $scope.user_detail;
+    $scope.can_reset_password=false;
+    $scope.can_edit=false;
 
 
     $http({
@@ -120,6 +126,12 @@ admin_app.controller('view_users_controller', function ($scope, $http, $routePar
         success(function (data, status) {
             if (status == 200) {
                 $scope.user_detail = data;
+
+                if($scope.user_detail.userStatus.status=='disable')
+                {
+                    $scope.can_reset_password=true;
+                    $scope.can_edit=true;
+                }else{}
             } else {
                 console.log('status:' + status);
             }
@@ -134,7 +146,13 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
     $scope.user_status_list = [];
     $scope.user_type_list = [];
     $scope.hotel_list = [];
+
+    $scope.assigned_department_list=[];
+    $scope.not_assigned_department_list=[];
+
     $scope.user = {};
+
+    <!-- get user details first -->
     $http({
         url: 'http://localhost:8080/api/users/' + $scope.uId,
         method: 'get',
@@ -215,6 +233,62 @@ admin_app.controller('update_users_controller', function ($scope, $http, $routeP
         .error(function (error) {
             console.log(error);
         });
+
+
+    <!-- get all assigned departments -->
+    $http({
+        url: 'http://localhost:8080/api/hotels/'+$scope.uId+'/dept/having',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                console.log('All assigned department are retrieved');
+                $scope.assigned_department_list = data;
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+<!-- get all not assigned departments -->
+
+    $http({
+        url: 'http://localhost:8080/api/hotels/'+$scope.uId+'/dept/notHaving',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                console.log('All not assigned department are retrieved');
+                $scope.not_assigned_department_list = data;
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     $scope.update = function () {
@@ -550,6 +624,8 @@ admin_app.controller('add_departments_controller', function ($scope, $http, $rou
 admin_app.controller('delete_users_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
     console.log('delete user controller is loaded');
     $scope.confirm_flag = false;
+    $scope.delete_button_status;
+    $scope.delete_message;
     $scope.uId = $routeParams.userId;
     $scope.user_detail = {};
     $http({
@@ -563,6 +639,18 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
         success(function (data, status) {
             if (status == 200) {
                 $scope.user_detail = data;
+                     if($scope.user_detail.userStatus.status=='disable')
+                     {
+                         $scope.delete_button_status=true;
+                         $scope.delete_message='First make the user enable then Delete';
+                     }
+                else{
+                         $scope.delete_button_status=false;
+                         $scope.delete_message='Are you sure to delete?';
+
+                     }
+
+
             } else {
                 console.log('status:' + status);
             }

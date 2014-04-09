@@ -21,7 +21,7 @@ public class UserDetail {
     @Column//(unique = true)
     private String userName;
 
-
+    @JsonIgnore
     @Column//(nullable = false)
     private String password;
 
