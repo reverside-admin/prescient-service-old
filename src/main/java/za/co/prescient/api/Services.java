@@ -318,11 +318,15 @@ public class Services {
     }
 
     @RequestMapping(value = "touchpoints/{tpId}/guestCards")
-    public List<ItcsTagRead> getGuestIdsByZoneId(@PathVariable("tpId") Integer zoneId) {
+    public List<GuestProfileDetail> getGuestIdsByZoneId(@PathVariable("tpId") Integer zoneId) {
 
         List<ItcsTagRead> itcsTagReadList =itcsTagReadRepository.findTagsInZone(zoneId);
-
-        return itcsTagReadList;
+        List<GuestProfileDetail> guestProfileDetails = guestCardAllocationRepository.findGuestsWithTagsInAZone(itcsTagReadList);
+        for(GuestProfileDetail obj : guestProfileDetails){
+            LOGGER.info("First Name : "+obj.getFirstName());
+        }
+        LOGGER.info("List : "+ itcsTagReadList);
+        return guestProfileDetails;
     }
 
 

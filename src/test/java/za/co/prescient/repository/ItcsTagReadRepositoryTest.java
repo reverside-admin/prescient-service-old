@@ -29,7 +29,11 @@ public class ItcsTagReadRepositoryTest {
         assertEquals(10, result.size());
 
         result = itcsTagReadRepository.findTagsInZone(1);
-        assertEquals(5, result.size());
+        assertEquals(3, result.size());
 
+        result = itcsTagReadRepository.findTagsInZone(2);
+        assertEquals(2, result.size());
     }
+
+
 }

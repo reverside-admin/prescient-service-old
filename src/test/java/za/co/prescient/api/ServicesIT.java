@@ -18,6 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 import za.co.prescient.Application;
 import za.co.prescient.model.Hotel;
 import za.co.prescient.repository.HotelRepository;
+import za.co.prescient.repository.ItcsTagReadRepository;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ConfigurationProperties("classpath:/application-test.properties")
 @Profile("test")
 @Slf4j
-public class HotelServiceIT {
+public class ServicesIT {
 
     @Autowired
     private WebApplicationContext context;
@@ -42,6 +43,9 @@ public class HotelServiceIT {
 
     @Autowired
     HotelRepository hotelRepository;
+
+    @Autowired
+    ItcsTagReadRepository itcsTagReadRepository;
 
     @Before
     public void setUp() {
@@ -66,4 +70,13 @@ public class HotelServiceIT {
                 .andExpect(content().string("[{\"id\":1,\"name\":\"hotel1\"},{\"id\":2,\"name\":\"hotel2\"},{\"id\":3,\"name\":\"hotel3\"}]"));
 //                .andExpect(content().string("[{\"id\":1,\"name\":\"orion\"},{\"id\":2,\"name\":\"taj\"},{\"id\":3,\"name\":\"hotel1\"},{\"id\":4,\"name\":\"hotel2\"},{\"id\":5,\"name\":\"hotel3\"}]"));
     }
+
+    @Test
+    public void testGetTags() throws Exception {
+        this.mvc.perform(get("/api/touchpoints/guestCardIds/all"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("[]"));
+    }
+
+
 }

@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Getter@Setter
@@ -19,40 +18,40 @@ public class GuestProfileDetail {
     @OneToOne
     private Hotel hotel;
 
-    @Column
-    private Long operaProfileId;
-
-    @Column
-    private String idNumber;
-
-    @Column
-    private String passportNumber;
+//    @Column
+//    private Long operaProfileId;
+//
+//    @Column
+//    private String idNumber;
+//
+//    @Column
+//    private String passportNumber;
 
     @Column
     private String firstName;
 
-    @Column
-    private String preferredName;
-
-    @Column
-    private String surname;
-
-    @Column
-    private String gender;
-
-    @Column
-    private String title;
-
-    @Column
-    private String nationalityId;
-
-    @Column
-    private Date dob;
-
-    @Column
-    private Date lastUpdateDate;
-
-    @Column
-    private String photoImagePath;
+//    @Column
+//    private String preferredName;
+//
+//    @Column
+//    private String surname;
+//
+//    @Column
+//    private String gender;
+//
+//    @Column
+//    private String title;
+//
+//    @Column
+//    private String nationalityId;
+//
+//    @Column
+//    private Date dob;
+//
+//    @Column
+//    private Date lastUpdateDate;
+//
+//    @Column
+//    private String photoImagePath;
 
 }
