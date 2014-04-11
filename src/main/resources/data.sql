@@ -51,6 +51,7 @@ insert into itcs_tag_read (id, guest_card, zone) values (9, 22, 2);
 insert into itcs_tag_read (id, guest_card, zone) values (10, 22, 2);
 
 
+/*
 insert into guest_profile_detail (id, hotel_id, first_name) values (100, 1, 'guest1');
 insert into guest_profile_detail (id, hotel_id, first_name) values (101, 1, 'guest2');
 insert into guest_profile_detail (id, hotel_id, first_name) values (102, 1, 'guest3');
@@ -58,5 +59,6 @@ insert into guest_profile_detail (id, hotel_id, first_name) values (102, 1, 'gue
 insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (1, 1000, 100);
 insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (2, 1001, 101);
 insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (3, 1002, 102);
+*/
 
 
