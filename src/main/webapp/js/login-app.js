@@ -13,6 +13,8 @@ login_app.controller("login_app_controller", function ($scope, $http, $cookieSto
 
     $scope.reset_mode = false;
 
+    $scope.reset_password_error;
+
     $scope.user;
 
     $scope.login = function (loginform) {
@@ -74,7 +76,7 @@ login_app.controller("login_app_controller", function ($scope, $http, $cookieSto
                 <!--console.log(error);-->
                 <!--$scope.error = error;-->
                 console.log('status code::' + status);
-                if (status == 500) {
+                 if (status == 500) {
                     $scope.error = 'Invalid UserName or Password';
                 }
             });
@@ -83,19 +85,16 @@ login_app.controller("login_app_controller", function ($scope, $http, $cookieSto
 
     $scope.resetPassword = function (passwordResetform, new_password, confirm_password) {
 
-        // TODO : Do validation here
-        //        0: html5 form validation
-        //        1: Check both entries are same
-        //        2: Check new password value is not password
+
 
         if (!passwordResetform.$valid)return;
 
         if (new_password != confirm_password) {
-            $scope.error = 'password mismatched';
+            $scope.reset_password_error = 'password mismatched';
             return;
         }
         if (new_password == 'password') {
-            $scope.error = 'password canot be password';
+            $scope.reset_password_error = 'password canot be password';
             return;
         }
 

@@ -1,0 +1,54 @@
+<div class="col-md-12">
+    <!--<div style="width: 50%; margin-left: auto;margin-right: auto;">-->
+        <!--<b class="text-primary">TouchPoints</b>-->
+        <!--<select ng-model="selected_touch_point"-->
+                <!--ng-options="obj.id as obj.name for obj in assigned_touch_point_list">-->
+            <!--<option value="">select Touchpoint</option>-->
+        <!--</select>-->
+    <!--</div>-->
+
+
+    <div class="col-md-12 text-left">
+        <h4 class="text-primary"><b>TouchPoint List </b> </h4>
+    </div>
+
+    <div class="col-md-12" style="width: 50%" >
+        <table class="table table-hover table-condensed table-striped table-responsive">
+
+
+            <tr ng-repeat="touchpoint in assigned_touch_point_list">
+                <td>{{touchpoint.name}}</td>
+                <td>{{touchpoint.id}}</td>
+                <td>
+                    <a ng-href="#touchpoint/{{touchpoint.id}}/guests">Detail</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div>
+        <ul class="pager " style="margin: 0px;">
+
+        </ul>
+    </div>
+
+</div>
+
+
