@@ -1,14 +1,37 @@
-<div class="col-md-12" style="width: 50%" >
+<div class="col-md-12">
     <div class="col-md-12 text-left">
         <h4 class="text-primary"><b>Guest List </b> </h4>
     </div>
-    <table class="table table-hover table-condensed table-striped table-responsive">
+
+    <div class="col-md-12 text-right">
+        <h5>  <input type="text" ng-model="search" placeholder="Search"/></h5>
+    </div>
 
 
-        <tr ng-repeat="guest in guest_list">
-            <td>{{guest.firstName}}</td>
-            <td><a ng-href="#">Detail</a>
-            </td>
-        </tr>
-    </table>
+    <div class="col-md-12">
+        <table class="table table-hover table-condensed table-striped table-responsive">
+            <tr>
+                <th>First Name</th>
+                <th></th>
+            </tr>
+
+            <tr ng-repeat="guest in guest_list | filter:search">
+                <td>{{guest.firstName}}</td>
+
+                <td><a ng-href="#guest/{{guest.id}}">Detail</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
 </div>

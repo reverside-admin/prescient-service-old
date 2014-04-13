@@ -60,9 +60,9 @@ insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) v
 insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (3, 1002, 102);
 
 
-insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time) values (1, '999', 100, '2010-04-01 00:00:00', '2010-04-05 00:00:00');
-insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time) values (2, '888', 101, '2010-04-02 00:00:00', '2010-04-06 00:00:00');
-insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time) values (3, '777', 102, '2010-04-03 00:00:00', '2010-04-07 00:00:00');
+insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, guest_profile_detail_id) values (1, '999', 100, '2010-04-01 00:00:00', '2010-04-05 00:00:00', 100);
+insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, guest_profile_detail_id) values (2, '888', 101, '2010-04-02 00:00:00', '2010-04-06 00:00:00', 101);
+insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, guest_profile_detail_id) values (3, '777', 102, '2010-04-03 00:00:00', '2010-04-07 00:00:00', 102);
 
 
 

@@ -15,8 +15,15 @@ staff_app.config(['$routeProvider',
                 'templateUrl': 'ui/find-guest.html',
                 'controller': 'find_guest_controller'
             })
+            .when('/guest/:guestId', {
+                'templateUrl': 'ui/guest-detail.html',
+                'controller': 'guest_detail_controller'
+            })
+            .when('/welcome', {
+                'templateUrl': '/welcome.html'
+            })
             .otherwise({
-                redirectTo: '/'
+                redirectTo: '/welcome'
             });
     }]);
 
@@ -99,4 +106,38 @@ staff_app.controller('find_guest_controller', function ($scope, $http, $routePar
         .error(function (error) {
             console.log(error);
         });
+});
+
+staff_app.controller('guest_detail_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
+
+    $scope.guest_detail;
+    $scope.guest_id=$routeParams.guestId;
+    console.log('guest detail controller is loaded...'+$scope.guest_id);
+
+
+
+    $http({
+        url: 'http://localhost:8080/api/guest/'+$scope.guest_id,
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            console.log('get success code::'+status);
+            if (status == 200) {
+                $scope.guest_detail = data;
+                console.log('Guest Detail::'+$scope.guest_detail);
+
+                console.log($scope.guest_detail.arrivalTime);
+                console.log($scope.guest_detail.departureTime);
+
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
 });

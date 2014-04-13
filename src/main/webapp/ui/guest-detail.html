@@ -1,0 +1,41 @@
+<div class="col-md-12">
+    <div class="col-md-12 text-left">
+        <h4 class="text-primary"><b>Guest Detail</b></h4>
+    </div>
+
+
+    <div style="width: 50%; margin-left: auto;margin-right: auto;">
+        <table class="table table-hover table-condensed table-bordered  table-responsive">
+            <tr>
+                <td>Guest Id</td>
+                <td style="width: 50%">{{guest_detail.guestId}}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>First Name</td>
+                <td style="width: 50%">{{guest_detail.guestProfileDetail.firstName}}</td>
+            </tr>
+
+            <tr>
+                <td>Room</td>
+                <td style="width: 50%">{{guest_detail.roomId}}</td>
+            </tr>
+
+
+
+            <tr>
+                <td>Arrival Time</td>
+                <td>{{guest_detail.arrivalTime | date:'medium'}}</td>
+            </tr>
+
+            <tr>
+                <td>Departure Time</td>
+                <td>{{guest_detail.departureTime | date:'medium'}}</td>
+            </tr>
+
+        </table>
+    </div>
+
+</div>

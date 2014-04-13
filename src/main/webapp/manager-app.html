@@ -1,6 +1,8 @@
-<html ng-app="manager_app">
+<!DOCTYPE html>
+<html ng-app='manager_app' style="height:100%;">
+
 <head>
-    <title>Admin App</title>
+    <title>Manager App</title>
     <meta charset="utf-8">
     <title>Bootstrap, from Twitter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,32 +15,16 @@
     <script src="/lib/jquery-1.11.0.min.js"></script>
     <script src="/lib/bootstrap.min.js"></script>
     <script src="/js/manager-app.js"></script>
-    <script type="text/javascript">
-
-        var applyContainerHeight = function () {
-            console.log($(window).height());
-            console.log(document.getElementById('manmay'));
-            var height = $(window).height();
-            document.getElementById('manmay').style.height = ($(window).height()-150)+"px";
-        };
-
-        window.addEventListener('load', function() { applyContainerHeight(); }, false);
-
-        $(window).resize(function () {
-            applyContainerHeight();
-        });
-
-    </script>
 
 </head>
 
-<body ng-controller='manager_app_controller' ng-init="init()" onload="applyContainerHeight" style="height:100%;">
+<body ng-controller='manager_app_controller' ng-init="init()" onload="applyContainerHeight">
 
 
-<div class="container" style="height:100%;">
-    <div class="row" style="height:99%;">
-        <div class="col-md-12" style="height:100%;">
-            <div class="panel panel-primary" style="background: #d9e2dd; height: 100%;">
+<div class="container">
+    <div class="row" >
+        <div class="col-md-12">
+            <div class="panel panel-primary">
                 <div class="panel-heading  clearfix">
                     <div class="col-md-6 text-left">
                         <h3 class="panel-title">Manager Application</h3>
@@ -47,7 +33,7 @@
                         <a class="btn btn-primary btn-xs" ng-click="logout()">Logout</a>
                     </div>
                 </div>
-                <div class="panel-body" style="height:100%;">
+                <div class="panel-body">
                     <div class="col-md-12">
                         <ul class="nav nav-pills ">
                             <li>
@@ -57,12 +43,13 @@
                                 <a href="#">Guest List</a>
                             </li>
                             <li>
-                                <a href="#">TouchPoints</a>
+                                <a href="#">Touch Points</a>
                             </li>
                         </ul>
                     </div>
                     <!-- NG ViEW Start -->
-                    <div id="manmay" name="manmay" class="row" style="height:100%;" ng-view>
+                    <div class="row"  ng-view>
+
                     </div>
                     <!-- NG ViEW End -->
                 </div>
@@ -72,5 +59,4 @@
 </div>
 
 </body>
-
 </html>

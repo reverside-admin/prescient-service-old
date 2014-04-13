@@ -27,5 +27,8 @@ public class GuestStayDetail {
     @Column
     Integer guestId;
 
+    @ManyToOne
+    GuestProfileDetail guestProfileDetail;
+
 
 }

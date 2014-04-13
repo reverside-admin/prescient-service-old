@@ -334,9 +334,9 @@ public class Services {
 
 
     @RequestMapping(value = "guest/{guestId}")
-    public GuestStayDetail getGuestDetailByGuestId(@PathVariable("guestId") Long guestId) {
-
-       return guestStayDetailRepository.findOne(guestId);
+    public GuestStayDetail getGuestDetailByGuestId(@PathVariable("guestId") Integer guestId) {
+        LOGGER.info("guest detail service is invoked");
+       return guestStayDetailRepository.findGuestDetailByGId(guestId);
 
 
     }
