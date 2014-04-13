@@ -15,7 +15,7 @@ public class GuestProfileDetail {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     private Hotel hotel;
 
 //    @Column

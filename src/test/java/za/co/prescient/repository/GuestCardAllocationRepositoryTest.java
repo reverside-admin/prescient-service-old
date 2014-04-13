@@ -54,7 +54,7 @@ public class GuestCardAllocationRepositoryTest {
     public void shouldNotReturnAnyGuestIfTagIsNotAllocated() {
         assertNotNull(guestCardAllocationRepository);
         List<GuestProfileDetail> guestProfileDetails = guestCardAllocationRepository.findGuestsWithTags(asList(1000, 1002));
-        assertEquals(1, guestProfileDetails.size());
+        assertEquals(2, guestProfileDetails.size());
     }
 
     @Test

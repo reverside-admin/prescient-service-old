@@ -43,6 +43,9 @@ public class Services {
     @Autowired
     GuestCardAllocationRepository guestCardAllocationRepository;
 
+    @Autowired
+    GuestStayDetailRepository guestStayDetailRepository;
+
 
     @RequestMapping(value = "status")
     public List<UserStatus> getAllUserStatus() {
@@ -330,7 +333,12 @@ public class Services {
     }
 
 
+    @RequestMapping(value = "guest/{guestId}")
+    public GuestStayDetail getGuestDetailByGuestId(@PathVariable("guestId") Long guestId) {
+
+       return guestStayDetailRepository.findOne(guestId);
 
 
+    }
 
 }
