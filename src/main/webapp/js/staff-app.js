@@ -140,4 +140,6 @@ staff_app.controller('guest_detail_controller', function ($scope, $http, $routeP
             console.log(error);
         });
 
+
+
 });
