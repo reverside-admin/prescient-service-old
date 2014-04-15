@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter@Setter
@@ -20,4 +21,8 @@ public class TouchPoint {
     @ManyToOne
     @JsonIgnore
     private Department department;
+
+    @OneToMany
+    @JoinColumn(name="touch_point_id", referencedColumnName = "id")
+    private List<TouchPointSetup> touchPointSetups;
 }

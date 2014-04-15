@@ -151,26 +151,19 @@ public class Services {
 
     @RequestMapping(value = "users/delete/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public void deleteUser(@PathVariable("id")Long id, Principal principal) {
+    public void deleteUser(@PathVariable("id") Long id, Principal principal) {
 
         UserDetail userDetail = userDetailRepository.findOne(id);
 
-        if(userDetail.getUserName() == (principal.getName())){
+        if (userDetail.getUserName() == (principal.getName())) {
             throw new RuntimeException("User Can't delete himself");
-        }
-        else {
+        } else {
             UserStatus userStatus = new UserStatus();
             userStatus.setId(Long.valueOf(1));
             userDetail.setUserStatus(userStatus);
             userDetailRepository.save(userDetail);
         }
     }
-
-
-
-
-
-
 
 
     /////////////////////////////////
@@ -323,12 +316,12 @@ public class Services {
     @RequestMapping(value = "touchpoints/{tpId}/guestCards")
     public List<GuestProfileDetail> getGuestIdsByZoneId(@PathVariable("tpId") Integer zoneId) {
 
-        List<ItcsTagRead> itcsTagReadList =itcsTagReadRepository.findTagsInZone(zoneId);
+        List<ItcsTagRead> itcsTagReadList = itcsTagReadRepository.findTagsInZone(zoneId);
         List<GuestProfileDetail> guestProfileDetails = guestCardAllocationRepository.findGuestsWithTagsInAZone(itcsTagReadList);
-        for(GuestProfileDetail obj : guestProfileDetails){
-            LOGGER.info("First Name : "+obj.getFirstName());
+        for (GuestProfileDetail obj : guestProfileDetails) {
+            LOGGER.info("First Name : " + obj.getFirstName());
         }
-        LOGGER.info("List : "+ itcsTagReadList);
+        LOGGER.info("List : " + itcsTagReadList);
         return guestProfileDetails;
     }
 
@@ -336,9 +329,32 @@ public class Services {
     @RequestMapping(value = "guest/{guestId}")
     public GuestStayDetail getGuestDetailByGuestId(@PathVariable("guestId") Integer guestId) {
         LOGGER.info("guest detail service is invoked");
-       return guestStayDetailRepository.findGuestDetailByGId(guestId);
-
-
+        return guestStayDetailRepository.findGuestDetailByGId(guestId);
     }
+
+
+    @Autowired
+    TouchPointSetupRepository touchPointSetupRepository;
+
+    /*@RequestMapping(value = "tp/setup", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createSetup(@RequestBody TouchPointSetup touchPointSetup) {
+        LOGGER.info("touchpointsetup invoked");
+        touchPointSetupRepository.save(touchPointSetup);
+    }*/
+
+
+    @RequestMapping(value = "tp/setup", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@RequestBody TouchPointSetup touchPointSetup) {
+        touchPointSetupRepository.save(touchPointSetup);
+    }
+
+
+    @RequestMapping(value = "tp/{tpid}/setups")
+    public List<TouchPointSetup> getAll(@PathVariable("tpid") Long tpid) {
+        return touchPointSetupRepository.findTpSetupsByTpId(tpid);
+    }
+
 
 }
