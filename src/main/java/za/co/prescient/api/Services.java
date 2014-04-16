@@ -354,5 +354,31 @@ public class Services {
         return touchPointSetupRepository.findOne(id);
     }
 
+    @RequestMapping(value = "tpsetup/{id}", method = RequestMethod.PUT, consumes = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@PathVariable("id") Long id, @RequestBody TouchPointSetup touchPointSetup) {
+
+        TouchPointSetup tpSetup = touchPointSetupRepository.findOne(id);
+
+        tpSetup.setSetupName(touchPointSetup.getSetupName());
+        tpSetup.setSetupDescription(touchPointSetup.getSetupDescription());
+        tpSetup.setImageName(touchPointSetup.getImageName());
+        tpSetup.setFileName(touchPointSetup.getFileName());
+        tpSetup.setLengthX(touchPointSetup.getLengthX());
+        tpSetup.setLengthY(touchPointSetup.getLengthY());
+        tpSetup.setFilePath(touchPointSetup.getFilePath());
+
+        touchPointSetupRepository.save(tpSetup);
+    }
+
+    @RequestMapping(value = "tpsetup/{id}/delete", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
+    public void delete(@PathVariable ("id") Long id) {
+
+        touchPointSetupRepository.delete(id);
+
+    }
+
+
 
 }
