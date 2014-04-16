@@ -2,12 +2,12 @@
 
     <div class="col-md-12 text-right">
         <div class="btn-group btn-group-sm">
-            <a ng-href="#touchpoint/setup"  class="btn btn-primary">New SetUp</a>
+            <a ng-href="#"  class="btn btn-primary">option1</a>
         </div>
     </div>
 
     <div class="col-md-12 text-left">
-        <h4 class="text-primary"><b>TouchPoint  List </b> </h4>
+        <h4 class="text-primary"><b>Setup  List </b> </h4>
     </div>
 
 
@@ -21,15 +21,14 @@
             <tr>
                 <th>Name</th>
                 <th></th>
-
             </tr>
 
 
-            <tr ng-repeat="touchpoint in touch_point_list | filter:search">
-                <td>{{touchpoint.name}}</td>
+            <tr ng-repeat="setup in touch_point_setups | filter:search">
+                <td>{{setup.setupName}}</td>
 
                 <td>
-                    <a ng-href="#touchpoint/{{touchpoint.id}}/setup">view</a>
+                    <a ng-href="#setup/{{setup.id}}">view</a>
                 </td>
             </tr>
         </table>

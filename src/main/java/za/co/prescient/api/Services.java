@@ -46,6 +46,10 @@ public class Services {
     @Autowired
     GuestStayDetailRepository guestStayDetailRepository;
 
+    @Autowired
+    TouchPointSetupRepository touchPointSetupRepository;
+
+
 
     @RequestMapping(value = "status")
     public List<UserStatus> getAllUserStatus() {
@@ -333,17 +337,6 @@ public class Services {
     }
 
 
-    @Autowired
-    TouchPointSetupRepository touchPointSetupRepository;
-
-    /*@RequestMapping(value = "tp/setup", method = RequestMethod.POST, consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createSetup(@RequestBody TouchPointSetup touchPointSetup) {
-        LOGGER.info("touchpointsetup invoked");
-        touchPointSetupRepository.save(touchPointSetup);
-    }*/
-
-
     @RequestMapping(value = "tp/setup", method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody TouchPointSetup touchPointSetup) {
@@ -354,6 +347,11 @@ public class Services {
     @RequestMapping(value = "tp/{tpid}/setups")
     public List<TouchPointSetup> getAll(@PathVariable("tpid") Long tpid) {
         return touchPointSetupRepository.findTpSetupsByTpId(tpid);
+    }
+
+    @RequestMapping(value = "tpsetup/{setupId}")
+    public TouchPointSetup getDetail(@PathVariable("setupId") Long id) {
+        return touchPointSetupRepository.findOne(id);
     }
 
 

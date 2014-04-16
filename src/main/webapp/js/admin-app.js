@@ -22,6 +22,16 @@ admin_app.config(['$routeProvider',
                 'templateUrl': 'ui/users/touch-point-setup.html',
                 'controller': 'touch_point_setup_controller'
             })
+
+            .when('/touchpoint/:tpid/setup', {
+                'templateUrl': 'ui/users/setup-list.html',
+                'controller': 'setup_list_controller'
+            })
+
+            .when('/setup/:setupId', {
+                'templateUrl': 'ui/users/view-setup.html',
+                'controller': 'setup_view_controller'
+            })
             .when('/users/create', {
                 'templateUrl': 'ui/users/create.html',
                 'controller': 'create_users_controller'
@@ -111,7 +121,7 @@ admin_app.controller('list_users_controller', function ($scope, $http, $routePar
         });
 });
 
- admin_app.controller('view_users_controller', function ($scope, $http, $routeParams, $cookieStore) {
+admin_app.controller('view_users_controller', function ($scope, $http, $routeParams, $cookieStore) {
     $scope.uId = $routeParams.userId;
     $scope.user_detail;
     $scope.can_reset_password = false;
@@ -712,7 +722,7 @@ admin_app.controller('touch_point_setup_controller', function ($scope, $http, $r
     console.log('touch point setup controller of admin application is loaded');
     $scope.current_user_id = $cookieStore.get("user").id;
     $scope.current_touch_point_list = [];
-    $scope.touch_point_setup={};
+    $scope.touch_point_setup = {};
     console.log('current user id::' + $scope.current_user_id);
     <!-- get all assigned touch point for the current user -->
 
@@ -737,25 +747,54 @@ admin_app.controller('touch_point_setup_controller', function ($scope, $http, $r
             console.log(error);
         });
 
-$scope.setup=function(setup_form)
-{
+    $scope.setup = function (setup_form) {
 
-    console.log('setup is clicked');
-    console.log('touch point setup object::'+$scope.touch_point_setup);
+        console.log('setup is clicked');
+        console.log('touch point setup object::' + $scope.touch_point_setup);
 
-<!-- setup the touch point -->
+        <!-- setup the touch point -->
+        $http({
+            url: 'http://localhost:8080/api/tp/setup',
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")
+            },
+            data: $scope.touch_point_setup
+        }).
+            success(function (data, status) {
+                if (status == 201) {
+                    console.log('touch point  setup is successfull');
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+
+    }
+});
+
+
+admin_app.controller('setup_list_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
+    console.log(' setup list  controller is loaded.....');
+    $scope.touch_point_setups;
+
+    <!-- get all setups by touchpointid -->
+
     $http({
-        url: 'http://localhost:8080/api/tp/setup',
-        method: 'post',
+        url: 'http://localhost:8080/api/tp/' + $routeParams.tpid + '/setups',
+        method: 'get',
         headers: {
-            'Content-Type': 'application/json',
             'Authorization': $cookieStore.get("auth")
-        },
-        data: $scope.touch_point_setup
+        }
     }).
         success(function (data, status) {
-            if (status == 201) {
-                console.log('touch point  setup is successfull');
+            if (status == 200) {
+                $scope.touch_point_setups = data;
+                console.log('touch point setups::' + $scope.touch_point_setups);
+                console.log($scope.touch_point_setups.length);
             } else {
                 console.log('status:' + status);
             }
@@ -763,8 +802,34 @@ $scope.setup=function(setup_form)
         .error(function (error) {
             console.log(error);
         });
+});
 
-}
+
+admin_app.controller('setup_view_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
+    console.log(' setup view  controller is loaded.....');
+    $scope.setup_detail;
+
+    <!-- get  setup detail by setupid -->
+
+    $http({
+        url: 'http://localhost:8080/api/tpsetup/' + $routeParams.setupId,
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.setup_detail=data;
+                console.log('setup detail::'+$scope.setup_detail);
+             } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
 });
 
 
