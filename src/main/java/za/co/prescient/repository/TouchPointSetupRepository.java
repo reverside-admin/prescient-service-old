@@ -10,12 +10,7 @@ import java.util.List;
 @Repository
 public interface TouchPointSetupRepository extends JpaRepository<TouchPointSetup, Long> {
 
- /*
-  * @Query("select  distinct t.guestCard from ItcsTagRead t where t.zone = ?1")
-    List<ItcsTagRead> findTagsInZone(int zoneId);
-   * */
-
-
     @Query("select tps from TouchPointSetup tps where tps.touchPointId = ?1")
     List<TouchPointSetup> findTpSetupsByTpId(Long tpid);
+
 }

@@ -15,7 +15,7 @@ public class GuestCardAllocation {
     private Long id;
 
     @Column
-    private Integer guestCardId;
+    private Integer guestCardId;//TODO: make relationship with GuestCard Table
 
     @ManyToOne
     private GuestProfileDetail guestProfileDetail ;

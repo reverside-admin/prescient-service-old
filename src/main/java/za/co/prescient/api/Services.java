@@ -49,7 +49,8 @@ public class Services {
     @Autowired
     TouchPointSetupRepository touchPointSetupRepository;
 
-
+    @Autowired
+    GuestCardRepository guestCardRepository;
 
     @RequestMapping(value = "status")
     public List<UserStatus> getAllUserStatus() {
@@ -101,7 +102,7 @@ public class Services {
 
     @RequestMapping(value = "users/update/{id}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void update(@PathVariable Long id, @RequestBody UserDetail user) {
+    public void update(@PathVariable ("id") Long id, @RequestBody UserDetail user) {
         UserDetail userDetail = userDetailRepository.findOne(id);
 
         userDetail.setFirstName(user.getFirstName());
@@ -379,6 +380,22 @@ public class Services {
 
     }
 
+    @RequestMapping(value = "guestcards/{msn}/detail")
+    public GuestCard get(@PathVariable ("msn") String msn) {
+        return guestCardRepository.findAGuestCard(msn);
+    }
 
+
+    @RequestMapping(value = "guestcards/{msn}", method = RequestMethod.PUT, consumes = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@PathVariable("msn") String msn, @RequestBody GuestCard guestCard) {
+
+        GuestCard gCard = guestCardRepository.findAGuestCard(msn);
+        LOGGER.info("guestcard1 : "+gCard);
+
+        gCard.setRfidTagNo(guestCard.getRfidTagNo());
+
+        guestCardRepository.save(gCard);
+    }
 
 }

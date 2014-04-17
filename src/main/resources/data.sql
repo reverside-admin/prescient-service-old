@@ -79,5 +79,11 @@ insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_ti
 /*insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, guest_profile_detail_id) values (7, '333', 106, '2010-04-03 00:00:00', '2010-04-07 00:00:00', 106);*/
 
 
+insert into guest_card (id, mag_stripe_no) values (1, 'mag1');
+insert into guest_card (id, mag_stripe_no) values (2, 'mag2');
+insert into guest_card (id, mag_stripe_no) values (3, 'mag3');
+insert into guest_card (id, mag_stripe_no) values (4, 'mag4');
+insert into guest_card (id, mag_stripe_no) values (5, 'mag5');
+
 
 

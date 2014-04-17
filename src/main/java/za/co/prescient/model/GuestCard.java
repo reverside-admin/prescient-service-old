@@ -15,9 +15,9 @@ public class GuestCard {
     private Long id;
 
     @Column
-    private String hotelKey;
+    private String magStripeNo;
 
     @Column
-    private String rfidKey;
+    private String rfidTagNo;
 
 }
