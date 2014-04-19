@@ -2,6 +2,7 @@ package za.co.prescient.api;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import za.co.prescient.model.*;
@@ -94,174 +95,11 @@ public class Services {
         return allTouchPoints;
     }
 
-    @RequestMapping(value = "users", method = RequestMethod.POST, consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody UserDetail user) {
-        LOGGER.info("request received to create user : " + user);
-        user.setPassword("password");
-        userDetailRepository.save(user);
-    }
-
-    @RequestMapping(value = "users/update/{id}", method = RequestMethod.PUT, consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void update(@PathVariable("id") Long id, @RequestBody UserDetail user) {
-        UserDetail userDetail = userDetailRepository.findOne(id);
-
-        userDetail.setFirstName(user.getFirstName());
-        userDetail.setLastName(user.getLastName());
-
-        UserStatus userStatus = new UserStatus();
-        userStatus.setId(user.getUserStatus().getId());
-        userDetail.setUserStatus(userStatus);
-
-        UserType userType = new UserType();
-        userType.setId(user.getUserType().getId());
-        userDetail.setUserType(userType);
-
-        List<Department> departments = new ArrayList<Department>();
-        departments.addAll(user.getDepartments());
-        userDetail.setDepartments(departments);
-
-        List<TouchPoint> touchPoints = new ArrayList<TouchPoint>();
-        touchPoints.addAll(user.getTouchPoints());
-        userDetail.setTouchPoints(touchPoints);
-
-//        Hotel hotel = new Hotel();
-//        hotel.setId(user.getHotel().getId());
-//        userDetail.setHotel(hotel);
-
-        userDetailRepository.save(userDetail);
-    }
-
-    @RequestMapping(value = "users/resetPasswordAdmin/{id}", method = RequestMethod.PUT, consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void resetPasswordByAdmin(@PathVariable Long id, @RequestBody UserDetail user) {
-        UserDetail userDetail = userDetailRepository.findOne(id);
-        userDetail.setPassword("password");
-        userDetailRepository.save(userDetail);
-    }
-
-    @RequestMapping(value = "users/resetPasswordUser/{id}", method = RequestMethod.PUT, consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void resetPasswordByUser(@PathVariable Long id, @RequestBody UserDetail user) {
-        UserDetail userDetail = userDetailRepository.findOne(id);
-        userDetail.setPassword(user.getPassword());
-        userDetailRepository.save(userDetail);
-    }
-
-    @RequestMapping(value = "users/{userId}/tp/having")
-    public List<TouchPoint> getAssignedTouchPoints(@PathVariable("userId") Long userId) {
-        LOGGER.info("Allotted TouchPoints size : " + userDetailRepository.findOne(userId).getTouchPoints().size());
-        List<TouchPoint> touchPoints = userDetailRepository.findOne(userId).getTouchPoints();
-        return touchPoints;
-    }
-
-    @RequestMapping(value = "users/delete/{id}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteUser(@PathVariable("id") Long id, Principal principal) {
-
-        UserDetail userDetail = userDetailRepository.findOne(id);
-
-        if (userDetail.getUserName() == (principal.getName())) {
-            throw new RuntimeException("User Can't delete himself");
-        } else {
-            UserStatus userStatus = new UserStatus();
-            userStatus.setId(Long.valueOf(1));
-            userDetail.setUserStatus(userStatus);
-            userDetailRepository.save(userDetail);
-        }
-    }
-
-
-    /////////////////////////////////
-
-    @RequestMapping(value = "users/{userName}/login")
-    public UserDetail login(@PathVariable("userName") String userName) {
-        LOGGER.info("Login Service Start");
-        UserDetail userDetail = userDetailRepository.findByUserName(userName);
-        LOGGER.info("Login Service End.");
-        return userDetail;
-    }
-
-    @RequestMapping(value = "users")
-    public List<UserDetail> get() {
-        LOGGER.info("Get All UserDetails service");
-        return userDetailRepository.findAll();
-    }
-
-    @RequestMapping(value = "users/{userId}")
-    public UserDetail get(@PathVariable("userId") Long userId) {
-        LOGGER.info("Get a single UserDetail service");
-        return userDetailRepository.findOne(userId);
-    }
-
-    @RequestMapping(value = "users/deleteuser/{id}", method = RequestMethod.PUT, consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void delete(@PathVariable Long id, @RequestBody UserDetail user) {
-        UserDetail userDetail = userDetailRepository.findOne(id);
-        UserStatus userStatus = new UserStatus();
-        userStatus.setId(Long.valueOf(1));
-        userDetail.setUserStatus(userStatus);
-        userDetailRepository.save(userDetail);
-    }
-
     @RequestMapping(value = "users/assignDept/{id}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public void assignDept(@PathVariable Long id, @RequestBody List<Department> departments) {
         UserDetail userDetail = userDetailRepository.findOne(id);
         userDetail.setDepartments(departments);
-        userDetailRepository.save(userDetail);
-    }
-
-    @RequestMapping(value = "users/{userId}/tp/all")
-    public List<TouchPoint> getAllTouchPoints(@PathVariable("userId") Long userId) {
-        UserDetail userDetail = userDetailRepository.findOne(userId);
-        List<Department> departments = userDetail.getDepartments();
-        LOGGER.info(departments.size());
-        List<TouchPoint> touchPoints = new ArrayList<TouchPoint>();
-        List<TouchPoint> allTouchPoints = new ArrayList<TouchPoint>();
-        for (Department obj : departments) {
-            LOGGER.info("Dept  : " + obj.getId() + " " + obj.getName());
-            touchPoints = touchPointRepository.findTouchPointByDepartmentId(obj.getId());
-            allTouchPoints.addAll(touchPoints);
-            LOGGER.info("touchPoints : " + touchPoints);
-            LOGGER.info("touchPoints 1 : " + allTouchPoints);
-        }
-        LOGGER.info("touchPoints1 : " + touchPoints);
-
-        return allTouchPoints;
-    }
-
-    @RequestMapping(value = "users/{userId}/tp/notHaving")
-    public List<TouchPoint> getNotAllottedTouchpoints(@PathVariable("userId") Long userId) {
-        UserDetail userDetail = userDetailRepository.findOne(userId);
-        List<Department> departments = userDetail.getDepartments();
-        List<TouchPoint> touchPoints;
-        List<TouchPoint> allTouchPoints = new ArrayList<TouchPoint>();
-        for (Department obj : departments) {
-            touchPoints = touchPointRepository.findTouchPointByDepartmentId(obj.getId());
-            allTouchPoints.addAll(touchPoints);
-        }
-        List<TouchPoint> superSet = new ArrayList(allTouchPoints);
-        List<TouchPoint> subSet = new ArrayList(userDetailRepository.findOne(userId).getTouchPoints());
-        superSet.removeAll(subSet);
-        for (TouchPoint obj : superSet) {
-            LOGGER.info("TP Not Allotted till now : " + obj.getId() + " " + obj.getName());
-        }
-        return superSet;
-    }
-
-//    @RequestMapping(value = "users/{userId}/tp/having")
-//    public List<TouchPoint> getAllottedTouchPoints(@PathVariable("userId") Long userId) {
-//        LOGGER.info("Allotted Departments : " + userDetailRepository.findOne(userId).getTouchPoints());
-//        return userDetailRepository.findOne(userId).getTouchPoints();
-//    }
-
-    @RequestMapping(value = "users/assignTP/{id}", method = RequestMethod.PUT, consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void assignTP(@PathVariable Long id, @RequestBody List<TouchPoint> touchPoints) {
-        UserDetail userDetail = userDetailRepository.findOne(id);
-        userDetail.setTouchPoints(touchPoints);
         userDetailRepository.save(userDetail);
     }
 
@@ -305,15 +143,6 @@ public class Services {
         LOGGER.info("Allotted Departments : " + userDetailRepository.findOne(userId).getDepartments());
         return userDetailRepository.findOne(userId).getDepartments();
     }
-
-    @RequestMapping(value = "departments/{departmentId}/touchpoints")
-    public List<TouchPoint> touchpoints(@PathVariable("departmentId") Long departmentId) {
-        LOGGER.info("Get All Touch Points by DepartmentId service");
-        return touchPointRepository.findTouchPointByDepartmentId(departmentId);
-    }
-
-
-    // Test
 
     @RequestMapping(value = "touchpoints/guestCardIds/all")
     public List<ItcsTagRead> getGuestIds() {

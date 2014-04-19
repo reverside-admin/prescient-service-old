@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface TouchPointRepository extends JpaRepository<TouchPoint, Long> {
+
     public List<TouchPoint> findTouchPointByDepartmentId(@Param("departmentId") Long departmentId);
 
 }

@@ -5,9 +5,9 @@
 /**
  * Created by Bibhuti on 2014/03/29.
  */
-var login_app = angular.module('login_app', []);
+var login_app = angular.module('login_app1', []);
 
-login_app.controller("login_app_controller", function ($scope) {
+login_app1.controller("login_app_controller1", function ($scope) {
     $scope.message = "Hello World";
 
     $scope.login = function(username, password){
