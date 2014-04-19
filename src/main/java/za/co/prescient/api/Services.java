@@ -9,6 +9,8 @@ import za.co.prescient.repository.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -102,7 +104,7 @@ public class Services {
 
     @RequestMapping(value = "users/update/{id}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void update(@PathVariable ("id") Long id, @RequestBody UserDetail user) {
+    public void update(@PathVariable("id") Long id, @RequestBody UserDetail user) {
         UserDetail userDetail = userDetailRepository.findOne(id);
 
         userDetail.setFirstName(user.getFirstName());
@@ -374,14 +376,14 @@ public class Services {
 
     @RequestMapping(value = "tpsetup/{id}/delete", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
-    public void delete(@PathVariable ("id") Long id) {
+    public void delete(@PathVariable("id") Long id) {
 
         touchPointSetupRepository.delete(id);
 
     }
 
     @RequestMapping(value = "guestcards/{msn}/detail")
-    public GuestCard get(@PathVariable ("msn") String msn) {
+    public GuestCard get(@PathVariable("msn") String msn) {
         return guestCardRepository.findAGuestCard(msn);
     }
 
@@ -391,11 +393,33 @@ public class Services {
     public void update(@PathVariable("msn") String msn, @RequestBody GuestCard guestCard) {
 
         GuestCard gCard = guestCardRepository.findAGuestCard(msn);
-        LOGGER.info("guestcard1 : "+gCard);
-
+        LOGGER.info("guestcard1 : " + gCard);
         gCard.setRfidTagNo(guestCard.getRfidTagNo());
-
         guestCardRepository.save(gCard);
     }
+
+    @RequestMapping(value = "guestcards", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void importCards(@RequestBody LinkedHashMap linkedHashMap) {
+        LOGGER.info("file data::" + linkedHashMap.get("fileData"));
+        String str = linkedHashMap.get("fileData").toString();
+        LOGGER.info("str::" + str);
+        String resultStr[] = str.split("\n");
+        LOGGER.info("No of cards::" + resultStr.length);
+        GuestCard guestCard;
+        for(String obj:resultStr)
+        {
+            guestCard=new GuestCard();
+            guestCard.setMagStripeNo(obj.trim());
+            guestCardRepository.save(guestCard);
+        }
+    }
+
+
+    @RequestMapping(value = "guestcards/all")
+    public List<GuestCard> getall() {
+        return guestCardRepository.findAll();
+    }
+
 
 }

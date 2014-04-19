@@ -32,6 +32,15 @@ admin_app.config(['$routeProvider',
                 'templateUrl': 'ui/users/view-setup.html',
                 'controller': 'setup_view_controller'
             })
+            .when('/setup/update/:setupId', {
+                'templateUrl': 'ui/users/edit-setup.html',
+                'controller': 'edit_setup_controller'
+            })
+
+            .when('/setup/delete/:setupId', {
+                'templateUrl': 'ui/users/delete-setup.html',
+                'controller': 'delete_setup_controller'
+            })
             .when('/users/create', {
                 'templateUrl': 'ui/users/create.html',
                 'controller': 'create_users_controller'
@@ -121,6 +130,7 @@ admin_app.controller('list_users_controller', function ($scope, $http, $routePar
         });
 });
 
+
 admin_app.controller('view_users_controller', function ($scope, $http, $routeParams, $cookieStore) {
     $scope.uId = $routeParams.userId;
     $scope.user_detail;
@@ -153,6 +163,7 @@ admin_app.controller('view_users_controller', function ($scope, $http, $routePar
             console.log(error);
         });
 });
+
 
 admin_app.controller('update_users_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
     $scope.uId = $routeParams.userId;
@@ -683,11 +694,130 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
     }
 });
 
+
 admin_app.controller('access_card_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
     $scope.reset_mode = false;
+    $scope.content;
+    $scope.magStripeNo;
+    $scope.rfidTagNo;
+    $scope.access_card_detail = {};
+
+    $scope.showContent = function ($fileContent) {
+        $scope.content = $fileContent;
+        $scope.data = {"fileData": $scope.content};
+        console.log('File Data::' + $scope.data.fileData);
+        console.log('File Content Type is::' + typeof $scope.content);
+    };
+
+    $scope.import = function () {
+        console.log('import is in progress');
+        $http({
+            url: 'http://localhost:8080/api/guestcards',
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")
+            },
+            data: $scope.data
+        }).
+            success(function (data, status) {
+                if (status == 201) {
+                    console.log('imported successfully');
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+    }
+
+    $scope.checkCard = function () {
+        console.log('check card function is called...');
 
 
-});
+        $http({
+            url: 'http://localhost:8080/api/guestcards/' + $scope.access_card_detail.magStripeNo + '/detail',
+            method: 'get',
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")
+            }
+        }).
+            success(function (data, status) {
+                if (status == 200) {
+                    console.log('check successful');
+                    $scope.access_card_detail.rfidTagNo = data.rfidTagNo;
+                    $scope.magStripeNo = data.magStripeNo;
+                    console.log('magStripeNO::' + data.magStripeNo);
+
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+
+    }
+
+
+    $scope.reset = function () {
+        console.log('reset values');
+        $scope.magStripeNo = null;
+    }
+
+    $scope.saveCard = function () {
+        console.log('save card is called......');
+        console.log($scope.access_card_detail.magStripeNo);
+        console.log($scope.access_card_detail.rfidTagNo);
+
+
+        $http({
+            url: 'http://localhost:8080/api/guestcards/' + $scope.access_card_detail.magStripeNo,
+            method: 'put',
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")
+            },
+            data: $scope.access_card_detail
+
+
+        }).
+            success(function (data, status) {
+                if (status == 200) {
+                    console.log('successfully done');
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+
+
+    }
+})
+    .directive('onReadFile', function ($parse) {
+        return {
+            restrict: 'A',
+            scope: false,
+            link: function (scope, element, attrs) {
+                var fn = $parse(attrs.onReadFile);
+
+                element.on('change', function (onChangeEvent) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (onLoadEvent) {
+                        scope.$apply(function () {
+                            fn(scope, {$fileContent: onLoadEvent.target.result});
+                        });
+                    };
+
+                    reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
+                });
+            }
+        };
+    });
+
 
 admin_app.controller('touch_point_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
     console.log('touch point controller of admin is loaded');
@@ -820,15 +950,120 @@ admin_app.controller('setup_view_controller', function ($scope, $http, $routePar
     }).
         success(function (data, status) {
             if (status == 200) {
-                $scope.setup_detail=data;
-                console.log('setup detail::'+$scope.setup_detail);
-             } else {
+                $scope.setup_detail = data;
+                console.log('setup detail::' + $scope.setup_detail);
+            } else {
                 console.log('status:' + status);
             }
         })
         .error(function (error) {
             console.log(error);
         });
+
+});
+
+
+admin_app.controller('edit_setup_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
+    console.log('edit setup controller is loaded');
+    $scope.setup_detail = {};
+
+    <!-- view  setup detail by setupid -->
+
+    $http({
+        url: 'http://localhost:8080/api/tpsetup/' + $routeParams.setupId,
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.setup_detail = data;
+                console.log('setup detail::' + $scope.setup_detail);
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+    $scope.update = function () {
+        console.log('update setup is called');
+        $http({
+            url: 'http://localhost:8080/api/tpsetup/' + $routeParams.setupId,
+            method: 'put',
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")
+            },
+            data: $scope.setup_detail
+
+
+        }).
+            success(function (data, status) {
+                if (status == 200) {
+                    console.log('touch point setup updated successfully');
+                    $location.url('setup/' + $scope.setup_detail.id);
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+    }
+
+});
+
+
+admin_app.controller('delete_setup_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
+    console.log('delete setup controller is loaded');
+    $scope.setup_detail;
+
+    <!-- view  setup detail by setupid -->
+
+    $http({
+        url: 'http://localhost:8080/api/tpsetup/' + $routeParams.setupId,
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.setup_detail = data;
+                console.log('setup detail::' + $scope.setup_detail);
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+    $scope.delete = function () {
+        console.log('delete setup is called');
+        $http({
+            url: 'http://localhost:8080/api/tpsetup/' + $routeParams.setupId + '/delete',
+            method: 'delete',
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")
+            }
+        }).
+            success(function (data, status) {
+                if (status == 301) {
+                    console.log('touch point setup deleted successfully');
+                } else {
+                    console.log('status:' + status);
+                    console.log('error in delete setup');
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+
+
+    }
 
 });
 
