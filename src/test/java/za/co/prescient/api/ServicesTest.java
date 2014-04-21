@@ -2,7 +2,6 @@
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -43,6 +42,11 @@ public class ServicesTest {
     UserDetailRepository userDetailRepository;
 
     Services services;
+    StatusService statusService;
+    UserTypeService userTypeService;
+    HotelService hotelService;
+    DepartmentService departmentService;
+    TouchPointService touchPointService;
     Long hotelId;
 
     List<UserStatus> userStatusList;
@@ -55,14 +59,19 @@ public class ServicesTest {
     @Before
     public void setup() {
         services = new Services();
+        statusService = new StatusService();
+        userTypeService = new UserTypeService();
+        hotelService = new HotelService();
+        departmentService = new DepartmentService();
+        touchPointService = new TouchPointService();
 
         hotelId = 1L;
 
-        setField(services, "userStatusRepository", userStatusRepository);
-        setField(services, "userTypeRepository", userTypeRepository);
-        setField(services, "hotelRepository", hotelRepository);
-        setField(services, "departmentRepository", departmentRepository);
-        setField(services, "touchPointRepository", touchPointRepository);
+        setField(statusService, "userStatusRepository", userStatusRepository);
+        setField(userTypeService, "userTypeRepository", userTypeRepository);
+        setField(hotelService, "hotelRepository", hotelRepository);
+        setField(departmentService, "departmentRepository", departmentRepository);
+        setField(touchPointService, "touchPointRepository", touchPointRepository);
         setField(services, "userDetailRepository", userDetailRepository);
 
 
@@ -78,7 +87,7 @@ public class ServicesTest {
     public void shouldCallUserStatusRepositoryForGetAllUserStatus() {
         when(userStatusRepository.findAll()).thenReturn(userStatusList);
 
-        services.getAllUserStatus();
+        statusService.getAllUserStatus();
 
         verify(userStatusRepository, times(1)).findAll();
     }
@@ -87,7 +96,7 @@ public class ServicesTest {
     public void shouldReturnNonEmptyListWhenUserStatusRepositoryReturnsNonEmptyListForGetAllUserStatus() {
         when(userStatusRepository.findAll()).thenReturn(userStatusList);
 
-        List<UserStatus> result = services.getAllUserStatus();
+        List<UserStatus> result = statusService.getAllUserStatus();
 
         assertEquals(result.size(), userStatusList.size());
         assertEquals(result.get(0), userStatusList.get(0));
@@ -99,7 +108,7 @@ public class ServicesTest {
     public void shouldReturnEmptyListWhenUserStatusRepositoryReturnsEmptyListForGetAllUserStatus() {
         when(userStatusRepository.findAll()).thenReturn(new ArrayList<UserStatus>());
 
-        List<UserStatus> result = services.getAllUserStatus();
+        List<UserStatus> result = statusService.getAllUserStatus();
 
         assertEquals(0, result.size());
     }
@@ -108,7 +117,7 @@ public class ServicesTest {
     public void shouldCallUserRoleRepositoryForGetAllUserRole() {
         when(userTypeRepository.findAll()).thenReturn(userTypeList);
 
-        services.getAllUserRoles();
+        userTypeService.getAllUserRoles();
 
         verify(userTypeRepository, times(1)).findAll();
     }
@@ -117,7 +126,7 @@ public class ServicesTest {
     public void shouldReturnNonEmptyListWhenUserTypeRepositoryReturnsNonEmptyListForGetAllUserRoles() {
         when(userTypeRepository.findAll()).thenReturn(userTypeList);
 
-        List<UserType> result = services.getAllUserRoles();
+        List<UserType> result = userTypeService.getAllUserRoles();
 
         assertEquals(result.size(), userTypeList.size());
         assertEquals(result.get(0), userTypeList.get(0));
@@ -129,7 +138,7 @@ public class ServicesTest {
     public void shouldReturnEmptyListWhenUserTypesRepositoryReturnsEmptyListForGetAllUserRoles() {
         when(userTypeRepository.findAll()).thenReturn(new ArrayList<UserType>());
 
-        List<UserType> result = services.getAllUserRoles();
+        List<UserType> result = userTypeService.getAllUserRoles();
 
         assertEquals(0, result.size());
     }
@@ -138,7 +147,7 @@ public class ServicesTest {
     public void shouldCallHotelRepositoryForGetAllHotels() {
         when(hotelRepository.findAll()).thenReturn(hotelList);
 
-        services.getAllHotels();
+        hotelService.getHotels();
 
         verify(hotelRepository, times(1)).findAll();
     }
@@ -147,7 +156,7 @@ public class ServicesTest {
     public void shouldReturnNonEmptyListWhenHotelRepositoryReturnsNonEmptyListForGetAllHotels() {
         when(hotelRepository.findAll()).thenReturn(hotelList);
 
-        List<Hotel> result = services.getAllHotels();
+        List<Hotel> result = hotelService.getHotels();
 
         assertEquals(result.size(), hotelList.size());
         assertEquals(result.get(0), hotelList.get(0));
@@ -159,7 +168,7 @@ public class ServicesTest {
     public void shouldReturnEmptyListWhenHotelRepositoryReturnsEmptyListForGetAllHotels() {
         when(hotelRepository.findAll()).thenReturn(new ArrayList<Hotel>());
 
-        List<Hotel> result = services.getAllHotels();
+        List<Hotel> result = hotelService.getHotels();
 
         assertEquals(0, result.size());
     }
@@ -169,7 +178,7 @@ public class ServicesTest {
 
         when(departmentRepository.findByHotelId(hotelId)).thenReturn(departmentList);
 
-        services.getDepartments(hotelId);
+        departmentService.getAllDepartmentsByHotel(hotelId);
 
         verify(departmentRepository, times(1)).findByHotelId(hotelId);
     }
@@ -178,7 +187,7 @@ public class ServicesTest {
     public void shouldReturnNonEmptyListWhenDepartmentRepositoryReturnsNonEmptyListForGetDepartments() {
         when(departmentRepository.findByHotelId(hotelId)).thenReturn(departmentList);
 
-        List<Department> result = services.getDepartments(hotelId);
+        List<Department> result = departmentService.getAllDepartmentsByHotel(hotelId);
 
         assertEquals(result.size(), departmentList.size());
         assertEquals(result.get(0), departmentList.get(0));
@@ -190,7 +199,7 @@ public class ServicesTest {
     public void shouldReturnEmptyListWhenDepartmentRepositoryReturnsEmptyListForGetDepartments() {
         when(departmentRepository.findAll()).thenReturn(new ArrayList<Department>());
 
-        List<Department> result = services.getDepartments(hotelId);
+        List<Department> result = departmentService.getAllDepartmentsByHotel(hotelId);
 
         assertEquals(0, result.size());
     }
@@ -208,7 +217,7 @@ public class ServicesTest {
         when(department2.getId()).thenReturn(2L);
         when(touchPointRepository.findTouchPointByDepartmentId(2L)).thenReturn(asList(mock(TouchPoint.class)));
 
-        services.getAllTouchPointsByDepts(asList(department1, department2));
+        touchPointService.getAllTouchPointsByDepts(asList(department1, department2));
 
         verify(touchPointRepository, times(2)).findTouchPointByDepartmentId(departmentIdCaptor.capture());
 
@@ -227,7 +236,7 @@ public class ServicesTest {
         when(department2.getId()).thenReturn(2L);
         when(touchPointRepository.findTouchPointByDepartmentId(2L)).thenReturn(asList(mock(TouchPoint.class)));
 
-        List<TouchPoint> result = services.getAllTouchPointsByDepts(asList(department1, department2));
+        List<TouchPoint> result = touchPointService.getAllTouchPointsByDepts(asList(department1, department2));
 
         assertEquals(3, result.size());
     }
@@ -238,19 +247,9 @@ public class ServicesTest {
         when(department1.getId()).thenReturn(1L);
         when(touchPointRepository.findTouchPointByDepartmentId(1L)).thenReturn(new ArrayList<TouchPoint>());
 
-        List<TouchPoint> result = services.getAllTouchPointsByDepts(asList(department1));
+        List<TouchPoint> result = touchPointService.getAllTouchPointsByDepts(asList(department1));
 
         assertEquals(0, result.size());
-    }
-
-    @Ignore
-    @Test
-    public void shouldCallUserDetailRepositoryForGetAssignedTouchPoints() {
-        when(userDetailRepository.findOne(1L).getTouchPoints()).thenReturn(touchPointList);
-
-        services.getAssignedTouchPoints(1L);
-
-        verify(userDetailRepository, times(1)).findOne(1L).getTouchPoints();
     }
 
 }
