@@ -2,7 +2,9 @@
 
     <div class="col-md-12 text-right">
         <div class="btn-group btn-group-sm">
-            <a ng-href="#"  class="btn btn-primary">option1</a>
+            <a ng-href="#touchpoint/setup/{{current_touch_point_id}}"  class="btn btn-primary">SetUp</a>
+            <a ng-href="#users/touchpoint"  class="btn btn-primary">Back</a>
+
         </div>
     </div>
 
@@ -28,12 +30,11 @@
                 <td>{{setup.setupName}}</td>
 
                 <td>
-                    <a ng-href="#setup/{{setup.id}}">view</a>
+                    <a ng-href="#touchpoint/{{current_touch_point_id}}/setups/{{setup.id}}">view</a>
                 </td>
             </tr>
         </table>
     </div>
 </div>
-
 
 

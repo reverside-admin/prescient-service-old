@@ -1,4 +1,4 @@
-package za.co.prescient.api;
+/*package za.co.prescient.api;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -254,3 +254,4 @@ public class ServicesTest {
     }
 
 }
+*/

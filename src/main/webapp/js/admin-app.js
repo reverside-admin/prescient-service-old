@@ -14,30 +14,38 @@ admin_app.config(['$routeProvider',
                 'templateUrl': 'ui/users/access-card.html',
                 'controller': 'access_card_controller'
             })
+            .when('/users/accesscard/import', {
+                'templateUrl': 'ui/users/import-key-card.html',
+                'controller': 'access_card_controller'
+            })
+            .when('/users/accesscard/register', {
+                'templateUrl': 'ui/users/register-cards.html',
+                'controller': 'access_card_controller'
+            })
             .when('/users/touchpoint', {
                 'templateUrl': 'ui/users/touch-point.html',
                 'controller': 'touch_point_controller'
             })
-            .when('/touchpoint/setup', {
+            .when('/touchpoint/setup/:setupId', {
                 'templateUrl': 'ui/users/touch-point-setup.html',
                 'controller': 'touch_point_setup_controller'
             })
 
-            .when('/touchpoint/:tpid/setup', {
+            .when('/touchpoint/:tpid/setups', {
                 'templateUrl': 'ui/users/setup-list.html',
                 'controller': 'setup_list_controller'
             })
 
-            .when('/setup/:setupId', {
+            .when('/touchpoint/:tpId/setups/:setupId', {
                 'templateUrl': 'ui/users/view-setup.html',
                 'controller': 'setup_view_controller'
             })
-            .when('/setup/update/:setupId', {
+            .when('/touchpoint/:tpId/setup/update/:setupId', {
                 'templateUrl': 'ui/users/edit-setup.html',
                 'controller': 'edit_setup_controller'
             })
 
-            .when('/setup/delete/:setupId', {
+            .when('/touchpoint/:tpId/setup/delete/:setupId', {
                 'templateUrl': 'ui/users/delete-setup.html',
                 'controller': 'delete_setup_controller'
             })
@@ -49,7 +57,7 @@ admin_app.config(['$routeProvider',
                 'templateUrl': 'ui/users/view.html',
                 'controller': 'view_users_controller'
             })
-            .when('/users/reset/:userId', {
+            .when('/users/reset/:userId/password', {
                 'templateUrl': 'ui/users/reset-password.html',
                 'controller': 'reset_users_controller'
             })
@@ -57,7 +65,7 @@ admin_app.config(['$routeProvider',
                 'templateUrl': 'ui/users/update.html',
                 'controller': 'update_users_controller'
             })
-            .when('/users/delete/:userId', {
+            .when('/users/:userId/update/status/:userStatus', {
                 'templateUrl': 'ui/users/delete.html',
                 'controller': 'delete_users_controller'
             })
@@ -130,7 +138,6 @@ admin_app.controller('list_users_controller', function ($scope, $http, $routePar
         });
 });
 
-
 admin_app.controller('view_users_controller', function ($scope, $http, $routeParams, $cookieStore) {
     $scope.uId = $routeParams.userId;
     $scope.user_detail;
@@ -153,7 +160,9 @@ admin_app.controller('view_users_controller', function ($scope, $http, $routePar
                 if ($scope.user_detail.userStatus.status == 'disable') {
                     $scope.can_reset_password = true;
                     $scope.can_edit = true;
-                } else {
+                }
+                if ($scope.user_detail.id == $cookieStore.get("user").id) {
+                    $scope.can_reset_password = true;
                 }
             } else {
                 console.log('status:' + status);
@@ -631,6 +640,7 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
     $scope.delete_button_status;
     $scope.delete_message;
     $scope.uId = $routeParams.userId;
+    $scope.userStatus = $routeParams.userStatus;
     $scope.user_detail = {};
     $http({
         url: 'http://localhost:8080/api/users/' + $scope.uId,
@@ -666,7 +676,7 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
     $scope.delete = function () {
         console.log('delete');
         $http({
-            url: 'http://localhost:8080/api/users/delete/' + $scope.uId,
+            url: 'http://localhost:8080/api/users/' + $scope.uId + '/update/status/' + $scope.userStatus,
             method: 'get',
             headers: { 'Content-Type': 'application/json',
                 'Authorization': $cookieStore.get("auth")
@@ -700,7 +710,36 @@ admin_app.controller('access_card_controller', function ($scope, $http, $routePa
     $scope.content;
     $scope.magStripeNo;
     $scope.rfidTagNo;
+    $scope.message;
+    $scope.guest_cards;
+    $scope.editable=true;
     $scope.access_card_detail = {};
+    $scope.card_detail={};
+
+    <!-- find all guest cards -->
+
+
+    $http({
+        url: 'http://localhost:8080/api/guestcards/all',
+        method: 'get',
+        headers: { 'Content-Type': 'application/json',
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                console.log('all guest cards returned successfully');
+
+                $scope.guest_cards = data;
+
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
 
     $scope.showContent = function ($fileContent) {
         $scope.content = $fileContent;
@@ -723,6 +762,8 @@ admin_app.controller('access_card_controller', function ($scope, $http, $routePa
             success(function (data, status) {
                 if (status == 201) {
                     console.log('imported successfully');
+                    $location.url('users/accesscard');
+
                 } else {
                     console.log('status:' + status);
                 }
@@ -746,9 +787,13 @@ admin_app.controller('access_card_controller', function ($scope, $http, $routePa
             success(function (data, status) {
                 if (status == 200) {
                     console.log('check successful');
+
                     $scope.access_card_detail.rfidTagNo = data.rfidTagNo;
                     $scope.magStripeNo = data.magStripeNo;
                     console.log('magStripeNO::' + data.magStripeNo);
+                    if (!data.magStripeNo) {
+                        $scope.message = 'Invalid Room Key Card';
+                    }
 
                 } else {
                     console.log('status:' + status);
@@ -764,6 +809,30 @@ admin_app.controller('access_card_controller', function ($scope, $http, $routePa
     $scope.reset = function () {
         console.log('reset values');
         $scope.magStripeNo = null;
+        $scope.message = null;
+    }
+
+    $scope.testing=function(magstripeno,rfidtagno)
+    {
+        $scope.card_detail.magStripeNo=magstripeno;
+        $scope.card_detail.rfidTagNo=rfidtagno;
+        console.log('test method is called...'+$scope.card_detail.magStripeNo+'::'+$scope.card_detail.rfidTagNo);
+
+        $http({
+            url: 'http://localhost:8080/api/guestcards/' + $scope.card_detail.magStripeNo,
+            method: 'put',
+            headers: { 'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")
+            },
+            data: $scope.card_detail
+        }).
+            success(function (data, status) {
+                    console.log('saved'+status);
+                $scope.editable=true;
+             })
+            .error(function (error) {
+                console.log(error);
+            });
     }
 
     $scope.saveCard = function () {
@@ -785,6 +854,9 @@ admin_app.controller('access_card_controller', function ($scope, $http, $routePa
             success(function (data, status) {
                 if (status == 200) {
                     console.log('successfully done');
+                    $scope.magStripeNo = null;
+                    $scope.access_card_detail.magStripeNo = null;
+                    $scope.message = 'saved successfully';
                 } else {
                     console.log('status:' + status);
                 }
@@ -792,8 +864,6 @@ admin_app.controller('access_card_controller', function ($scope, $http, $routePa
             .error(function (error) {
                 console.log(error);
             });
-
-
     }
 })
     .directive('onReadFile', function ($parse) {
@@ -827,7 +897,7 @@ admin_app.controller('touch_point_controller', function ($scope, $http, $routePa
 
     <!-- get all assigned Touch Points -->
     $http({
-        url: 'http://localhost:8080/api/users/' + $scope.current_user_id + '/tp/having',
+        url: 'http://localhost:8080/api/login/touchpoints',
         method: 'get',
         headers: {
             'Authorization': $cookieStore.get("auth")
@@ -853,12 +923,14 @@ admin_app.controller('touch_point_setup_controller', function ($scope, $http, $r
     $scope.current_user_id = $cookieStore.get("user").id;
     $scope.current_touch_point_list = [];
     $scope.touch_point_setup = {};
+    $scope.current_touch_point_id = $routeParams.setupId;
     console.log('current user id::' + $scope.current_user_id);
+    console.log('current touchpoint id::' + $scope.current_touch_point_id);
     <!-- get all assigned touch point for the current user -->
 
 
     $http({
-        url: 'http://localhost:8080/api/users/' + $scope.current_user_id + '/tp/having',
+        url: 'http://localhost:8080/api/login/touchpoints',
         method: 'get',
         headers: {
             'Authorization': $cookieStore.get("auth")
@@ -895,6 +967,8 @@ admin_app.controller('touch_point_setup_controller', function ($scope, $http, $r
             success(function (data, status) {
                 if (status == 201) {
                     console.log('touch point  setup is successfull');
+                    var redirect_url = 'touchpoint/' + $scope.current_touch_point_id + '/setups';
+                    $location.url(redirect_url);
                 } else {
                     console.log('status:' + status);
                 }
@@ -910,6 +984,7 @@ admin_app.controller('touch_point_setup_controller', function ($scope, $http, $r
 admin_app.controller('setup_list_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
     console.log(' setup list  controller is loaded.....');
     $scope.touch_point_setups;
+    $scope.current_touch_point_id = $routeParams.tpid;
 
     <!-- get all setups by touchpointid -->
 
@@ -938,6 +1013,7 @@ admin_app.controller('setup_list_controller', function ($scope, $http, $routePar
 admin_app.controller('setup_view_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
     console.log(' setup view  controller is loaded.....');
     $scope.setup_detail;
+    $scope.current_touch_point_id = $routeParams.tpId;
 
     <!-- get  setup detail by setupid -->
 
@@ -966,6 +1042,7 @@ admin_app.controller('setup_view_controller', function ($scope, $http, $routePar
 admin_app.controller('edit_setup_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
     console.log('edit setup controller is loaded');
     $scope.setup_detail = {};
+    $scope.current_touch_point_id = $routeParams.tpId;
 
     <!-- view  setup detail by setupid -->
 
@@ -1003,7 +1080,8 @@ admin_app.controller('edit_setup_controller', function ($scope, $http, $routePar
             success(function (data, status) {
                 if (status == 200) {
                     console.log('touch point setup updated successfully');
-                    $location.url('setup/' + $scope.setup_detail.id);
+                    var redirect_url = '/touchpoint/' + $scope.current_touch_point_id + '/setups/' + $scope.setup_detail.id
+                    $location.url(redirect_url);
                 } else {
                     console.log('status:' + status);
                 }
@@ -1019,6 +1097,7 @@ admin_app.controller('edit_setup_controller', function ($scope, $http, $routePar
 admin_app.controller('delete_setup_controller', function ($scope, $http, $routeParams, $location, $cookieStore) {
     console.log('delete setup controller is loaded');
     $scope.setup_detail;
+    $scope.current_touch_point_id = $routeParams.tpId;
 
     <!-- view  setup detail by setupid -->
 
@@ -1061,10 +1140,9 @@ admin_app.controller('delete_setup_controller', function ($scope, $http, $routeP
             .error(function (error) {
                 console.log(error);
             });
-
-
+        console.log('deleted......');
+        $location.url('touchpoint/' + $scope.current_touch_point_id + '/setups');
     }
-
 });
 
 
@@ -1092,19 +1170,18 @@ admin_app.controller('reset_users_controller', function ($scope, $http, $routePa
         });
 
     $scope.reset = function () {
-        console.log('password is reset');
+        console.log('password reset is called');
         $http({
-            url: 'http://localhost:8080/api/users/resetPasswordAdmin/' + $scope.uId,
-            method: 'put',
+            url: 'http://localhost:8080/api/users/' + $scope.uId + '/reset/password',
+            method: 'get',
             headers: { 'Content-Type': 'application/json',
                 'Authorization': $cookieStore.get("auth")
-            },
-            data: $scope.user_detail
-
+            }
         }).
             success(function (data, status) {
-                if (status == 201) {
+                if (status == 200) {
                     $location.url('users/view/' + $scope.uId);
+                    console.log('password reset successfully');
                 } else {
                     console.log('status:' + status);
                 }
@@ -1205,3 +1282,46 @@ admin_app.controller('add_touch_points_controller', function ($scope, $http, $ro
 
 });
 
+admin_app.controller('import_key_card_controller', function ($scope, $http, $location, $cookieStore, $window) {
+    console.log('import room key card controller is loaded');
+    $scope.reset_mode = false;
+    $scope.content;
+    $scope.magStripeNo;
+    $scope.rfidTagNo;
+    $scope.access_card_detail = {};
+
+    $scope.showContent = function ($fileContent) {
+        $scope.content = $fileContent;
+        $scope.data = {"fileData": $scope.content};
+        console.log('File Data::' + $scope.data.fileData);
+        console.log('File Content Type is::' + typeof $scope.content);
+    };
+
+    $scope.import = function () {
+        console.log('import is in progress');
+        $http({
+            url: 'http://localhost:8080/api/guestcards',
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")
+            },
+            data: $scope.data
+        }).
+            success(function (data, status) {
+                if (status == 201) {
+                    console.log('imported successfully');
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+    }
+
+});
+
+admin_app.controller('register_cards_controller', function ($scope, $http, $location, $cookieStore, $window) {
+    console.log('register room key card controller is loaded');
+});

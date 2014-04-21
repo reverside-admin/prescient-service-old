@@ -1,48 +1,37 @@
 <div class="col-md-12">
 
-
     <div class="col-md-12 text-right">
         <div class="btn-group btn-group-sm">
-            <a class="btn btn-primary" ng-click="reset_mode=true" ng-show="!reset_mode">Register Card</a>
-            <a class="btn btn-primary" ng-click="reset_mode=false" ng-show="reset_mode">Import Cards</a>
+            <a ng-href="#users/accesscard/import" class="btn btn-primary">Import Cards</a>
+            <a ng-href="#users/accesscard/register" class="btn btn-primary">Register Cards</a>
+            <a ng-href="#" class="btn btn-primary">Back</a>
         </div>
     </div>
 
-
-    <div ng-show="!reset_mode" style="width: 20%; margin-left: auto;margin-right: auto;margin-top: 10%;">
-        <div class="form-group" style="text-align: center;">
-            <label>Import Card</label>
-        </div>
-
-        <div class="form-group" style="text-align: center;">
-             <input type="file" class="form-control"   on-read-file="showContent($fileContent)"/>
-        </div>
-
-        <div class="form-group" style="text-align: center;">
-             <input type="button" class="btn btn-primary" value="import" ng-click="import()">
-         </div>
+    <div class="col-md-12 text-left">
+        <h4 class="text-primary"><b>AccessCard List </b></h4>
     </div>
 
-
-
-
-
-    <div style="width: 20%; margin-left: auto;margin-right: auto;margin-top: 10%;" ng-show="reset_mode">
-        <div class="form-group" style="text-align: center;">
-            <label>Register New Card</label>
-        </div>
-
-        <div class="form-group">
-            <input type="text" class="form-control" ng-Change="reset()"  placeholder="Room Key Card No" ng-model="access_card_detail.magStripeNo" required>
-        </div>
-
-        <div class="form-group" ng-if="magStripeNo">
-            <input type="text" class="form-control"   placeholder="RFID Tag No" ng-model="access_card_detail.rfidTagNo" required>
-        </div>
-
-        <div class="form-group" style="text-align: center;">
-            <input type="button" class="btn btn-primary" value="Check" ng-click="checkCard()"/>
-            <input type="button" class="btn btn-primary" value="Save" ng-if="magStripeNo" ng-click="saveCard()"/>
-        </div>
+    <div class="col-md-12 text-right">
+        <h5>  <input type="text" ng-model="search" placeholder="Search"/></h5>
     </div>
+
+    <div class="col-md-12">
+        <table class="table table-hover table-condensed table-striped table-responsive">
+            <tr>
+                <th>RoomCardNo</th>
+                <th>RFIDTagNO</th>
+
+                <th></th>
+            </tr>
+
+            <tr ng-repeat="guestcard in guest_cards | filter:search">
+                <td> {{guestcard.magStripeNo}}</td>
+                <td ng-click="editable=false"><input type="text" value="{{guestcard.rfidTagNo}}" ng-model="guestcard.rfidTagNo" ng-disabled="editable"></td>
+                <td><a  ng-click="testing(guestcard.magStripeNo,guestcard.rfidTagNo)">update</a></td>
+
+            </tr>
+        </table>
+    </div>
+
 </div>

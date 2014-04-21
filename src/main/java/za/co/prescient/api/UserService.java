@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import sun.rmi.runtime.Log;
 import za.co.prescient.model.*;
 import za.co.prescient.repository.UserDetailRepository;
 
@@ -32,7 +33,8 @@ public class UserService {
 
     @RequestMapping(value = "api/users/{id}/update/status/{status}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public void updateStatus(@PathVariable("id") Long id, @PathVariable("status")boolean status, Principal principal) {
+    public void updateStatus(@PathVariable("id") Long id, @PathVariable("status") Boolean status, Principal principal) {
+        log.info("change status service");
         UserDetail userDetail = userDetailRepository.findOne(id);
         if (userDetail.getUserName() == (principal.getName())) {
             throw new RuntimeException("User Can't delete himself");
@@ -50,7 +52,13 @@ public class UserService {
         userDetailRepository.save(userDetail);
     }
 
-
+    @RequestMapping(value = "api/users", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@RequestBody UserDetail user) {
+        log.info("request received to create user : " + user);
+        user.setPassword("password");
+        userDetailRepository.save(user);
+    }
 
 
 }
