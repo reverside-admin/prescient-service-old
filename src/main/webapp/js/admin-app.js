@@ -812,7 +812,7 @@ admin_app.controller('access_card_controller', function ($scope, $http, $routePa
         $scope.message = null;
     }
 
-    $scope.testing=function(magstripeno,rfidtagno)
+    $scope.save=function(magstripeno,rfidtagno)
     {
         $scope.card_detail.magStripeNo=magstripeno;
         $scope.card_detail.rfidTagNo=rfidtagno;
