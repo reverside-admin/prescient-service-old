@@ -7,70 +7,70 @@ admin_app.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider
             .when('/users/list', {
-                'templateUrl': 'ui/users/list.html',
+                'templateUrl': 'ui/list.html',
                 'controller': 'list_users_controller'
             })
             .when('/users/accesscard', {
-                'templateUrl': 'ui/users/access-card.html',
+                'templateUrl': 'ui/access-card.html',
                 'controller': 'access_card_controller'
             })
             .when('/users/touchpoint', {
-                'templateUrl': 'ui/users/touch-point.html',
+                'templateUrl': 'ui/touch-point.html',
                 'controller': 'touch_point_controller'
             })
             .when('/touchpoint/setup', {
-                'templateUrl': 'ui/users/touch-point-setup.html',
+                'templateUrl': 'ui/touch-point-setup.html',
                 'controller': 'touch_point_setup_controller'
             })
 
             .when('/touchpoint/:tpid/setup', {
-                'templateUrl': 'ui/users/setup-list.html',
+                'templateUrl': 'ui/setup-list.html',
                 'controller': 'setup_list_controller'
             })
 
             .when('/setup/:setupId', {
-                'templateUrl': 'ui/users/view-setup.html',
+                'templateUrl': 'ui/view-setup.html',
                 'controller': 'setup_view_controller'
             })
             .when('/setup/update/:setupId', {
-                'templateUrl': 'ui/users/edit-setup.html',
+                'templateUrl': 'ui/edit-setup.html',
                 'controller': 'edit_setup_controller'
             })
 
             .when('/setup/delete/:setupId', {
-                'templateUrl': 'ui/users/delete-setup.html',
+                'templateUrl': 'ui/delete-setup.html',
                 'controller': 'delete_setup_controller'
             })
             .when('/users/create', {
-                'templateUrl': 'ui/users/create.html',
+                'templateUrl': 'ui/create.html',
                 'controller': 'create_users_controller'
             })
             .when('/users/view/:userId', {
-                'templateUrl': 'ui/users/view.html',
+                'templateUrl': 'ui/view.html',
                 'controller': 'view_users_controller'
             })
             .when('/users/reset/:userId', {
-                'templateUrl': 'ui/users/reset-password.html',
+                'templateUrl': 'ui/reset-password.html',
                 'controller': 'reset_users_controller'
             })
             .when('/users/update/:userId', {
-                'templateUrl': 'ui/users/update.html',
+                'templateUrl': 'ui/update.html',
                 'controller': 'update_users_controller'
             })
             .when('/users/delete/:userId', {
-                'templateUrl': 'ui/users/delete.html',
+                'templateUrl': 'ui/delete.html',
                 'controller': 'delete_users_controller'
             })
             .when('/users/:uId/departments/add', {
-                'templateUrl': 'ui/users/add-department.html',
+                'templateUrl': 'ui/add-department.html',
                 'controller': 'add_departments_controller'
             })
             .when('/users/:uId/touchpoints/add', {
-                'templateUrl': 'ui/users/add-touchpoint.html',
+                'templateUrl': 'ui/add-touchpoint.html',
                 'controller': 'add_touch_points_controller'
             })
             .when('/welcome', {
-                'templateUrl': '/welcome.html'
+                'templateUrl': 'ui/welcome.html'
 
             })
 

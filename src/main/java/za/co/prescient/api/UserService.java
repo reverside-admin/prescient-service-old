@@ -1,19 +1,21 @@
 package za.co.prescient.api;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import za.co.prescient.model.*;
+import za.co.prescient.model.UserDetail;
 import za.co.prescient.repository.UserDetailRepository;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @Slf4j
 public class UserService {
+
+    private static final Logger LOGGER = Logger.getLogger(UserService.class);
 
     @Autowired
     UserDetailRepository userDetailRepository;
@@ -22,6 +24,14 @@ public class UserService {
     public List<UserDetail> get() {
         log.info("Get All UserDetails service");
         return userDetailRepository.findAll();
+    }
+
+    @RequestMapping(value = "api/users", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@RequestBody UserDetail user) {
+        LOGGER.info("request received to create user : " + user);
+        user.setPassword("password");
+        userDetailRepository.save(user);
     }
 
     @RequestMapping(value = "api/users/{userId}", method = RequestMethod.GET, produces = "application/json")
@@ -49,8 +59,5 @@ public class UserService {
         userDetail.setPassword("password");
         userDetailRepository.save(userDetail);
     }
-
-
-
 
 }
