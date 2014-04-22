@@ -17,7 +17,7 @@ public class GuestCardService {
     @Autowired
     GuestCardRepository guestCardRepository;
 
-    @RequestMapping(value = "guestcards/{msn}", method = RequestMethod.PUT, consumes = "application/json")
+    @RequestMapping(value = "api/guestcards/{msn}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("msn") String msn, @RequestBody GuestCard guestCard) {
 
@@ -27,12 +27,12 @@ public class GuestCardService {
         guestCardRepository.save(gCard);
     }
 
-    @RequestMapping(value = "guestcards/{msn}/detail")
+    @RequestMapping(value = "api/guestcards/{msn}/detail")
     public GuestCard get(@PathVariable("msn") String msn) {
         return guestCardRepository.findAGuestCard(msn);
     }
 
-    @RequestMapping(value = "guestcards", method = RequestMethod.POST, consumes = "application/json")
+    @RequestMapping(value = "api/guestcards", method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public void importCards(@RequestBody LinkedHashMap linkedHashMap) {
         log.info("file data::" + linkedHashMap.get("fileData"));
@@ -49,7 +49,7 @@ public class GuestCardService {
         }
     }
 
-    @RequestMapping(value = "guestcards/all")
+    @RequestMapping(value = "api/guestcards/all")
     public List<GuestCard> getall() {
         return guestCardRepository.findAll();
     }

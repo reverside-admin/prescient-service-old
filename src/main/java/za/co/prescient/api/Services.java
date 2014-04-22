@@ -69,8 +69,18 @@ public class Services {
         return guestStayDetailRepository.findGuestDetailByGId(guestId);
     }
 
+//find guest list by touchpoint
+    @RequestMapping(value = "touchpoints/{tpId}/guestCards")
+    public List<GuestProfileDetail> getGuestIdsByZoneId(@PathVariable("tpId") Integer zoneId) {
 
-
+        List<ItcsTagRead> itcsTagReadList = itcsTagReadRepository.findTagsInZone(zoneId);
+        List<GuestProfileDetail> guestProfileDetails = guestCardAllocationRepository.findGuestsWithTagsInAZone(itcsTagReadList);
+        for (GuestProfileDetail obj : guestProfileDetails) {
+            LOGGER.info("First Name : " + obj.getFirstName());
+        }
+        LOGGER.info("List : " + itcsTagReadList);
+        return guestProfileDetails;
+    }
 
 
 }

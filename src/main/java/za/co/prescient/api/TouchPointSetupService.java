@@ -16,7 +16,7 @@ public class TouchPointSetupService {
     @Autowired
     TouchPointSetupRepository touchPointSetupRepository;
 
-    @RequestMapping(value = "tpsetup/{id}", method = RequestMethod.PUT, consumes = "application/json")
+    @RequestMapping(value = "api/tpsetup/{id}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") Long id, @RequestBody TouchPointSetup touchPointSetup) {
 

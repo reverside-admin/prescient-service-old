@@ -49,14 +49,19 @@ insert into itcs_tag_read (id, guest_card, zone) values (7, 1004, 2);
 insert into itcs_tag_read (id, guest_card, zone) values (8, 1005, 3);
 /*insert into itcs_tag_read (id, guest_card, zone) values (9, 1006, 4);*/
 
+insert into guest_profile_detail (id, hotel_id, first_name, dob, gender, nationality_id, passport_number, preferred_name, surname, title)
+values (100, 1, 'John', '1988-04-21 00:00:00', 'Male', 'Indian', 'AZ74539', 'Joe', 'Smith', 'Mr');
+insert into guest_profile_detail (id, hotel_id, first_name, dob, gender, nationality_id, passport_number, preferred_name, surname, title)
+values (101, 1, 'Jasmine', '1978-12-3 00:00:00', 'Female', 'SouthAfrican', 'AZ74539', 'Jas', 'Roy', 'Miss');
+insert into guest_profile_detail (id, hotel_id, first_name, dob, gender, nationality_id, passport_number, preferred_name, surname, title)
+values (102, 1, 'John', '1989-01-22 00:00:00', 'Male', 'American', 'JH74535', 'John', 'Karthy', 'Mr');
 
-insert into guest_profile_detail (id, hotel_id, first_name) values (100, 1, 'guest1');
-insert into guest_profile_detail (id, hotel_id, first_name) values (101, 1, 'guest2');
-insert into guest_profile_detail (id, hotel_id, first_name) values (102, 1, 'guest3');
-
-insert into guest_profile_detail (id, hotel_id, first_name) values (103, 1, 'guest4');
-insert into guest_profile_detail (id, hotel_id, first_name) values (104, 1, 'guest5');
-insert into guest_profile_detail (id, hotel_id, first_name) values (105, 1, 'guest6');
+insert into guest_profile_detail (id, hotel_id, first_name, dob, gender, nationality_id, passport_number, preferred_name, surname, title)
+values (103, 1, 'Robert', '1999-04-1 00:00:00', 'Male', 'Indian', 'QP74536', 'Rob', 'Alvis', 'Mr');
+insert into guest_profile_detail (id, hotel_id, first_name, dob, gender, nationality_id, passport_number, preferred_name, surname, title)
+values (104, 1, 'Pooja', '1967-08-9 00:00:00', 'Female', 'Indian', 'XL74623', 'Poo', 'Das', 'Miss');
+insert into guest_profile_detail (id, hotel_id, first_name, dob, gender, nationality_id, passport_number, preferred_name, surname, title)
+values (105, 1, 'Shreya', '1988-07-06 00:00:00', 'Female', 'SouthAfrican', 'KQ74959', 'sree', 'Bata', 'Miss');
 /*insert into guest_profile_detail (id, hotel_id, first_name) values (106, 1, 'guest7');*/
 
 insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (1, 1000, 100);

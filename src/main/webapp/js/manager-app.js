@@ -11,6 +11,14 @@ manager_app.config(['$routeProvider',
                 'templateUrl': 'ui/touch_point.html',
                 'controller': 'touch_point_controller'
             })
+            .when('/manager/touchpoint/list', {
+                'templateUrl': 'ui/manager-touchpoint.html',
+                'controller': 'touch_point_controller'
+            })
+            .when('/manager/touchpoint/:tpId/setups', {
+                'templateUrl': 'ui/manager-touchpoint-setup-list.html',
+                'controller': 'touch_point_setup_list_controller'
+            })
             .when('/touchpoint/:TPId/guests', {
                 'templateUrl': 'ui/find-guest.html',
                 'controller': 'find_guest_controller'
@@ -20,7 +28,7 @@ manager_app.config(['$routeProvider',
                 'controller': 'guest_detail_controller'
             })
             .when('/welcome', {
-                'templateUrl': '/welcome.html'
+                'templateUrl': '/ui/welcome-page.html'
              })
             .otherwise({
                 redirectTo: '/welcome'
@@ -28,6 +36,39 @@ manager_app.config(['$routeProvider',
     }]);
 
 
+manager_app.controller('touch_point_setup_list_controller', function ($scope, $http, $location, $cookieStore,$routeParams, $window) {
+console.log('manager touchpoint setup  list controller is loaded');
+    $scope.touch_point_setups;
+    $scope.current_touch_point_id = $routeParams.tpId;
+
+    <!-- get all setups by touchpointid -->
+
+    $http({
+        url: 'http://localhost:8080/api/tp/' + $routeParams.tpId + '/setups',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.touch_point_setups = data;
+                console.log('touch point setups::' + $scope.touch_point_setups);
+                console.log($scope.touch_point_setups.length);
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+
+    $scope.setCurrentSetup=function()
+    {
+        console.log('set current setup method is called');
+    }
+});
 
 
 
@@ -66,7 +107,7 @@ manager_app.controller('touch_point_controller', function ($scope,$cookieStore,$
     console.log('current user id::'+$scope.user_detail.id);
 
     $http({
-        url: 'http://localhost:8080/api/users/'+$scope.user_detail.id+'/tp/having',
+        url: 'http://localhost:8080/api/login/touchpoints',
         method: 'get',
         headers: {
             'Authorization': $cookieStore.get("auth")
@@ -145,3 +186,5 @@ manager_app.controller('guest_detail_controller', function ($scope, $http, $rout
         });
 
 });
+
+

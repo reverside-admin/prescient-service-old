@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter@Setter
@@ -24,30 +25,30 @@ public class GuestProfileDetail {
 //    @Column
 //    private String idNumber;
 //
-//    @Column
-//    private String passportNumber;
+    @Column
+    private String passportNumber;
 
     @Column
     private String firstName;
 
-//    @Column
-//    private String preferredName;
-//
-//    @Column
-//    private String surname;
-//
-//    @Column
-//    private String gender;
-//
-//    @Column
-//    private String title;
-//
-//    @Column
-//    private String nationalityId;
-//
-//    @Column
-//    private Date dob;
-//
+    @Column
+    private String preferredName;
+
+    @Column
+    private String surname;
+
+    @Column
+    private String gender;
+
+    @Column
+    private String title;
+
+    @Column
+    private String nationalityId;
+
+    @Column
+    private Date dob;
+
 //    @Column
 //    private Date lastUpdateDate;
 //

@@ -20,7 +20,7 @@ staff_app.config(['$routeProvider',
                 'controller': 'guest_detail_controller'
             })
             .when('/welcome', {
-                'templateUrl': '/welcome.html'
+                'templateUrl': '/ui/welcome-page.html'
             })
             .otherwise({
                 redirectTo: '/welcome'
@@ -63,7 +63,7 @@ console.log('touch point controller of staff app module is loaded');
     console.log('current user id::'+$scope.user_detail.id);
 
     $http({
-        url: 'http://localhost:8080/api/users/'+$scope.user_detail.id+'/tp/having',
+        url: 'http://localhost:8080/api/login/touchpoints',
         method: 'get',
         headers: {
             'Authorization': $cookieStore.get("auth")
