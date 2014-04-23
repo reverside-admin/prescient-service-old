@@ -11,6 +11,10 @@
         <h4 class="text-primary"><b>Setup List </b></h4>
     </div>
 
+    <div class="col-md-12 text-center" ng-if="current_setup.setupName">
+        <h4 class="text-primary">Current Setup Name = <label style="color: tomato"> {{current_setup.setupName}}</label> </h4>
+    </div>
+
 
     <div class="col-md-12 text-right">
         <h5><input type="text" ng-model="search" placeholder="Search"/></h5>
@@ -20,8 +24,7 @@
     <div class="col-md-12">
         <table class="table table-hover table-condensed table-striped table-responsive">
             <tr>
-                <th>Name</th>
-                <th></th>
+                <th>Setup Name</th>
                 <th></th>
             </tr>
 
@@ -29,12 +32,8 @@
             <tr ng-repeat="setup in touch_point_setups | filter:search">
                 <td>{{setup.setupName}}</td>
                 <td>
-                    <input type="radio"  ng-model="setup.setupIndicator" ng-value="setup.setupIndicator"  name="TouchPointSetupGroup"/>
-                </td>
-
-                <td>
                     <button type="button" class="btn btn-primary"
-                            ng-click="setCurrentSetup(setup.setupName,setup.setupIndicator)">Set
+                            ng-click="setCurrentSetup(setup.id)">Set
                     </button>
                 </td>
             </tr>

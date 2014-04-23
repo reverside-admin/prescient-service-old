@@ -56,4 +56,20 @@ public class TouchPointSetupService {
     }
 
 
+    @RequestMapping(value = "api/touchpoint/{tpid}/setup/{setupid}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public void setCurrentSetup(@PathVariable("tpid") Long tpId,@PathVariable("setupid") Long setupId) {
+        touchPointSetupRepository.resetSetupIndicator(tpId);
+        touchPointSetupRepository.setCurrentSetupIndicator(setupId);
+    }
+
+
+    @RequestMapping(value = "api/touchpoint/{tpid}/currentsetup", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public TouchPointSetup getCurrentSetup(@PathVariable("tpid") Long tpId) {
+        TouchPointSetup tps=touchPointSetupRepository.findCurrentTpSetupsByTpId(tpId);
+        return tps;
+
+    }
+
 }

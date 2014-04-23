@@ -40,7 +40,34 @@ manager_app.controller('touch_point_setup_list_controller', function ($scope, $h
 console.log('manager touchpoint setup  list controller is loaded');
     $scope.touch_point_setups;
     $scope.current_touch_point_id = $routeParams.tpId;
-    $scope.current_setup_ind;
+    $scope.current_setup={};
+    $scope.ind=true;
+
+    <!-- get current setup detail -->
+    $http({
+        url: 'http://localhost:8080/api/touchpoint/'+$scope.current_touch_point_id+'/currentsetup',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.current_setup = data;
+                console.log('current setup name::'+$scope.current_setup.setupName);
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+
+
+
+
+
 
     <!-- get all setups by touchpointid -->
 
@@ -65,11 +92,29 @@ console.log('manager touchpoint setup  list controller is loaded');
         });
 
 
-    $scope.setCurrentSetup=function(setup_name,setup_ind)
+    $scope.setCurrentSetup=function(setup_id)
     {
         console.log('set current setup method is called');
-        console.log('setup name::'+setup_name);
-        console.log('setup indicator::'+setup_ind.setupIndicator);
+
+        $http({
+            url: 'http://localhost:8080/api/touchpoint/'+$scope.current_touch_point_id+'/setup/'+setup_id,
+            method: 'get',
+            headers: {
+                'Authorization': $cookieStore.get("auth")
+            }
+        }).
+            success(function (data, status) {
+                if (status == 200) {
+                   console.log('setup successfully done');
+                    $location.url('manager/touchpoint/list');
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+
     }
 });
 

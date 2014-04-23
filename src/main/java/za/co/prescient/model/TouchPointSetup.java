@@ -22,7 +22,7 @@ public class TouchPointSetup {
     String setupDescription;
 
     @Column
-    Boolean setupIndicator=false;
+    Boolean setupIndicator;
 
     @Column
     String imageName;
