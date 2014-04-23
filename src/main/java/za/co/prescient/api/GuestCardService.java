@@ -43,9 +43,12 @@ public class GuestCardService {
         GuestCard guestCard;
         for(String obj:resultStr)
         {
-            guestCard=new GuestCard();
-            guestCard.setMagStripeNo(obj.trim());
-            guestCardRepository.save(guestCard);
+            guestCard=guestCardRepository.findAGuestCard(obj.trim());
+            if(guestCard==null){
+                guestCard=new GuestCard();
+                guestCard.setMagStripeNo(obj.trim());
+                guestCardRepository.save(guestCard);
+            }
         }
     }
 

@@ -40,6 +40,7 @@ manager_app.controller('touch_point_setup_list_controller', function ($scope, $h
 console.log('manager touchpoint setup  list controller is loaded');
     $scope.touch_point_setups;
     $scope.current_touch_point_id = $routeParams.tpId;
+    $scope.current_setup_ind;
 
     <!-- get all setups by touchpointid -->
 
@@ -64,9 +65,11 @@ console.log('manager touchpoint setup  list controller is loaded');
         });
 
 
-    $scope.setCurrentSetup=function()
+    $scope.setCurrentSetup=function(setup_name,setup_ind)
     {
         console.log('set current setup method is called');
+        console.log('setup name::'+setup_name);
+        console.log('setup indicator::'+setup_ind.setupIndicator);
     }
 });
 

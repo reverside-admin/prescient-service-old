@@ -1,15 +1,15 @@
-insert into hotel (id, name) values (1, 'orion');
-insert into hotel (id, name) values (2, 'taj');
+insert into hotel (id, name) values (1, 'Orion');
+insert into hotel (id, name) values (2, 'Taj');
 
-insert into department (id, name, hotel_id) values (1, 'food', 1);
-insert into department (id, name, hotel_id) values (2, 'travel', 1);
-insert into department (id, name, hotel_id) values (3, 'hospitality', 1)
-insert into department (id, name, hotel_id) values (4, 'food', 2);
+insert into department (id, name, hotel_id) values (1, 'Food', 1);
+insert into department (id, name, hotel_id) values (2, 'Travel', 1);
+insert into department (id, name, hotel_id) values (3, 'Hospitality', 1)
+insert into department (id, name, hotel_id) values (4, 'Food', 2);
 
-insert into touch_point(id, name,  department_id) values(1, 'dining',  1);
-insert into touch_point(id, name,  department_id) values(2, 'kitchen', 1);
-insert into touch_point(id, name,  department_id) values(3, 'parking', 2);
-insert into touch_point(id, name,  department_id) values(4, 'reception', 3);
+insert into touch_point(id, name,  department_id) values(1, 'Dining',  1);
+insert into touch_point(id, name,  department_id) values(2, 'Kitchen', 1);
+insert into touch_point(id, name,  department_id) values(3, 'Parking', 2);
+insert into touch_point(id, name,  department_id) values(4, 'Reception', 3);
 
 insert into user_status (id, status) values (1,'disable');
 insert into user_status (id, status) values (2,'enable');
@@ -84,11 +84,11 @@ insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_ti
 /*insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, guest_profile_detail_id) values (7, '333', 106, '2010-04-03 00:00:00', '2010-04-07 00:00:00', 106);*/
 
 
-insert into guest_card (id, mag_stripe_no) values (1, 'mag1');
-insert into guest_card (id, mag_stripe_no) values (2, 'mag2');
-insert into guest_card (id, mag_stripe_no) values (3, 'mag3');
-insert into guest_card (id, mag_stripe_no) values (4, 'mag4');
-insert into guest_card (id, mag_stripe_no) values (5, 'mag5');
+insert into guest_card (id, mag_stripe_no) values (1, 'Room-001');
+insert into guest_card (id, mag_stripe_no) values (2, 'Room-002');
+insert into guest_card (id, mag_stripe_no) values (3, 'Room-003');
+insert into guest_card (id, mag_stripe_no) values (4, 'Room-004');
+insert into guest_card (id, mag_stripe_no) values (5, 'Room-005');
 
 
 

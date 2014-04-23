@@ -2,18 +2,18 @@
 
     <div class="col-md-12 text-right">
         <div class="btn-group btn-group-sm">
-             <a ng-href="#users/touchpoint"  class="btn btn-primary">Back</a>
+            <a ng-href="#users/touchpoint" class="btn btn-primary">Back</a>
 
         </div>
     </div>
 
     <div class="col-md-12 text-left">
-        <h4 class="text-primary"><b>Setup  List </b> </h4>
+        <h4 class="text-primary"><b>Setup List </b></h4>
     </div>
 
 
     <div class="col-md-12 text-right">
-        <h5>  <input type="text" ng-model="search" placeholder="Search"/></h5>
+        <h5><input type="text" ng-model="search" placeholder="Search"/></h5>
     </div>
 
 
@@ -22,19 +22,23 @@
             <tr>
                 <th>Name</th>
                 <th></th>
+                <th></th>
             </tr>
 
 
             <tr ng-repeat="setup in touch_point_setups | filter:search">
                 <td>{{setup.setupName}}</td>
                 <td>
-                    <input type="radio" name="setup-group"/>
+                    <input type="radio"  ng-model="setup.setupIndicator" ng-value="setup.setupIndicator"  name="TouchPointSetupGroup"/>
+                </td>
+
+                <td>
+                    <button type="button" class="btn btn-primary"
+                            ng-click="setCurrentSetup(setup.setupName,setup.setupIndicator)">Set
+                    </button>
                 </td>
             </tr>
         </table>
-    </div>
-    <div class="col-md-12 text-right">
-        <button type="button" class="btn btn-primary" ng-click="">Set</button>
     </div>
 </div>
 
