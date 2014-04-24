@@ -23,6 +23,10 @@ manager_app.config(['$routeProvider',
                 'templateUrl': 'ui/find-guest.html',
                 'controller': 'find_guest_controller'
             })
+            .when('/hotels/guests/checkedin', {
+                'templateUrl': 'ui/find-checkedin-guest.html',
+                'controller': 'checkedin_guest_controller'
+            })
             .when('/guest/:guestId', {
                 'templateUrl': 'ui/guest-detail.html',
                 'controller': 'guest_detail_controller'
@@ -34,6 +38,38 @@ manager_app.config(['$routeProvider',
                 redirectTo: '/welcome'
             });
     }]);
+
+
+
+manager_app.controller('checkedin_guest_controller', function ($scope, $http, $location, $cookieStore, $routeParams, $window) {
+    console.log('manager checkedin guest controller is loaded');
+
+    $scope.checkedin_guest_list;
+    $scope.hotel_id = $cookieStore.get("user").hotel.id;
+
+    <!--  get all checkedin guest list -->
+    $http({
+        url: 'http://localhost:8080/api/hotels/'+ $scope.hotel_id +'/guests/checkedIn',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.checkedin_guest_list = data;
+                console.log('checkedin guest list::' + $scope.checkedin_guest_list);
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+});
+
+
 
 
 manager_app.controller('touch_point_setup_list_controller', function ($scope, $http, $location, $cookieStore, $routeParams, $window) {

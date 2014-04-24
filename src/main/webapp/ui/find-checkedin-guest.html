@@ -1,0 +1,34 @@
+<div class="col-md-12">
+    <div class="col-md-12 text-left">
+        <h4 class="text-primary"><b>Checked-In Guest List </b> </h4>
+    </div>
+
+    <div class="col-md-12 text-right">
+        <h5>  <input type="text" ng-model="search" placeholder="Search"/></h5>
+    </div>
+
+
+    <div class="col-md-12">
+        <table class="table table-hover table-condensed table-striped table-responsive">
+            <tr>
+                <th style="text-align: center">Title</th>
+                <th style="text-align: center">First Name</th>
+                <th style="text-align: center">Sur Name</th>
+                <th style="text-align: center">Preferred Name</th>
+
+                <th></th>
+            </tr>
+
+            <tr ng-repeat="guest in checkedin_guest_list | filter:search">
+                <td style="text-align: center">{{guest.guestProfileDetail.title}}</td>
+                <td style="text-align: center">{{guest.guestProfileDetail.firstName}}</td>
+                <td style="text-align: center">{{guest.guestProfileDetail.surname}}</td>
+                <td style="text-align: center">{{guest.guestProfileDetail.preferredName}}</td>
+
+                <td><a ng-href="#">Detail</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
