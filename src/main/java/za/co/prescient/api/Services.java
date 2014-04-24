@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import za.co.prescient.model.*;
 import za.co.prescient.repository.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -68,6 +69,21 @@ public class Services {
         LOGGER.info("guest detail service is invoked");
         return guestStayDetailRepository.findGuestDetailByGId(guestId);
     }
+
+
+    @RequestMapping(value = "hotels/{hotelId}/guests/checkedIn")
+    public List<GuestStayDetail> getAllCheckedInGuests(@PathVariable ("hotelId") Long hotelId) {
+
+        LOGGER.info("find checked in guest list service is invoked");
+        return guestStayDetailRepository.findAllCheckedInGuests(hotelId);
+    }
+
+
+
+
+
+
+
 
 //find guest list by touchpoint
     @RequestMapping(value = "touchpoints/{tpId}/guestCards")

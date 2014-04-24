@@ -74,13 +74,13 @@ insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) v
 /*insert into guest_card_allocation (id, guest_card_id, guest_profile_detail_id) values (7, 1006, 106);*/
 
 
-insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, guest_profile_detail_id) values (1, '999', 100, '2010-04-01 00:00:00', '2010-04-05 00:00:00', 100);
-insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, guest_profile_detail_id) values (2, '888', 101, '2010-04-02 00:00:00', '2010-04-06 00:00:00', 101);
-insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, guest_profile_detail_id) values (3, '777', 102, '2010-04-03 00:00:00', '2010-04-07 00:00:00', 102);
+insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, current_stay_ind, guest_profile_detail_id, hotel_id) values (1, '999', 100, '2010-04-01 00:00:00', '2010-04-05 00:00:00', true, 100, 1);
+insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, current_stay_ind, guest_profile_detail_id, hotel_id) values (2, '888', 101, '2010-04-02 00:00:00', '2010-04-06 00:00:00', false, 101, 1);
+insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, current_stay_ind, guest_profile_detail_id, hotel_id) values (3, '777', 102, '2010-04-03 00:00:00', '2010-04-07 00:00:00', false, 102, 1);
 
-insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, guest_profile_detail_id) values (4, '666', 103, '2010-04-03 00:00:00', '2010-04-07 00:00:00', 103);
-insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, guest_profile_detail_id) values (5, '555', 104, '2010-04-03 00:00:00', '2010-04-07 00:00:00', 104);
-insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, guest_profile_detail_id) values (6, '444', 105, '2010-04-03 00:00:00', '2010-04-07 00:00:00', 105);
+insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, current_stay_ind,  guest_profile_detail_id, hotel_id) values (4, '666', 103, '2010-04-03 00:00:00', '2010-04-07 00:00:00', false , 103, 1);
+insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, current_stay_ind,  guest_profile_detail_id, hotel_id) values (5, '555', 104, '2010-04-03 00:00:00', '2010-04-07 00:00:00', false , 104, 1);
+insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, current_stay_ind,  guest_profile_detail_id, hotel_id) values (6, '444', 105, '2010-04-03 00:00:00', '2010-04-07 00:00:00', false, 105, 1);
 /*insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, guest_profile_detail_id) values (7, '333', 106, '2010-04-03 00:00:00', '2010-04-07 00:00:00', 106);*/
 
 
