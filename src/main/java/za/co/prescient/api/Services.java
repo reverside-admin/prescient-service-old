@@ -72,20 +72,14 @@ public class Services {
 
 
     @RequestMapping(value = "hotels/{hotelId}/guests/checkedIn")
-    public List<GuestStayDetail> getAllCheckedInGuests(@PathVariable ("hotelId") Long hotelId) {
+    public List<GuestStayDetail> getAllCheckedInGuests(@PathVariable("hotelId") Long hotelId) {
 
         LOGGER.info("find checked in guest list service is invoked");
         return guestStayDetailRepository.findAllCheckedInGuests(hotelId);
     }
 
 
-
-
-
-
-
-
-//find guest list by touchpoint
+    //find guest list by touchpoint
     @RequestMapping(value = "touchpoints/{tpId}/guestCards")
     public List<GuestProfileDetail> getGuestIdsByZoneId(@PathVariable("tpId") Integer zoneId) {
 
@@ -96,6 +90,29 @@ public class Services {
         }
         LOGGER.info("List : " + itcsTagReadList);
         return guestProfileDetails;
+    }
+
+   /* @RequestMapping(value = "guests/{guestId}/guestCard")
+    public GuestCardAllocation getGuestCard(@PathVariable("guestId") Long guestId) {
+        LOGGER.info("guestcard by guest id service is called");
+      return guestCardAllocationRepository.findGuestCardByGuestId(guestId);
+    }*/
+
+
+    @RequestMapping(value = "guests/{guestId}/locations")
+    public ItcsTagRead getGuestCardHistory(@PathVariable("guestId") Long guestId) {
+        LOGGER.info("guestcard by guest id service is called");
+
+         GuestCardAllocation guestCardAllocation = guestCardAllocationRepository.findGuestCardByGuestId(guestId);
+
+//        List<ItcsTagRead> itcList=itcsTagReadRepository.findGuestCardHistory(guestCardAllocation.getGuestCardId());
+//        LOGGER.info("return list size::"+itcList.size());
+
+        ItcsTagRead itc=itcsTagReadRepository.findGuestCardHistory(guestCardAllocation.getGuestCardId());
+        LOGGER.info("return list size::"+itc.getId());
+        return itc;
+
+
     }
 
 

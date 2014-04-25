@@ -1,0 +1,42 @@
+<div class="col-md-12">
+
+
+    <div class="col-md-12 text-right">
+        <div class="btn-group btn-group-sm">
+            <a ng-href="#hotels/guests/checkedin" class="btn btn-primary">Back</a>
+        </div>
+    </div>
+
+    <div class="col-md-12 text-left">
+        <h4 class="text-primary"><b>Guest Current Location</b></h4>
+    </div>
+
+
+    <div style="width: 50%; margin-left: auto;margin-right: auto;">
+        <table class="table table-hover table-condensed table-bordered  table-responsive">
+            <tr>
+                <td style="text-align: right"><b>Guest Card Id</b></td>
+                <td style="width: 50%">{{guest_current_position.guestCard}}</td>
+            </tr>
+            <tr>
+                <td style="text-align: right"><b>Zone Id</b></td>
+                <td>{{guest_current_position.zone}}</td>
+            </tr>
+            <tr>
+                <td style="text-align: right"><b>tagReadDatetime</b></td>
+                <td>{{guest_current_position.tagReadDatetime |date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+            </tr>
+            <tr>
+                <td style="text-align: right"><b>xcoordRead</b></td>
+                <td>{{guest_current_position.xcoordRead}}</td>
+            </tr>
+
+            <tr>
+                <td style="text-align: right"><b>ycoordRead</b></td>
+                <td>{{guest_current_position.ycoordRead}}</td>
+            </tr>
+
+        </table>
+    </div>
+
+</div>

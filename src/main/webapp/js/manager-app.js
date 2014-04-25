@@ -27,6 +27,11 @@ manager_app.config(['$routeProvider',
                 'templateUrl': 'ui/find-checkedin-guest.html',
                 'controller': 'checkedin_guest_controller'
             })
+
+            .when('/hotels/guests/:guestId/position', {
+                'templateUrl': 'ui/current-guest-location.html',
+                'controller': 'current_guest_location_controller'
+            })
             .when('/guest/:guestId', {
                 'templateUrl': 'ui/guest-detail.html',
                 'controller': 'guest_detail_controller'
@@ -38,6 +43,38 @@ manager_app.config(['$routeProvider',
                 redirectTo: '/welcome'
             });
     }]);
+
+
+manager_app.controller('current_guest_location_controller', function ($scope, $http, $location, $cookieStore, $routeParams, $window) {
+    console.log('current guest location  controller is loaded');
+    $scope.guest_id=$routeParams.guestId;
+    $scope.guest_current_position;
+    console.log('current guest location::'+$scope.guest_id);
+
+
+    $http({
+        url: 'http://localhost:8080/api/guests/'+$scope.guest_id+'/locations',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.guest_current_position = data;
+                console.log('current guest position detail ::' + $scope.guest_current_position);
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+});
+
+
+
 
 
 

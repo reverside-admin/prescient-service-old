@@ -16,10 +16,11 @@ public interface GuestCardAllocationRepository extends JpaRepository<GuestCardAl
     GuestCardAllocation findByGuestCardId(Integer guestCard);
 
     @Query("select gca.guestProfileDetail from GuestCardAllocation gca where gca.guestCardId in (?1)")
-    public List<GuestProfileDetail> findGuestsWithTags(List<Integer> tags );
+    public List<GuestProfileDetail> findGuestsWithTags(List<Integer> tags);
 
     @Query("select gca.guestProfileDetail from GuestCardAllocation gca where gca.guestCardId in (?1)")
-    public List<GuestProfileDetail> findGuestsWithTagsInAZone(List<ItcsTagRead> tags );
+    public List<GuestProfileDetail> findGuestsWithTagsInAZone(List<ItcsTagRead> tags);
 
-
+    @Query("select gca from GuestCardAllocation gca where gca.guestProfileDetail.id = ?1")
+    public GuestCardAllocation findGuestCardByGuestId(Long guestId);
 }
