@@ -32,6 +32,10 @@ manager_app.config(['$routeProvider',
                 'templateUrl': 'ui/current-guest-location.html',
                 'controller': 'current_guest_location_controller'
             })
+            .when('/hotels/guests/:guestId/location/history', {
+                'templateUrl': 'ui/guest-location-history.html',
+                'controller': 'current_guest_location_history_controller'
+            })
             .when('/guest/:guestId', {
                 'templateUrl': 'ui/guest-detail.html',
                 'controller': 'guest_detail_controller'
@@ -43,6 +47,39 @@ manager_app.config(['$routeProvider',
                 redirectTo: '/welcome'
             });
     }]);
+
+
+
+
+manager_app.controller('current_guest_location_history_controller', function ($scope, $cookieStore,$routeParams, $http) {
+    console.log('current_guest_location_history_controller of manager app module is loaded');
+    $scope.guest_id=$routeParams.guestId;
+    $scope.current_guest_location_history;
+
+    $http({
+        url: 'http://localhost:8080/api/guests/'+$scope.guest_id+'/location/history',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.current_guest_location_history = data;
+                console.log('current guest location history ::' + $scope.current_guest_location_history);
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+
+});
+
+
+
 
 
 manager_app.controller('current_guest_location_controller', function ($scope, $http, $location, $cookieStore, $routeParams, $window) {
@@ -60,9 +97,11 @@ manager_app.controller('current_guest_location_controller', function ($scope, $h
         }
     }).
         success(function (data, status) {
-            if (status == 200) {
+            if (status == 200 && data != null) {
+
                 $scope.guest_current_position = data;
                 console.log('current guest position detail ::' + $scope.guest_current_position);
+
             } else {
                 console.log('status:' + status);
             }

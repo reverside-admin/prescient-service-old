@@ -3,40 +3,50 @@
 
     <div class="col-md-12 text-right">
         <div class="btn-group btn-group-sm">
-            <a ng-href="#hotels/guests/checkedin" class="btn btn-primary">Back</a>
+             <a ng-href="#hotels/guests/checkedin" class="btn btn-primary">Back</a>
         </div>
     </div>
 
-    <div class="col-md-12 text-left">
+    <div class="col-md-12 text-left" ng-if="guest_current_position">
         <h4 class="text-primary"><b>Guest Current Location</b></h4>
     </div>
 
 
-    <div style="width: 50%; margin-left: auto;margin-right: auto;">
+    <div style="width: 50%; margin-left: auto;margin-right: auto;" ng-if="guest_current_position">
         <table class="table table-hover table-condensed table-bordered  table-responsive">
             <tr>
                 <td style="text-align: right"><b>Guest Card Id</b></td>
                 <td style="width: 50%">{{guest_current_position.guestCard}}</td>
             </tr>
             <tr>
-                <td style="text-align: right"><b>Zone Id</b></td>
-                <td>{{guest_current_position.zone}}</td>
+                <td style="text-align: right"><b>Current Zone</b></td>
+                <td>{{guest_current_position.itcsSystemZone.zoneName}}</td>
             </tr>
             <tr>
-                <td style="text-align: right"><b>tagReadDatetime</b></td>
-                <td>{{guest_current_position.tagReadDatetime |date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+                <td style="text-align: right"><b>Date & Time</b></td>
+                <td>{{guest_current_position.tagReadDatetime |date:'yyyy-MM-dd HH:mm:ss'}}</td>
             </tr>
             <tr>
-                <td style="text-align: right"><b>xcoordRead</b></td>
+                <td style="text-align: right"><b>X-Coordinate</b></td>
                 <td>{{guest_current_position.xcoordRead}}</td>
             </tr>
 
             <tr>
-                <td style="text-align: right"><b>ycoordRead</b></td>
+                <td style="text-align: right"><b>Y-Coordinate</b></td>
                 <td>{{guest_current_position.ycoordRead}}</td>
             </tr>
 
         </table>
     </div>
 
+    <div style="width: 50%; margin-left: auto;margin-right: auto;" ng-if="!guest_current_position">
+        <h4><b style="color: red">Guest with Id {{guest_id}} can not be detected  in any of the Hotel area right now but was last seen in
+            <a ng-href="#hotels/guests/{{guest_id}}/location/history">Guest History</a></b></h4>
+    </div>
+
+    <div class="col-md-12 text-right" ng-if="false">
+        <div class="btn-group btn-group-sm">
+            <a ng-href="#hotels/guests/{{guest_id}}/location/history" class="btn btn-primary">History</a>
+         </div>
+    </div>
 </div>

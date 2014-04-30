@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-public class ItcsTagRead {
+public class ItcsTagReadHistory {
 
 
     @Id

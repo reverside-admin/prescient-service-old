@@ -19,6 +19,19 @@ staff_app.config(['$routeProvider',
                 'templateUrl': 'ui/guest-detail.html',
                 'controller': 'guest_detail_controller'
             })
+            .when('/hotels/guests/checkedin', {
+                'templateUrl': 'ui/find-checkedin-guest.html',
+                'controller': 'checkedin_guest_controller'
+            })
+            .when('/hotels/guests/:guestId/position', {
+                'templateUrl': 'ui/current-guest-location.html',
+                'controller': 'current_guest_location_controller'
+            })
+
+            .when('/hotels/guests/:guestId/location/history', {
+                'templateUrl': 'ui/guest-location-history.html',
+                'controller': 'current_guest_location_history_controller'
+            })
             .when('/welcome', {
                 'templateUrl': '/ui/welcome-page.html'
             })
@@ -113,9 +126,6 @@ staff_app.controller('guest_detail_controller', function ($scope, $http, $routeP
     $scope.guest_detail;
     $scope.guest_id=$routeParams.guestId;
     console.log('guest detail controller is loaded...'+$scope.guest_id);
-
-
-
     $http({
         url: 'http://localhost:8080/api/guest/'+$scope.guest_id,
         method: 'get',
@@ -139,7 +149,92 @@ staff_app.controller('guest_detail_controller', function ($scope, $http, $routeP
         .error(function (error) {
             console.log(error);
         });
+});
 
+
+staff_app.controller('checkedin_guest_controller', function ($scope, $http, $location, $cookieStore, $routeParams, $window) {
+    console.log('staff checkedin guest controller is loaded');
+
+    $scope.checkedin_guest_list;
+    $scope.hotel_id = $cookieStore.get("user").hotel.id;
+
+    <!--  get all checkedin guest list -->
+    $http({
+        url: 'http://localhost:8080/api/hotels/'+ $scope.hotel_id +'/guests/checkedIn',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.checkedin_guest_list = data;
+                console.log('checkedin guest list::' + $scope.checkedin_guest_list);
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+});
+
+
+staff_app.controller('current_guest_location_controller', function ($scope, $http, $location, $cookieStore, $routeParams, $window) {
+    console.log('staff application current guest location  controller is loaded');
+    $scope.guest_id=$routeParams.guestId;
+    $scope.guest_current_position;
+    console.log('current guest location::'+$scope.guest_id);
+
+
+    $http({
+        url: 'http://localhost:8080/api/guests/'+$scope.guest_id+'/locations',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.guest_current_position = data;
+                console.log('current guest position detail ::' + $scope.guest_current_position);
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+});
+
+staff_app.controller('current_guest_location_history_controller', function ($scope, $cookieStore,$routeParams, $http) {
+    console.log('current_guest_location_history_controller of staff app module is loaded');
+    $scope.guest_id=$routeParams.guestId;
+    $scope.current_guest_location_history;
+
+    $http({
+        url: 'http://localhost:8080/api/guests/'+$scope.guest_id+'/location/history',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.current_guest_location_history = data;
+                console.log('current guest location history ::' + $scope.current_guest_location_history);
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
 
 
 });
+
+
+

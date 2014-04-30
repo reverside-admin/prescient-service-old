@@ -1,4 +1,13 @@
 <div class="col-md-12">
+
+    <div class="col-md-12 text-right">
+        <div class="btn-group btn-group-sm">
+             <a ng-href="#" class="btn btn-primary">Back</a>
+        </div>
+    </div>
+
+
+
     <div class="col-md-12 text-left">
         <h4 class="text-primary"><b>Checked-In Guest List </b> </h4>
     </div>
@@ -15,6 +24,7 @@
                 <th style="text-align: center">First Name</th>
                 <th style="text-align: center">Sur Name</th>
                 <th style="text-align: center">Preferred Name</th>
+                <th style="text-align: center">Room No</th>
                 <th style="text-align: center">Arrival Time</th>
 
 
@@ -26,6 +36,8 @@
                 <td style="text-align: center">{{guest.guestProfileDetail.firstName}}</td>
                 <td style="text-align: center">{{guest.guestProfileDetail.surname}}</td>
                 <td style="text-align: center">{{guest.guestProfileDetail.preferredName}}</td>
+                <td style="text-align: center">{{guest.roomId}}</td>
+
                 <td style="text-align: center">{{guest.arrivalTime |date:'yyyy-MM-dd HH:mm:ss'}}</td>
 
                 <td><a ng-href="#hotels/guests/{{guest.guestId}}/position">Detail</a>

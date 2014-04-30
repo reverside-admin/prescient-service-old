@@ -37,15 +37,53 @@ insert into user_detail_touch_points (uid, tid) values (1, 1);
 insert into user_detail_touch_points (uid, tid) values (1, 3);
 insert into user_detail_touch_points (uid, tid) values (2, 3);
 
-insert into itcs_tag_read (id, guest_card, zone, x_coord_read, y_coord_read, tag_read_datetime) values (1, 1000, 1, 1.1, 1.2, '2010-04-01 00:01:00');
-insert into itcs_tag_read (id, guest_card, zone, x_coord_read, y_coord_read, tag_read_datetime) values (2, 1000, 1, 2.1, 3.2, '2010-04-01 00:02:00');
-insert into itcs_tag_read (id, guest_card, zone, x_coord_read, y_coord_read, tag_read_datetime) values (3, 1000, 1, 1.1, 4.2, '2010-04-01 00:03:00');
-insert into itcs_tag_read (id, guest_card, zone, x_coord_read, y_coord_read, tag_read_datetime) values (4, 1001, 1, 3.1, 5.2, '2010-04-01 00:04:00');
-insert into itcs_tag_read (id, guest_card, zone, x_coord_read, y_coord_read, tag_read_datetime) values (5, 1002, 1, 1.7, 6.2, '2010-04-01 00:05:00');
 
-insert into itcs_tag_read (id, guest_card, zone, x_coord_read, y_coord_read, tag_read_datetime) values (6, 1003, 2, 8.1, 4.2, '2010-04-02 00:00:00');
-insert into itcs_tag_read (id, guest_card, zone, x_coord_read, y_coord_read, tag_read_datetime) values (7, 1004, 2, 5.1, 3.2, '2010-04-01 00:00:00');
-insert into itcs_tag_read (id, guest_card, zone, x_coord_read, y_coord_read, tag_read_datetime) values (8, 1005, 3, 9.1, 9.2, '2010-04-01 00:00:00');
+
+insert into itcs_system_zone (id, zone_id, zone_name) values (1,1,'Dining');
+insert into itcs_system_zone (id, zone_id, zone_name) values (2,2,'Kitchen');
+insert into itcs_system_zone (id, zone_id, zone_name) values (3,3,'Parking');
+insert into itcs_system_zone (id, zone_id, zone_name) values (4,4,'Reception');
+
+
+
+
+insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (1, 1000, 1, 1.1, 1.2, '2010-04-01 00:03:10');
+insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (2, 1000, 1, 2.1, 3.2, '2010-04-01 00:03:18');
+insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (3, 1000, 1, 1.1, 4.2, '2010-04-01 00:03:20');
+insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (4, 1001, 1, 3.1, 5.2, '2010-04-01 00:11:00');
+insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (15, 1001, 3, 3.1, 5.2, '2010-04-01 00:11:10');
+insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (16, 1001, 1, 3.1, 5.2, '2010-04-01 00:11:03');
+
+
+
+insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (5, 1002, 1, 1.7, 6.2, '2010-04-01 00:05:00');
+
+insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (6, 1003, 2, 8.1, 4.2, '2010-04-02 00:00:00');
+/*insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (7, 1004, 2, 5.1, 3.2, '2010-04-01 00:00:00');*/
+/*insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (8, 1005, 3, 9.1, 9.2, '2010-04-01 00:00:00');*/
+insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (9, 1000, 2, 1.14, 1.24, '2010-04-01 00:08:05');
+insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (10, 1000, 2, 1.88, 1.29, '2010-04-01 00:08:14');
+insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (11, 1000, 3, 1.88, 1.29, '2010-04-01 00:08:17');
+insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (12, 1000, 2, 1.88, 1.29, '2010-04-01 00:08:18');
+insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (13, 1000, 3, 1.88, 1.29, '2010-04-01 00:08:22');
+insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (14, 1000, 4, 1.88, 1.29, '2010-04-01 00:08:21');
+
+
+
+
+insert into itcs_tag_read_history (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (1, 1004, 2, 1.88, 1.29, '2010-04-01 00:08:21');
+insert into itcs_tag_read_history (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (2, 1004, 3, 1.88, 1.29, '2010-04-01 00:09:26');
+insert into itcs_tag_read_history (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (3, 1004, 4, 1.88, 1.29, '2010-04-01 00:09:31');
+insert into itcs_tag_read_history (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (4, 1005, 2, 1.88, 1.29, '2010-04-01 00:08:28');
+insert into itcs_tag_read_history (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (5, 1005, 3, 1.88, 1.29, '2010-04-01 00:09:21');
+
+
+
+
+
+
+
+
 /*insert into itcs_tag_read (id, guest_card, zone) values (9, 1006, 4);*/
 
 insert into guest_profile_detail (id, hotel_id, first_name, dob, gender, nationality_id, passport_number, preferred_name, surname, title)
@@ -79,7 +117,7 @@ insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_ti
 
 insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, current_stay_ind,  guest_profile_detail_id, hotel_id) values (4, '666', 103, '2010-04-03 00:00:00', '2010-04-07 00:00:00', false , 103, 1);
 insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, current_stay_ind,  guest_profile_detail_id, hotel_id) values (5, '555', 104, '2010-04-03 00:00:00', '2010-04-07 00:00:00', true , 104, 1);
-insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, current_stay_ind,  guest_profile_detail_id, hotel_id) values (6, '444', 105, '2010-04-03 00:00:00', '2010-04-07 00:00:00', false, 105, 1);
+insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, current_stay_ind,  guest_profile_detail_id, hotel_id) values (6, '444', 105, '2010-04-03 00:00:00', '2010-04-07 00:00:00', true, 105, 1);
 /*insert into guest_stay_detail (id, room_id, guest_id, arrival_time, departure_time, guest_profile_detail_id) values (7, '333', 106, '2010-04-03 00:00:00', '2010-04-07 00:00:00', 106);*/
 
 
