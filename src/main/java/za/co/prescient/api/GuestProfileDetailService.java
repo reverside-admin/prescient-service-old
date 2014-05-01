@@ -51,4 +51,11 @@ public class GuestProfileDetailService {
         return guestProfileDetails;
     }
 
+    @RequestMapping(value="api/guests")
+    public List<GuestProfileDetail> findGuests()
+    {
+        return guestProfileDetailRepository.findAll();
+    }
+
+
 }

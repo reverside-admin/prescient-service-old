@@ -9,6 +9,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+
+// TODO : Rename the class to Setup
 public class TouchPointSetup {
 
     @Id

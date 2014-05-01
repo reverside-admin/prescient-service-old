@@ -36,6 +36,14 @@ manager_app.config(['$routeProvider',
                 'templateUrl': 'ui/guest-location-history.html',
                 'controller': 'current_guest_location_history_controller'
             })
+            .when('/manager/guest/contacts', {
+                'templateUrl': 'ui/guest-contact-list.html',
+                'controller': 'guest_contact_list_controller'
+            })
+            .when('/manager/guest/contact/create', {
+                'templateUrl': 'ui/create-guest-contact.html',
+                'controller': 'create_guest_contact_controller'
+            })
             .when('/guest/:guestId', {
                 'templateUrl': 'ui/guest-detail.html',
                 'controller': 'guest_detail_controller'
@@ -49,15 +57,13 @@ manager_app.config(['$routeProvider',
     }]);
 
 
-
-
-manager_app.controller('current_guest_location_history_controller', function ($scope, $cookieStore,$routeParams, $http) {
+manager_app.controller('current_guest_location_history_controller', function ($scope, $cookieStore, $routeParams, $http) {
     console.log('current_guest_location_history_controller of manager app module is loaded');
-    $scope.guest_id=$routeParams.guestId;
+    $scope.guest_id = $routeParams.guestId;
     $scope.current_guest_location_history;
 
     $http({
-        url: 'http://localhost:8080/api/guests/'+$scope.guest_id+'/location/history',
+        url: 'http://localhost:8080/api/guests/' + $scope.guest_id + '/location/history',
         method: 'get',
         headers: {
             'Authorization': $cookieStore.get("auth")
@@ -79,18 +85,137 @@ manager_app.controller('current_guest_location_history_controller', function ($s
 });
 
 
+manager_app.controller('guest_contact_list_controller', function ($scope, $cookieStore, $routeParams, $http) {
+    console.log('guest_contact_list_controller of manager app module is loaded');
 
+
+});
+
+manager_app.controller('create_guest_contact_controller', function ($scope, $cookieStore, $routeParams, $http) {
+    console.log('create_guest_contact_controller of manager app module is loaded');
+    $scope.guest_contact = {};
+    $scope.assigned_touch_point_list;
+    $scope.guest_list;
+    $scope.selected_touch_points = [];
+
+    <!-- get all assigned touch points -->
+    $http({
+        url: 'http://localhost:8080/api/login/touchpoints',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            console.log('get success code::' + status);
+            if (status == 200) {
+                $scope.assigned_touch_point_list = data;
+                console.log('All Touch Points::' + $scope.assigned_touch_point_list);
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+   <!-- get all guests in the hotel -->
+
+    $http({
+        url: 'http://localhost:8080/api/guests',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            console.log('get success code::' + status);
+            if (status == 200) {
+                $scope.guest_list = data;
+                console.log('All Touch Points::' + $scope.guest_list);
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+
+
+
+    $scope.onSelect = function (touchpoint_id) {
+        console.log('touch point with Id::' + touchpoint_id + ' is clicked');
+
+        for (var i = 0; i < $scope.selected_touch_points.length; i++) {
+            if ($scope.selected_touch_points[i] == touchpoint_id) {
+                $scope.selected_touch_points.splice(i, 1);
+                 return;
+            }
+        }
+        $scope.selected_touch_points.push({"touchPointId":touchpoint_id});
+
+    };
+
+
+    $scope.create = function () {
+        $scope.guest_contact.guestContactListTouchPoint = $scope.selected_touch_points;
+        $scope.guest_contact.ownerId=$cookieStore.get('user').id;
+        console.log('create the guest contact list');
+        console.log('guest contact list name::'+$scope.guest_contact.guestContactListName);
+        console.log('owner id of this contact list is::'+$scope.guest_contact.ownerId);
+        console.log('touchpoints::' + $scope.guest_contact.guestContactListTouchPoint);
+        console.log('selected touch points::'+$scope.selected_touch_points);
+
+
+
+
+
+
+        $http({
+            url: 'http://localhost:8080/api/guest/contact/create',
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': $cookieStore.get("auth")
+            },
+            data: $scope.guest_contact
+        }).
+            success(function (data, status) {
+                if (status == 201) {
+                    console.log('Guest contact created successfully');
+                    console.log($scope.guest_contact.guestContactListName);
+
+
+                } else {
+                    console.log('status:' + status);
+                }
+            })
+            .error(function (error) {
+                console.log(error);
+            });
+
+
+
+
+
+
+
+    }
+
+
+});
 
 
 manager_app.controller('current_guest_location_controller', function ($scope, $http, $location, $cookieStore, $routeParams, $window) {
     console.log('current guest location  controller is loaded');
-    $scope.guest_id=$routeParams.guestId;
+    $scope.guest_id = $routeParams.guestId;
     $scope.guest_current_position;
-    console.log('current guest location::'+$scope.guest_id);
+    console.log('current guest location::' + $scope.guest_id);
 
 
     $http({
-        url: 'http://localhost:8080/api/guests/'+$scope.guest_id+'/locations',
+        url: 'http://localhost:8080/api/guests/' + $scope.guest_id + '/locations',
         method: 'get',
         headers: {
             'Authorization': $cookieStore.get("auth")
@@ -113,10 +238,6 @@ manager_app.controller('current_guest_location_controller', function ($scope, $h
 });
 
 
-
-
-
-
 manager_app.controller('checkedin_guest_controller', function ($scope, $http, $location, $cookieStore, $routeParams, $window) {
     console.log('manager checkedin guest controller is loaded');
 
@@ -125,7 +246,7 @@ manager_app.controller('checkedin_guest_controller', function ($scope, $http, $l
 
     <!--  get all checkedin guest list -->
     $http({
-        url: 'http://localhost:8080/api/hotels/'+ $scope.hotel_id +'/guests/checkedIn',
+        url: 'http://localhost:8080/api/hotels/' + $scope.hotel_id + '/guests/checkedIn',
         method: 'get',
         headers: {
             'Authorization': $cookieStore.get("auth")
@@ -144,8 +265,6 @@ manager_app.controller('checkedin_guest_controller', function ($scope, $http, $l
         });
 
 });
-
-
 
 
 manager_app.controller('touch_point_setup_list_controller', function ($scope, $http, $location, $cookieStore, $routeParams, $window) {
@@ -169,7 +288,7 @@ manager_app.controller('touch_point_setup_list_controller', function ($scope, $h
             if (status == 200) {
                 $scope.current_setup = data;
                 console.log('current setup name::' + $scope.current_setup.setupName);
-                $scope.testModel =$scope.current_setup.id;
+                $scope.testModel = $scope.current_setup.id;
 
             } else {
                 console.log('status:' + status);

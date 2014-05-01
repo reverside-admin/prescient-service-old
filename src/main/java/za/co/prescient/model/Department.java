@@ -8,7 +8,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Getter@Setter
+@Getter
+@Setter
 public class Department {
 
     @Id

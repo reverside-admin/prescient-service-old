@@ -10,6 +10,7 @@ import java.util.Date;
 @Entity
 @Getter@Setter
 @ToString
+// TODO : Rename the class Guest
 public class GuestProfileDetail {
 
     @Id
@@ -19,12 +20,6 @@ public class GuestProfileDetail {
     @ManyToOne
     private Hotel hotel;
 
-//    @Column
-//    private Long operaProfileId;
-//
-//    @Column
-//    private String idNumber;
-//
     @Column
     private String passportNumber;
 
@@ -49,10 +44,5 @@ public class GuestProfileDetail {
     @Column
     private Date dob;
 
-//    @Column
-//    private Date lastUpdateDate;
-//
-//    @Column
-//    private String photoImagePath;
 
 }
