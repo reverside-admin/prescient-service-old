@@ -9,6 +9,7 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+// TODO : Rename the class as GuestStayHistory
 public class GuestStayDetail {
 
     @Id
@@ -35,8 +36,8 @@ public class GuestStayDetail {
     GuestProfileDetail guestProfileDetail;
 
     //TODO: verify the relationship with Hotel Table
+    // TODO : remove the relation to hotel id as reference to guest will have
     @Column
     Long hotelId;
-
 
 }

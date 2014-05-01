@@ -20,6 +20,7 @@ public class GuestProfileDetail {
     @ManyToOne
     private Hotel hotel;
 
+    // TODO : Make it unique (add hotel id to constraint if necessary) (confirm from business)
     @Column
     private String passportNumber;
 

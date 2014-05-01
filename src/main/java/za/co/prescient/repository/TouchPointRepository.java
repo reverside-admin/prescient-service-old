@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 public interface TouchPointRepository extends JpaRepository<TouchPoint, Long> {
 
+    //TODO : remove param annotation
     public List<TouchPoint> findTouchPointByDepartmentId(@Param("departmentId") Long departmentId);
 
 }

@@ -13,8 +13,9 @@ public class GuestContactListTouchPoint {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private GuestContactListHeader guestContactListHeader;
+
+    // TODO : Refer to touchPoint table
     private Integer touchPointId;
-    /*@ManyToOne
-    @JoinColumn
-    GuestContactListHeader guestContactListHeader;*/
+
 }

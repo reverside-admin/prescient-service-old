@@ -12,8 +12,6 @@ import java.util.List;
 @Repository
 public interface ItcsTagReadRepository extends JpaRepository<ItcsTagRead, Long> {
 
-//    List<ItcsTagRead> findByZone(int zoneId);
-
     @Query("select  distinct itr.guestCard from ItcsTagRead itr where itr.itcsSystemZone.zoneId = ?1")
     List<ItcsTagRead> findTagsInZone(int zoneId);
 

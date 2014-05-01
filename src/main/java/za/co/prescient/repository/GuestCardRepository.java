@@ -8,7 +8,10 @@ import za.co.prescient.model.GuestCard;
 @Repository
 public interface GuestCardRepository extends JpaRepository<GuestCard, Long> {
 
+    @Deprecated
     @Query("select gc from GuestCard gc where gc.magStripeNo = ?1")
     GuestCard findAGuestCard(String magStripeNo);
+
+    GuestCard findByMagStripeNo(String magStripeNo);
 
 }
