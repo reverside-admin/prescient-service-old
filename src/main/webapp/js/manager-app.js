@@ -88,15 +88,41 @@ manager_app.controller('current_guest_location_history_controller', function ($s
 manager_app.controller('guest_contact_list_controller', function ($scope, $cookieStore, $routeParams, $http) {
     console.log('guest_contact_list_controller of manager app module is loaded');
 
+$scope.contact_list;
+
+
+    <!-- get all contacts -->
+    $http({
+        url: 'http://localhost:8080/api/guest/contacts',
+        method: 'get',
+        headers: {
+            'Authorization': $cookieStore.get("auth")
+        }
+    }).
+        success(function (data, status) {
+            if (status == 200) {
+                $scope.contact_list = data;
+                console.log('all contacts ::' + $scope.contact_list);
+            } else {
+                console.log('status:' + status);
+            }
+        })
+        .error(function (error) {
+            console.log(error);
+        });
+
+
+
 
 });
 
-manager_app.controller('create_guest_contact_controller', function ($scope, $cookieStore, $routeParams, $http) {
+manager_app.controller('create_guest_contact_controller', function ($scope, $cookieStore, $routeParams, $http,$location) {
     console.log('create_guest_contact_controller of manager app module is loaded');
     $scope.guest_contact = {};
     $scope.assigned_touch_point_list;
     $scope.guest_list;
     $scope.selected_touch_points = [];
+    $scope.selected_guests=[];
 
     <!-- get all assigned touch points -->
     $http({
@@ -119,7 +145,7 @@ manager_app.controller('create_guest_contact_controller', function ($scope, $coo
             console.log(error);
         });
 
-   <!-- get all guests in the hotel -->
+    <!-- get all guests in the hotel -->
 
     $http({
         url: 'http://localhost:8080/api/guests',
@@ -144,13 +170,14 @@ manager_app.controller('create_guest_contact_controller', function ($scope, $coo
 
 
 
-    $scope.onSelect = function (touchpoint_id) {
+    $scope.onSelectTouchPoint = function (touchpoint_id) {
         console.log('touch point with Id::' + touchpoint_id + ' is clicked');
 
         for (var i = 0; i < $scope.selected_touch_points.length; i++) {
-            if ($scope.selected_touch_points[i] == touchpoint_id) {
+
+            if ($scope.selected_touch_points[i].touchPointId == touchpoint_id) {
                 $scope.selected_touch_points.splice(i, 1);
-                 return;
+                return;
             }
         }
         $scope.selected_touch_points.push({"touchPointId":touchpoint_id});
@@ -158,19 +185,27 @@ manager_app.controller('create_guest_contact_controller', function ($scope, $coo
     };
 
 
+
+    $scope.onSelectGuest = function (guest_id) {
+        console.log('guest with Id::' + guest_id + ' is clicked');
+
+        for (var i = 0; i < $scope.selected_guests.length; i++) {
+
+            if ($scope.selected_guests[i].guestId == guest_id) {
+                $scope.selected_guests.splice(i, 1);
+                return;
+            }
+        }
+        $scope.selected_guests.push({"guestId":guest_id});
+
+    };
+
+
     $scope.create = function () {
         $scope.guest_contact.guestContactListTouchPoint = $scope.selected_touch_points;
+        $scope.guest_contact.guestContactListGuest=$scope.selected_guests;
         $scope.guest_contact.ownerId=$cookieStore.get('user').id;
         console.log('create the guest contact list');
-        console.log('guest contact list name::'+$scope.guest_contact.guestContactListName);
-        console.log('owner id of this contact list is::'+$scope.guest_contact.ownerId);
-        console.log('touchpoints::' + $scope.guest_contact.guestContactListTouchPoint);
-        console.log('selected touch points::'+$scope.selected_touch_points);
-
-
-
-
-
 
         $http({
             url: 'http://localhost:8080/api/guest/contact/create',
@@ -185,6 +220,7 @@ manager_app.controller('create_guest_contact_controller', function ($scope, $coo
                 if (status == 201) {
                     console.log('Guest contact created successfully');
                     console.log($scope.guest_contact.guestContactListName);
+                    $location.url('/manager/guest/contacts');
 
 
                 } else {
@@ -195,16 +231,12 @@ manager_app.controller('create_guest_contact_controller', function ($scope, $coo
                 console.log(error);
             });
 
-
-
-
-
-
-
     }
 
 
 });
+
+
 
 
 manager_app.controller('current_guest_location_controller', function ($scope, $http, $location, $cookieStore, $routeParams, $window) {

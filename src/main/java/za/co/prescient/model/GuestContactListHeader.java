@@ -26,8 +26,20 @@ public class GuestContactListHeader {
 
     // TODO : remove joinColumn and add mappedBy -> contactList
     @OneToMany(cascade = CascadeType.ALL,targetEntity=GuestContactListTouchPoint.class)
-    @JoinColumn(referencedColumnName="contactList")
+    @JoinColumn(name="contact_list_id", referencedColumnName="id")
     List<GuestContactListTouchPoint> guestContactListTouchPoint;
+
+
+
+    @OneToMany(cascade = CascadeType.ALL,targetEntity=GuestContactListGuest.class)
+    @JoinColumn(name="contact_list_id", referencedColumnName="id")
+    List<GuestContactListGuest> guestContactListGuest;
+
+
+   /* @OneToMany(mappedBy = "guestContactListHeader",cascade = CascadeType.ALL,targetEntity=GuestContactListTouchPoint.class)
+    List<GuestContactListTouchPoint> guestContactListTouchPoint;*/
+
+
 
 
 

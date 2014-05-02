@@ -4,7 +4,7 @@
 
         <div class="col-md-12 text-right">
             <div class="btn-group btn-group-sm">
-                <a ng-href="#" class="btn btn-primary">Back</a>
+                <a ng-href="#manager/guest/contacts" class="btn btn-primary">Back</a>
             </div>
         </div>
 
@@ -28,7 +28,7 @@
                     <td>
                         <ul>
                             <li ng-repeat="touchpoint in assigned_touch_point_list">
-                                <input type="checkbox" ng-click="onSelect(touchpoint.id)"/>
+                                <input type="checkbox" ng-click="onSelectTouchPoint(touchpoint.id)"/>
                                 {{touchpoint.name}}
                             </li>
                         </ul>
@@ -36,8 +36,7 @@
                 </tr>
 
                 <tr ng-repeat="guest in guest_list">
-                    <td><input type="checkbox"/></td>
-
+                    <td><input type="checkbox" ng-click="onSelectGuest(guest.id)"/></td>
                     <td>{{guest.title}}</td>
                     <td>{{guest.firstName}}</td>
                     <td>{{guest.surname}}</td>
