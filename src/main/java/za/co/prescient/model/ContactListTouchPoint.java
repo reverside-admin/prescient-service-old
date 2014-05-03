@@ -5,16 +5,17 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-
+@Entity
 @Getter
 @Setter
-@Entity
-public class GuestContactListGuest {
-
+public class ContactListTouchPoint {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    Long id;
 
+    @ManyToOne
+    ContactList contactList;
 
-     private Integer guestId;
+    @ManyToOne
+    TouchPoint touchPoint;
 }

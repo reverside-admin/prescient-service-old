@@ -1,30 +1,28 @@
 package za.co.prescient.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
-
-// TODO : Rename the class to Setup
-public class TouchPointSetup {
+@Data
+public class Setup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    Long id;
 
     @Column
-    String setupName;
+    String name;
 
     @Column
-    String setupDescription;
+    String description;
 
     @Column
-    Boolean setupIndicator;
+    Boolean indicator;
 
     @Column
     String imageName;
@@ -41,7 +39,7 @@ public class TouchPointSetup {
     @Column
     String filePath;
 
-    @Column(name="touch_point_id")
-    Long touchPointId;
+    @ManyToOne
+    TouchPoint touchPoint;
 
 }

@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import za.co.prescient.model.UserDetail;
-import za.co.prescient.repository.UserDetailRepository;
+import za.co.prescient.model.User;
+import za.co.prescient.repository.UserRepository;
 
 import java.security.Principal;
 
@@ -14,17 +14,17 @@ import java.security.Principal;
 public class LoginService {
 
     @Autowired
-    private UserDetailRepository userDetailRepository;
+    private UserRepository userRepository;
 
     @RequestMapping(value = "login/{userName}/{password}", produces = "application/json")
     @ResponseBody
-    public UserDetail login(@PathVariable("userName") String userName, @PathVariable("password") String password) {
+    public User login(@PathVariable("userName") String userName, @PathVariable("password") String password) {
         log.info("User Login -> userName:{}, password:{}", userName, password);
-        UserDetail userDetail = userDetailRepository.findByUserNameAndPassword(userName, password);
-        if (userDetail == null) {
+        User user = userRepository.findByUserNameAndPassword(userName, password);
+        if (user == null) {
             throw new RuntimeException("User Not Found");
         }
-        return userDetail;
+        return user;
     }
 
 
@@ -32,8 +32,8 @@ public class LoginService {
     @ResponseStatus(HttpStatus.OK)
     public void changePassword(@PathVariable("newPassword")String newPassword, Principal principal) {
         String userName = principal.getName();
-        UserDetail userDetail = userDetailRepository.findByUserName(userName);
-        userDetail.setPassword(newPassword);
-        userDetailRepository.save(userDetail);
+        User user = userRepository.findByUserName(userName);
+        user.setPassword(newPassword);
+        userRepository.save(user);
     }
 }

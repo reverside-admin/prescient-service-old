@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import za.co.prescient.model.GuestCard;
-import za.co.prescient.repository.GuestCardRepository;
+import za.co.prescient.model.Card;
+import za.co.prescient.repository.CardRepository;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,21 +15,21 @@ import java.util.List;
 public class GuestCardService {
 
     @Autowired
-    GuestCardRepository guestCardRepository;
+    CardRepository cardRepository;
 
     @RequestMapping(value = "api/guestcards/{msn}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("msn") String msn, @RequestBody GuestCard guestCard) {
+    public void update(@PathVariable("msn") String msn, @RequestBody Card guestCard) {
 
-        GuestCard gCard = guestCardRepository.findAGuestCard(msn);
+        Card gCard = cardRepository.findByMagStripeNo(msn);
         log.info("guestcard1 : " + gCard);
         gCard.setRfidTagNo(guestCard.getRfidTagNo());
-        guestCardRepository.save(gCard);
+        cardRepository.save(gCard);
     }
 
     @RequestMapping(value = "api/guestcards/{msn}/detail")
-    public GuestCard get(@PathVariable("msn") String msn) {
-        return guestCardRepository.findAGuestCard(msn);
+    public Card get(@PathVariable("msn") String msn) {
+        return cardRepository.findByMagStripeNo(msn);
     }
 
     @RequestMapping(value = "api/guestcards", method = RequestMethod.POST, consumes = "application/json")
@@ -40,20 +40,20 @@ public class GuestCardService {
         log.info("str::" + str);
         String resultStr[] = str.split("\n");
         log.info("No of cards::" + resultStr.length);
-        GuestCard guestCard;
+        Card guestCard;
         for(String obj:resultStr)
         {
-            guestCard=guestCardRepository.findAGuestCard(obj.trim());
+            guestCard= cardRepository.findByMagStripeNo(obj.trim());
             if(guestCard==null){
-                guestCard=new GuestCard();
+                guestCard=new Card();
                 guestCard.setMagStripeNo(obj.trim());
-                guestCardRepository.save(guestCard);
+                cardRepository.save(guestCard);
             }
         }
     }
 
     @RequestMapping(value = "api/guestcards/all")
-    public List<GuestCard> getall() {
-        return guestCardRepository.findAll();
+    public List<Card> getall() {
+        return cardRepository.findAll();
     }
 }

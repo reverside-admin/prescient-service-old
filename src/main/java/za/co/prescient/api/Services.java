@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import za.co.prescient.model.*;
+import za.co.prescient.model.itcs.ItcsTagRead;
+import za.co.prescient.model.itcs.ItcsTagReadHistory;
 import za.co.prescient.repository.*;
+import za.co.prescient.repository.itcs.ItcsTagReadHistoryRepository;
+import za.co.prescient.repository.itcs.ItcsTagReadRepository;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -25,7 +28,7 @@ public class Services {
     TouchPointRepository touchPointRepository;
 
     @Autowired
-    UserDetailRepository userDetailRepository;
+    UserRepository userRepository;
 
     @Autowired
     UserStatusRepository userStatusRepository;
@@ -34,22 +37,22 @@ public class Services {
     UserTypeRepository userTypeRepository;
 
     @Autowired
-    GuestProfileDetailRepository guestProfileDetailRepository;
+    GuestRepository guestRepository;
 
     @Autowired
     ItcsTagReadRepository itcsTagReadRepository;
 
     @Autowired
-    GuestCardAllocationRepository guestCardAllocationRepository;
+    CardRepository guestCardAllocationRepository;
 
     @Autowired
-    GuestStayDetailRepository guestStayDetailRepository;
+    GuestStayHistoryRepository guestStayHistoryRepository;
 
     @Autowired
-    TouchPointSetupRepository touchPointSetupRepository;
+    SetupRepository setupRepository;
 
     @Autowired
-    GuestCardRepository guestCardRepository;
+    CardRepository cardRepository;
 
     @Autowired
     ItcsTagReadHistoryRepository itcsTagReadHistoryRepository;
@@ -57,9 +60,9 @@ public class Services {
     @RequestMapping(value = "users/assignDept/{Userid}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public void assignDept(@PathVariable Long id, @RequestBody List<Department> departments) {
-        UserDetail userDetail = userDetailRepository.findOne(id);
-        userDetail.setDepartments(departments);
-        userDetailRepository.save(userDetail);
+        User user = userRepository.findOne(id);
+        user.setDepartments(departments);
+        userRepository.save(user);
     }
 
     @RequestMapping(value = "touchpoints/guestCardIds/all")
@@ -68,30 +71,31 @@ public class Services {
     }
 
     @RequestMapping(value = "guest/{guestId}")
-    public GuestStayDetail getGuestDetailByGuestId(@PathVariable("guestId") Integer guestId) {
+    public GuestStayHistory getGuestDetailByGuestId(@PathVariable("guestId") Integer guestId) {
         LOGGER.info("guest detail service is invoked");
-        return guestStayDetailRepository.findGuestDetailByGId(guestId);
+        return guestStayHistoryRepository.findByGuestId(guestId);
     }
 
 
     @RequestMapping(value = "hotels/{hotelId}/guests/checkedIn")
-    public List<GuestStayDetail> getAllCheckedInGuests(@PathVariable("hotelId") Long hotelId) {
+    public List<GuestStayHistory> getAllCheckedInGuests(@PathVariable("hotelId") Long hotelId) {
 
         LOGGER.info("find checked in guest list service is invoked");
-        return guestStayDetailRepository.findAllCheckedInGuests(hotelId);
+        return guestStayHistoryRepository.findCheckedInByHotelId(hotelId);
     }
 
     //find guest list by touchpoint
     @RequestMapping(value = "touchpoints/{tpId}/guestCards")
-    public List<GuestProfileDetail> getGuestIdsByZoneId(@PathVariable("tpId") Integer zoneId) {
+    public List<Guest> getGuestIdsByZoneId(@PathVariable("tpId") Integer zoneId) {
 
         List<ItcsTagRead> itcsTagReadList = itcsTagReadRepository.findTagsInZone(zoneId);
-        List<GuestProfileDetail> guestProfileDetails = guestCardAllocationRepository.findGuestsWithTagsInAZone(itcsTagReadList);
-        for (GuestProfileDetail obj : guestProfileDetails) {
-            LOGGER.info("First Name : " + obj.getFirstName());
-        }
-        LOGGER.info("List : " + itcsTagReadList);
-        return guestProfileDetails;
+// TODO :       List<Guest> guests = guestCardAllocationRepository.findGuestsWithTagsInAZone(itcsTagReadList);
+//        for (Guest obj : guests) {
+//            LOGGER.info("First Name : " + obj.getFirstName());
+//        }
+//        LOGGER.info("List : " + itcsTagReadList);
+//        return guests;
+        return null;
     }
 
 //   /* @RequestMapping(value = "guests/{guestId}/guestCard")
@@ -105,26 +109,29 @@ public class Services {
     @RequestMapping(value = "guests/{guestId}/locations")
     public ItcsTagRead getGuestCardHistory(@PathVariable("guestId") Long guestId) {
         LOGGER.info("guestcard by guest id service is called");
-         GuestCardAllocation guestCardAllocation = guestCardAllocationRepository.findGuestCardByGuestId(guestId);
+      // TODO :   GuestCard guestCardAllocation = guestCardAllocationRepository.findGuestCardByGuestId(guestId);
 //        List<ItcsTagRead> itcList=itcsTagReadRepository.findGuestCardHistory(guestCardAllocation.getGuestCardId());
 //        LOGGER.info("return list size::"+itcList.size());
 
-        ItcsTagRead itc=itcsTagReadRepository.findGuestCardHistory(guestCardAllocation.getGuestCardId());
+//TODO :        ItcsTagRead itc=itcsTagReadRepository.findGuestCardHistory(guestCardAllocation.getGuestCardId());
        // LOGGER.info("return list size::"+itc.getId());
-        return itc;
+        return null;
     }
 
 
     @RequestMapping(value = "guests/{guestId}/location/history")
     public List<ItcsTagReadHistory> getGuestHistory(@PathVariable("guestId") Long guestId) {
         LOGGER.info("guestcard history service is called");
-         GuestCardAllocation guestCardAllocation = guestCardAllocationRepository.findGuestCardByGuestId(guestId);
+         // TODO : GuestCard guestCardAllocation = guestCardAllocationRepository.findGuestCardByGuestId(guestId);
 
-        List<ItcsTagReadHistory> itc= itcsTagReadHistoryRepository.findGuestHistory(guestCardAllocation.getGuestCardId());
+//        List<ItcsTagReadHistory> itc= itcsTagReadHistoryRepository.findGuestHistory(guestCardAllocation.getGuestCardId());
 
-        LOGGER.info("return list size::"+itc.size());
-        return itc;
+//        LOGGER.info("return list size::"+itc.size());
+        return null;
     }
+
+
+
 
 
 

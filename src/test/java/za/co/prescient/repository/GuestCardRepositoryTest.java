@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import za.co.prescient.Application;
-import za.co.prescient.model.GuestProfileDetail;
+import za.co.prescient.model.Guest;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -20,10 +20,10 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = Application.class, loader = SpringApplicationContextLoader.class)
-public class GuestCardAllocationRepositoryTest {
+public class GuestCardRepositoryTest {
 
     @Autowired
-    GuestCardAllocationRepository guestCardAllocationRepository;
+    GuestCardRepository guestCardRepository;
 
     @Autowired
     DataSource dataSource;
@@ -45,31 +45,31 @@ public class GuestCardAllocationRepositoryTest {
 
     @Test
     public void shouldReturnGuestsAllocatedWithTagIds() {
-        assertNotNull(guestCardAllocationRepository);
-        List<GuestProfileDetail> guestProfileDetails = guestCardAllocationRepository.findGuestsWithTags(asList(1000, 1001));
-        assertEquals(2, guestProfileDetails.size());
+        assertNotNull(guestCardRepository);
+        List<Guest> guests = guestCardRepository.findGuestsWithTags(asList(1000, 1001));
+        assertEquals(2, guests.size());
     }
 
     @Test
     public void shouldNotReturnAnyGuestIfTagIsNotAllocated() {
-        assertNotNull(guestCardAllocationRepository);
-        List<GuestProfileDetail> guestProfileDetails = guestCardAllocationRepository.findGuestsWithTags(asList(1000, 1002));
-        assertEquals(2, guestProfileDetails.size());
+        assertNotNull(guestCardRepository);
+        List<Guest> guests = guestCardRepository.findGuestsWithTags(asList(1000, 1002));
+        assertEquals(2, guests.size());
     }
 
     @Test
     public void shouldReturnAGuestNameAllocatedWithTagId() {
-        assertNotNull(guestCardAllocationRepository);
-        List<GuestProfileDetail> guestProfileDetails = guestCardAllocationRepository.findGuestsWithTags(asList(1000));
-        assertEquals("guest1", guestProfileDetails.get(0).getFirstName());
+        assertNotNull(guestCardRepository);
+        List<Guest> guests = guestCardRepository.findGuestsWithTags(asList(1000));
+        assertEquals("guest1", guests.get(0).getFirstName());
     }
 
     @Test
     public void shouldReturnGuestNamesAllocatedWithTagIds() {
-        assertNotNull(guestCardAllocationRepository);
-        List<GuestProfileDetail> guestProfileDetails = guestCardAllocationRepository.findGuestsWithTags(asList(1000, 1001, 1003));
-        assertEquals("guest1", guestProfileDetails.get(0).getFirstName());
-        assertEquals("guest2", guestProfileDetails.get(1).getFirstName());
+        assertNotNull(guestCardRepository);
+        List<Guest> guests = guestCardRepository.findGuestsWithTags(asList(1000, 1001, 1003));
+        assertEquals("guest1", guests.get(0).getFirstName());
+        assertEquals("guest2", guests.get(1).getFirstName());
     }
 
 

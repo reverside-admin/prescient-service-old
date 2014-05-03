@@ -1,9 +1,8 @@
-package za.co.prescient.repository;
+package za.co.prescient.repository.itcs;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import za.co.prescient.model.ItcsTagRead;
-import za.co.prescient.model.ItcsTagReadHistory;
+import za.co.prescient.model.itcs.ItcsTagReadHistory;
 
 import java.util.List;
 

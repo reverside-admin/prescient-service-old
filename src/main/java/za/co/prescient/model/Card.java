@@ -1,23 +1,23 @@
 package za.co.prescient.model;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-
 @Entity
-@Getter
-@Setter
-public class ItcsSystemZone {
+@Data
+public class Card {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    Long id;
 
-    @Column
-    private Integer zoneId;
+    @Column(unique = true)
+    String magStripeNo;
 
-    @Column
-    private String zoneName;
+    @Column(unique = true)
+    String rfidTagNo;
 
 }

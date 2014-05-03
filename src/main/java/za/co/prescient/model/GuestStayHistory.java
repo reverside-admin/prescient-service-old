@@ -9,22 +9,28 @@ import java.util.Date;
 
 @Entity
 @Data
-public class GuestCard {
+public class GuestStayHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
     @ManyToOne
-    Card card;
-
-    @ManyToOne
     Guest guest;
 
     @Column
-    Date issueDate;
+    String roomId;
 
     @Column
-    Boolean status;
+    Date arrivalTime;
+
+    @Column
+    Date departureTime;
+
+    @Column
+    Boolean currentStayIndicator;
+
+    @ManyToOne
+    Hotel hotel;
 
 }

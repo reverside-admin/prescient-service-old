@@ -8,21 +8,22 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Getter@Setter
+@Getter
+@Setter
 public class TouchPoint {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    Long id;
 
     @Column
-    private String name;
+    String name;
 
     @ManyToOne
     @JsonIgnore
-    private Department department;
+    Department department;
 
     @OneToMany
-    @JoinColumn(name="touch_point_id", referencedColumnName = "id")
-    private List<TouchPointSetup> touchPointSetups;
+    @JoinColumn(name = "touch_point_id", referencedColumnName = "id")
+    List<Setup> setups;
 }

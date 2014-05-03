@@ -1,4 +1,4 @@
-package za.co.prescient.repository;
+package za.co.prescient.repository.itcs;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,8 @@ import org.springframework.boot.test.SpringApplicationContextLoader;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import za.co.prescient.Application;
-import za.co.prescient.model.ItcsTagRead;
+import za.co.prescient.model.itcs.ItcsTagRead;
+import za.co.prescient.repository.itcs.ItcsTagReadRepository;
 
 import java.util.List;
 

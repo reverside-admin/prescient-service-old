@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import za.co.prescient.model.Department;
 import za.co.prescient.model.TouchPoint;
 import za.co.prescient.repository.TouchPointRepository;
-import za.co.prescient.repository.UserDetailRepository;
+import za.co.prescient.repository.UserRepository;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -17,14 +17,14 @@ import java.util.List;
 public class TouchPointService {
 
     @Autowired
-    private UserDetailRepository userDetailRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private TouchPointRepository touchPointRepository;
 
     @RequestMapping(value = "api/login/touchpoints", method = RequestMethod.GET, produces = "application/json")
     public List<TouchPoint> getTouchPointsAssignedToLoggedInUser(Principal principal) {
-        List<TouchPoint> touchPoints = userDetailRepository.findByUserName(principal.getName()).getTouchPoints();
+        List<TouchPoint> touchPoints = userRepository.findByUserName(principal.getName()).getTouchPoints();
         return touchPoints;
     }
 

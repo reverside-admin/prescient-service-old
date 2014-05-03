@@ -1,4 +1,4 @@
-package za.co.prescient.model;
+package za.co.prescient.model.itcs;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -18,7 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 import za.co.prescient.Application;
 import za.co.prescient.model.Hotel;
 import za.co.prescient.repository.HotelRepository;
-import za.co.prescient.repository.ItcsTagReadRepository;
+import za.co.prescient.repository.itcs.ItcsTagReadRepository;
 
 import java.util.Arrays;
 import java.util.List;

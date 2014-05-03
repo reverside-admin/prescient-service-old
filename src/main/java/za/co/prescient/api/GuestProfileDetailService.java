@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import za.co.prescient.model.GuestProfileDetail;
-import za.co.prescient.model.ItcsTagRead;
-import za.co.prescient.repository.GuestCardAllocationRepository;
-import za.co.prescient.repository.GuestProfileDetailRepository;
-import za.co.prescient.repository.ItcsTagReadRepository;
-import za.co.prescient.repository.UserDetailRepository;
+import za.co.prescient.model.Guest;
+import za.co.prescient.model.itcs.ItcsTagRead;
+import za.co.prescient.repository.CardRepository;
+import za.co.prescient.repository.GuestRepository;
+import za.co.prescient.repository.itcs.ItcsTagReadRepository;
+import za.co.prescient.repository.UserRepository;
 
 import java.util.List;
 
@@ -19,42 +19,43 @@ import java.util.List;
 public class GuestProfileDetailService {
 
     @Autowired
-    UserDetailRepository userDetailRepository;
+    UserRepository userRepository;
 
     @Autowired
-    GuestProfileDetailRepository guestProfileDetailRepository;
+    GuestRepository guestRepository;
 
     @Autowired
     ItcsTagReadRepository itcsTagReadRepository;
 
     @Autowired
-    GuestCardAllocationRepository guestCardAllocationRepository;
+    CardRepository guestCardAllocationRepository;
 
     @RequestMapping(value = "users/{userId}/guestList")
-    public List<GuestProfileDetail> getAllGuest(@PathVariable("userId") Long userId) {
-        log.info("Allotted Departments : " + userDetailRepository.findOne(userId).getTouchPoints());
-        userDetailRepository.findOne(userId).getHotel().getId();
-        guestProfileDetailRepository.findGuestProfileDetailByHotelId(userDetailRepository.findOne(userId).getHotel().getId());
-        log.info("GUEST LIST" + guestProfileDetailRepository.findGuestProfileDetailByHotelId(userDetailRepository.findOne(userId).getHotel().getId()));
-        return guestProfileDetailRepository.findGuestProfileDetailByHotelId(userDetailRepository.findOne(userId).getHotel().getId());
+    public List<Guest> getAllGuest(@PathVariable("userId") Long userId) {
+        log.info("Allotted Departments : " + userRepository.findOne(userId).getTouchPoints());
+        userRepository.findOne(userId).getHotel().getId();
+        guestRepository.findByHotelId(userRepository.findOne(userId).getHotel().getId());
+        log.info("GUEST LIST" + guestRepository.findByHotelId(userRepository.findOne(userId).getHotel().getId()));
+        return guestRepository.findByHotelId(userRepository.findOne(userId).getHotel().getId());
     }
 
     @RequestMapping(value = "touchpoints/{touchpointId}/guestCards")
-    public List<GuestProfileDetail> getGuestIdsByZoneId(@PathVariable("touchpointId") Integer zoneId) {
+    public List<Guest> getGuestIdsByZoneId(@PathVariable("touchpointId") Integer zoneId) {
 
         List<ItcsTagRead> itcsTagReadList = itcsTagReadRepository.findTagsInZone(zoneId);
-        List<GuestProfileDetail> guestProfileDetails = guestCardAllocationRepository.findGuestsWithTagsInAZone(itcsTagReadList);
-        for (GuestProfileDetail obj : guestProfileDetails) {
-            log.info("First Name : " + obj.getFirstName());
-        }
-        log.info("List : " + itcsTagReadList);
-        return guestProfileDetails;
+        // TODO : List<Guest> guests = guestCardAllocationRepository.findGuestsWithTagsInAZone(itcsTagReadList);
+//        for (Guest obj : guests) {
+//            log.info("First Name : " + obj.getFirstName());
+//        }
+//        log.info("List : " + itcsTagReadList);
+//        return guests;
+        return null;
     }
 
     @RequestMapping(value="api/guests")
-    public List<GuestProfileDetail> findGuests()
+    public List<Guest> findGuests()
     {
-        return guestProfileDetailRepository.findAll();
+        return guestRepository.findAll();
     }
 
 

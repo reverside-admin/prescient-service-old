@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import za.co.prescient.model.TouchPointSetup;
-import za.co.prescient.repository.TouchPointSetupRepository;
+import za.co.prescient.model.Setup;
+import za.co.prescient.repository.SetupRepository;
 
 import java.util.List;
 
@@ -14,60 +14,60 @@ import java.util.List;
 public class TouchPointSetupService {
 
     @Autowired
-    TouchPointSetupRepository touchPointSetupRepository;
+    SetupRepository setupRepository;
 
     @RequestMapping(value = "api/tpsetup/{id}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") Long id, @RequestBody TouchPointSetup touchPointSetup) {
+    public void update(@PathVariable("id") Long id, @RequestBody Setup setup) {
 
-        TouchPointSetup tpSetup = touchPointSetupRepository.findOne(id);
+        Setup tpSetup = setupRepository.findOne(id);
 
-        tpSetup.setSetupName(touchPointSetup.getSetupName());
-        tpSetup.setSetupDescription(touchPointSetup.getSetupDescription());
-        tpSetup.setImageName(touchPointSetup.getImageName());
-        tpSetup.setFileName(touchPointSetup.getFileName());
-        tpSetup.setLengthX(touchPointSetup.getLengthX());
-        tpSetup.setLengthY(touchPointSetup.getLengthY());
-        tpSetup.setFilePath(touchPointSetup.getFilePath());
+        tpSetup.setName(setup.getName());
+        tpSetup.setDescription(setup.getDescription());
+        tpSetup.setImageName(setup.getImageName());
+        tpSetup.setFileName(setup.getFileName());
+        tpSetup.setLengthX(setup.getLengthX());
+        tpSetup.setLengthY(setup.getLengthY());
+        tpSetup.setFilePath(setup.getFilePath());
 
-        touchPointSetupRepository.save(tpSetup);
+        setupRepository.save(tpSetup);
     }
 
     @RequestMapping(value = "api/tp/setup", method = RequestMethod.POST, consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody TouchPointSetup touchPointSetup) {
-        touchPointSetupRepository.save(touchPointSetup);
+    public void create(@RequestBody Setup setup) {
+        setupRepository.save(setup);
     }
 
     @RequestMapping(value = "api/tp/{tpid}/setups")
-    public List<TouchPointSetup> getAll(@PathVariable("tpid") Long tpid) {
-        return touchPointSetupRepository.findTpSetupsByTpId(tpid);
+    public List<Setup> getAll(@PathVariable("tpid") Long tpid) {
+        return setupRepository.findByTouchPointId(tpid);
     }
 
     @RequestMapping(value = "api/tpsetup/{setupId}")
-    public TouchPointSetup getDetail(@PathVariable("setupId") Long id) {
-        return touchPointSetupRepository.findOne(id);
+    public Setup getDetail(@PathVariable("setupId") Long id) {
+        return setupRepository.findOne(id);
     }
 
     @RequestMapping(value = "api/tpsetup/{id}/delete", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.MOVED_PERMANENTLY)
     public void delete(@PathVariable("id") Long id) {
-        touchPointSetupRepository.delete(id);
+        setupRepository.delete(id);
     }
 
 
     @RequestMapping(value = "api/touchpoint/{tpid}/setup/{setupid}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public void setCurrentSetup(@PathVariable("tpid") Long tpId,@PathVariable("setupid") Long setupId) {
-        touchPointSetupRepository.resetSetupIndicator(tpId);
-        touchPointSetupRepository.setCurrentSetupIndicator(setupId);
+        setupRepository.resetIndicatorForTouchPointId(tpId);
+        setupRepository.setIndicator(setupId);
     }
 
 
     @RequestMapping(value = "api/touchpoint/{tpid}/currentsetup", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public TouchPointSetup getCurrentSetup(@PathVariable("tpid") Long tpId) {
-        TouchPointSetup tps=touchPointSetupRepository.findCurrentTpSetupsByTpId(tpId);
+    public Setup getCurrentSetup(@PathVariable("tpid") Long tpId) {
+        Setup tps= setupRepository.findCurrentSetupOfATouchPoint(tpId);
         return tps;
 
     }

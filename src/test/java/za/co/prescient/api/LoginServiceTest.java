@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import za.co.prescient.model.UserDetail;
-import za.co.prescient.repository.UserDetailRepository;
+import za.co.prescient.model.User;
+import za.co.prescient.repository.UserRepository;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -16,7 +16,7 @@ import static org.springframework.test.util.ReflectionTestUtils.setField;
 public class LoginServiceTest {
 
     @Mock
-    UserDetailRepository userDetailRepository;
+    UserRepository userRepository;
 
     LoginService loginService;
     String userName ;
@@ -27,31 +27,31 @@ public class LoginServiceTest {
         userName = "testUserName";
         password = "testPassword";
         loginService = new LoginService();
-        setField(loginService, "userDetailRepository", userDetailRepository);
+        setField(loginService, "userDetailRepository", userRepository);
     }
 
     @Test
     public void shouldCallUserRepositoryForLogin() {
-        UserDetail userDetail = mock(UserDetail.class);
-        when(userDetailRepository.findByUserNameAndPassword(userName, password)).thenReturn(userDetail);
+        User user = mock(User.class);
+        when(userRepository.findByUserNameAndPassword(userName, password)).thenReturn(user);
         loginService.login(userName, password);
-        verify(userDetailRepository, times(1)).findByUserNameAndPassword(userName, password);
+        verify(userRepository, times(1)).findByUserNameAndPassword(userName, password);
     }
 
 
     @Test(expected = RuntimeException.class)
     public void shouldThrowExceptionWhenUserRepositoryReturnsNullForLogin() {
-        when(userDetailRepository.findByUserNameAndPassword(userName, password)).thenReturn(null);
+        when(userRepository.findByUserNameAndPassword(userName, password)).thenReturn(null);
         loginService.login(userName, password);
     }
 
 
     @Test
     public void shouldReturnSameObjectWhenUserRepositoryReturnsNotNullForLogin() {
-        UserDetail userDetail = mock(UserDetail.class);
-        when(userDetailRepository.findByUserNameAndPassword(userName, password)).thenReturn(userDetail);
-        UserDetail result = loginService.login(userName, password);
-        assertEquals(result, userDetail);
+        User user = mock(User.class);
+        when(userRepository.findByUserNameAndPassword(userName, password)).thenReturn(user);
+        User result = loginService.login(userName, password);
+        assertEquals(result, user);
     }
 
 

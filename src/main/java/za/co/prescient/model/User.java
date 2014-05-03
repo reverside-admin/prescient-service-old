@@ -12,41 +12,41 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class UserDetail {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long Id;
+    Long Id;
 
     @Column//(unique = true)
-    private String userName;
+    String userName;
 
     @JsonIgnore
     @Column//(nullable = false)
-    private String password;
+    String password;
 
     @Column//(nullable = false)
-    private String firstName;
+    String firstName;
 
     @Column//(nullable = false)
-    private String lastName;
+    String lastName;
 
     @ManyToOne//(optional = false)
-    private UserStatus userStatus;
+    UserStatus userStatus;
 
     @ManyToOne//(optional = false)
-    private UserType userType;
+    UserType userType;
 
     @OneToOne//(optional = false)
-    private Hotel hotel;
+    Hotel hotel;
 
     @ManyToMany
-    @JoinTable( joinColumns = @JoinColumn(name = "uid"),
+    @JoinTable(joinColumns = @JoinColumn(name = "uid"),
             inverseJoinColumns = @JoinColumn(name = "did"))
-    private List<Department> departments;
+    List<Department> departments;
 
     @ManyToMany
-    @JoinTable( joinColumns = @JoinColumn(name = "uid"),
+    @JoinTable(joinColumns = @JoinColumn(name = "uid"),
             inverseJoinColumns = @JoinColumn(name = "tid"))
-    private List<TouchPoint> touchPoints;
+    List<TouchPoint> touchPoints;
 }
