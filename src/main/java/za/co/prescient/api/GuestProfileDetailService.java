@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import za.co.prescient.model.Guest;
 import za.co.prescient.model.GuestCard;
-import za.co.prescient.model.itcs.ItcsTagRead;
 import za.co.prescient.repository.GuestCardRepository;
 import za.co.prescient.repository.GuestRepository;
 import za.co.prescient.repository.UserRepository;
 import za.co.prescient.repository.itcs.ItcsTagReadRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -41,16 +41,15 @@ public class GuestProfileDetailService {
     }
 
     @RequestMapping(value = "api/touchpoints/{touchpointId}/guestCards")
-    public List<GuestCard> getGuestIdsByZoneId(@PathVariable("touchpointId") Long zoneId) {
-
-        List<ItcsTagRead> itcsTagReadList = itcsTagReadRepository.findTagsInZone(zoneId);
-        log.info("list size : "+itcsTagReadList.size());
-        List<GuestCard> guests = guestCardRepository.findGuestsWithTagsInAZone(itcsTagReadList);
-        for (GuestCard obj : guests) {
-            log.info("First Name : " + obj.getGuest().getFirstName());
+    public List<GuestCard> findCurrentlyPresentGuestCardsInTouchPoint(@PathVariable("touchpointId") Long touchPointId) {
+        List<Integer> cardIdListInteger = itcsTagReadRepository.findCurrentCardsInZone(touchPointId.intValue());
+        log.info("list size : " + cardIdListInteger.size());
+        List<Long> cardIdListLong  = new ArrayList<Long>();
+        for(Integer cardIdInteger : cardIdListInteger){
+           cardIdListLong.add(cardIdInteger.longValue());
         }
-        log.info("List : " + itcsTagReadList);
-        return guests;
+        List<GuestCard> guestCardList = guestCardRepository.findByCardIdListWithStatusActive(cardIdListLong);
+        return guestCardList;
     }
 
     @RequestMapping(value="api/guests")

@@ -90,7 +90,7 @@ public class Services {
         LOGGER.info("guestcard by guest id service is called");
          GuestCard guestCardAllocation = guestCardRepository.findGuestCardByGuestId(guestId);
         LOGGER.info("guest card---------------"+guestCardAllocation);
-        ItcsTagRead itc=itcsTagReadRepository.findGuestCardHistory(guestCardAllocation.getCard().getId());
+        ItcsTagRead itc=itcsTagReadRepository.findGuestCardHistory(guestCardAllocation.getCard().getId().intValue());
         return itc;
     }
 
@@ -100,7 +100,7 @@ public class Services {
         LOGGER.info("guestcard history service is called");
          GuestCard guestCardAllocation = guestCardRepository.findGuestCardByGuestId(guestId);
 
-        List<ItcsTagReadHistory> itc= itcsTagReadHistoryRepository.findGuestHistory(guestCardAllocation.getCard().getId());
+        List<ItcsTagReadHistory> itc= itcsTagReadHistoryRepository.findGuestHistory(guestCardAllocation.getCard().getId().intValue());
 
         LOGGER.info("return list size::"+itc.size());
         return itc;

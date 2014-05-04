@@ -10,7 +10,7 @@ public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Integer id;
+    Long id;
 
     @Column(unique = true)
     String magStripeNo;

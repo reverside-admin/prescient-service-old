@@ -19,9 +19,6 @@ public class ItcsTagRead {
     @Column
     private Integer guestCard;
 
-//    @Column
-//    private Integer zone; //Same as Touch Point Id
-
     @Column
     private Double xCoordRead;
 

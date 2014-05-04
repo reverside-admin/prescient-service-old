@@ -117,13 +117,13 @@ insert into card (id, mag_stripe_no) values (1005, 'Room-006');
 
 
 
-insert into guest_card (id, card_id, guest_id) values (1, 1000, 100);
-insert into guest_card (id, card_id, guest_id) values (2, 1001, 101);
-insert into guest_card (id, card_id, guest_id) values (3, 1002, 102);
+insert into guest_card (id, card_id, guest_id, status) values (1, 1000, 100, true);
+insert into guest_card (id, card_id, guest_id, status) values (2, 1001, 101, true);
+insert into guest_card (id, card_id, guest_id, status) values (3, 1002, 102, true);
 
-insert into guest_card (id, card_id, guest_id) values (4, 1003, 103);
-insert into guest_card (id, card_id, guest_id) values (5, 1004, 104);
-insert into guest_card (id, card_id, guest_id) values (6, 1005, 105);
+insert into guest_card (id, card_id, guest_id, status) values (4, 1003, 103, true);
+insert into guest_card (id, card_id, guest_id, status) values (5, 1004, 104, true);
+insert into guest_card (id, card_id, guest_id, status) values (6, 1005, 105, true);
 -- insert into guest_card (id, card_id, guest_id) values (7, 1006, 106);
 
 
