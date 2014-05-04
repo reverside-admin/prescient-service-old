@@ -12,7 +12,7 @@ public interface GuestStayHistoryRepository extends JpaRepository<GuestStayHisto
 
     // TODO: Add filter to get latest history
     @Query("select gsh from GuestStayHistory gsh where gsh.guest.id = ?1")
-    public GuestStayHistory findByGuestId(Integer guestId );
+    public GuestStayHistory findByGuest(Long guestId );
 
 
     @Query("select gsh from GuestStayHistory gsh where gsh.currentStayIndicator = true and gsh.hotel.id= ?1 ")

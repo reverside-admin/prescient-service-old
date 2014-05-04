@@ -43,7 +43,7 @@ public class Services {
     ItcsTagReadRepository itcsTagReadRepository;
 
     @Autowired
-    CardRepository guestCardAllocationRepository;
+    GuestCardRepository guestCardRepository;
 
     @Autowired
     GuestStayHistoryRepository guestStayHistoryRepository;
@@ -71,9 +71,9 @@ public class Services {
     }
 
     @RequestMapping(value = "guest/{guestId}")
-    public GuestStayHistory getGuestDetailByGuestId(@PathVariable("guestId") Integer guestId) {
+    public GuestStayHistory getGuestDetailByGuestId(@PathVariable("guestId") Long guestId) {
         LOGGER.info("guest detail service is invoked");
-        return guestStayHistoryRepository.findByGuestId(guestId);
+        return guestStayHistoryRepository.findByGuest(guestId);
     }
 
 
@@ -84,59 +84,26 @@ public class Services {
         return guestStayHistoryRepository.findCheckedInByHotelId(hotelId);
     }
 
-    //find guest list by touchpoint
-    @RequestMapping(value = "touchpoints/{tpId}/guestCards")
-    public List<Guest> getGuestIdsByZoneId(@PathVariable("tpId") Integer zoneId) {
-
-        List<ItcsTagRead> itcsTagReadList = itcsTagReadRepository.findTagsInZone(zoneId);
-// TODO :       List<Guest> guests = guestCardAllocationRepository.findGuestsWithTagsInAZone(itcsTagReadList);
-//        for (Guest obj : guests) {
-//            LOGGER.info("First Name : " + obj.getFirstName());
-//        }
-//        LOGGER.info("List : " + itcsTagReadList);
-//        return guests;
-        return null;
-    }
-
-//   /* @RequestMapping(value = "guests/{guestId}/guestCard")
-//    public GuestCardAllocation getGuestCard(@PathVariable("guestId") Long guestId) {
-//        LOGGER.info("guestcard by guest id service is called");
-//      return guestCardAllocationRepository.findGuestCardByGuestId(guestId);
-//    }*/
-
-
 
     @RequestMapping(value = "guests/{guestId}/locations")
     public ItcsTagRead getGuestCardHistory(@PathVariable("guestId") Long guestId) {
         LOGGER.info("guestcard by guest id service is called");
-      // TODO :   GuestCard guestCardAllocation = guestCardAllocationRepository.findGuestCardByGuestId(guestId);
-//        List<ItcsTagRead> itcList=itcsTagReadRepository.findGuestCardHistory(guestCardAllocation.getGuestCardId());
-//        LOGGER.info("return list size::"+itcList.size());
-
-//TODO :        ItcsTagRead itc=itcsTagReadRepository.findGuestCardHistory(guestCardAllocation.getGuestCardId());
-       // LOGGER.info("return list size::"+itc.getId());
-        return null;
+         GuestCard guestCardAllocation = guestCardRepository.findGuestCardByGuestId(guestId);
+        LOGGER.info("guest card---------------"+guestCardAllocation);
+        ItcsTagRead itc=itcsTagReadRepository.findGuestCardHistory(guestCardAllocation.getCard().getId());
+        return itc;
     }
 
 
     @RequestMapping(value = "guests/{guestId}/location/history")
     public List<ItcsTagReadHistory> getGuestHistory(@PathVariable("guestId") Long guestId) {
         LOGGER.info("guestcard history service is called");
-         // TODO : GuestCard guestCardAllocation = guestCardAllocationRepository.findGuestCardByGuestId(guestId);
+         GuestCard guestCardAllocation = guestCardRepository.findGuestCardByGuestId(guestId);
 
-//        List<ItcsTagReadHistory> itc= itcsTagReadHistoryRepository.findGuestHistory(guestCardAllocation.getGuestCardId());
+        List<ItcsTagReadHistory> itc= itcsTagReadHistoryRepository.findGuestHistory(guestCardAllocation.getCard().getId());
 
-//        LOGGER.info("return list size::"+itc.size());
-        return null;
+        LOGGER.info("return list size::"+itc.size());
+        return itc;
     }
-
-
-
-
-
-
-
-
-
 
 }

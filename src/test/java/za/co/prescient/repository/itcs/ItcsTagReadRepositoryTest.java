@@ -8,7 +8,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import za.co.prescient.Application;
 import za.co.prescient.model.itcs.ItcsTagRead;
-import za.co.prescient.repository.itcs.ItcsTagReadRepository;
 
 import java.util.List;
 
@@ -29,10 +28,10 @@ public class ItcsTagReadRepositoryTest {
         List<ItcsTagRead> result = itcsTagReadRepository.findAll();
         assertEquals(10, result.size());
 
-        result = itcsTagReadRepository.findTagsInZone(1);
+        result = itcsTagReadRepository.findTagsInZone(1L);
         assertEquals(3, result.size());
 
-        result = itcsTagReadRepository.findTagsInZone(2);
+        result = itcsTagReadRepository.findTagsInZone(2L);
         assertEquals(2, result.size());
     }
 

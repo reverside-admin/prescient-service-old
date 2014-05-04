@@ -1,17 +1,12 @@
 package za.co.prescient;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import javax.sql.DataSource;
 
 
 @Configuration
@@ -22,7 +17,7 @@ import javax.sql.DataSource;
 public class Application extends WebMvcConfigurerAdapter {
 
 
-    @Value("${spring.datasource.driverClassName}")
+   /* @Value("${spring.datasource.driverClassName}")
     private String databaseDriver;
     @Value("${spring.datasource.url}")
     private String databaseUrl;
@@ -39,7 +34,7 @@ public class Application extends WebMvcConfigurerAdapter {
         driverManagerDataSource.setUsername(databaseUserName);
         driverManagerDataSource.setPassword(databasePassword);
         return  driverManagerDataSource;
-    }
+    }*/
 
 
     public static void main(String[] args) {

@@ -1,8 +1,6 @@
 package za.co.prescient.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -12,7 +10,7 @@ public class Card {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    Integer id;
 
     @Column(unique = true)
     String magStripeNo;
