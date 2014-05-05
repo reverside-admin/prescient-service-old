@@ -19,8 +19,8 @@
                 <tr>
                     <td> Touch Point Name *</td>
                     <td>
-                        <select ng-model="touch_point_setup.touchPointId"
-                                ng-options="obj.id as obj.name for obj in current_touch_point_list">
+                        <select ng-model="selectedtouchpoint"
+                                ng-options="obj as obj.name for obj in current_touch_point_list">
                             <option value="">select touchpoint</option>
                         </select>
                     </td>
@@ -28,36 +28,36 @@
 
                 <tr>
                     <td> Touch Point SetUp Name *</td>
-                    <td><input type="text"  ng-model="touch_point_setup.setupName"  style="width: 100%" required></td>
+                    <td><input type="text"  ng-model="tpsetup.setupName"  style="width: 100%" required ></td>
                 </tr>
 
 
                 <tr>
                     <td> Touch Point SetUp Description *</td>
-                    <td><input type="text" ng-model="touch_point_setup.setupDescription" style="width: 100%" required></td>
+                    <td><input type="text" ng-model="tpsetup.description" style="width: 100%" required></td>
                 </tr>
                 <tr>
                     <td>Image Name *</td>
-                    <td><input type="text" ng-model="touch_point_setup.imageName"  style="width: 100%" required></td>
+                    <td><input type="text" ng-model="tpsetup.imageName"  style="width: 100%" required></td>
                 </tr>
 
                 <tr>
                     <td>File Name *</td>
-                    <td><input type="text"  ng-model="touch_point_setup.fileName"  style="width: 100%" required></td>
+                    <td><input type="text"  ng-model="tpsetup.fileName"  style="width: 100%" required></td>
                 </tr>
 
                 <tr>
                     <td>XLength *</td>
-                    <td><input type="text" ng-model="touch_point_setup.lengthX"  style="width: 100%" required></td>
+                    <td><input type="text" ng-model="tpsetup.lengthX"  style="width: 100%" required></td>
                 </tr>
 
                 <tr>
                     <td>YLength *</td>
-                    <td><input type="text" ng-model="touch_point_setup.lengthY" style="width: 100%" required></td>
+                    <td><input type="text" ng-model="tpsetup.lengthY" style="width: 100%" required></td>
                 </tr>
                 <tr>
                     <td>File Path *</td>
-                    <td><input type="text" ng-model="touch_point_setup.filePath"  style="width: 100%" required></td>
+                    <td><input type="text" ng-model="tpsetup.filePath"  style="width: 100%" required></td>
                 </tr>
             </table>
         </div>

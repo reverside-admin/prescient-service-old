@@ -47,7 +47,9 @@ public class UserService {
         if (user.getUserName() == (principal.getName())) {
             throw new RuntimeException("User Can't delete himself");
         } else {
-            user.getUserStatus().setId(status ? 0L : 1L);
+           //user.getUserStatus().setId(status ? 1L : 2L);
+            //user.getUserStatus().setValue("updated");
+            log.info("status"+user.getUserStatus().getValue());
             userRepository.save(user);
         }
     }

@@ -98,7 +98,7 @@ admin_app.controller('admin_app_controller', function ($scope, $http, $location,
     } else {
         console.log("User is authenticated");
         $scope.user = $cookieStore.get("user");
-        if ($scope.user.userType.type != "ROLE_ADMIN") {
+        if ($scope.user.userType.value != "ROLE_ADMIN") {
             $window.location.replace("login-app.html");
         }
     }
@@ -640,7 +640,7 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
     $scope.delete_button_status;
     $scope.delete_message;
     $scope.uId = $routeParams.userId;
-    $scope.userStatus = $routeParams.userStatus;
+    $scope.userStatus=$routeParams.userStatus;
     $scope.user_detail = {};
     $http({
         url: 'http://localhost:8080/api/users/' + $scope.uId,
@@ -653,7 +653,7 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
         success(function (data, status) {
             if (status == 200) {
                 $scope.user_detail = data;
-                if ($scope.user_detail.userStatus.status == 'disable') {
+                if ($scope.user_detail.userStatus.value == 'disable') {
                     $scope.delete_button_status = true;
                     $scope.delete_message = 'First make the user enable then Delete';
                 }
@@ -674,9 +674,18 @@ admin_app.controller('delete_users_controller', function ($scope, $http, $routeP
 
 
     $scope.delete = function () {
+
+        if($routeParams.userStatus=='enable')
+        {
+            $scope.userStatus=1;
+        }
+        else{
+            $scope.userStatus=0;
+        }
         console.log('delete');
-        $http({
-            url: 'http://localhost:8080/api/users/' + $scope.uId + '/update/status/' + $scope.userStatus,
+
+                $http({
+            url: 'http://localhost:8080/api/users/' + $scope.uId + '/update/status/'+$scope.userStatus,
             method: 'get',
             headers: { 'Content-Type': 'application/json',
                 'Authorization': $cookieStore.get("auth")
@@ -922,7 +931,9 @@ admin_app.controller('touch_point_setup_controller', function ($scope, $http, $r
     console.log('touch point setup controller of admin application is loaded');
     $scope.current_user_id = $cookieStore.get("user").id;
     $scope.current_touch_point_list = [];
-    $scope.touch_point_setup = {};
+    $scope.tpsetup = {};
+    $scope.selectedtouchpoint={};
+
     $scope.current_touch_point_id = $routeParams.setupId;
     console.log('current user id::' + $scope.current_user_id);
     console.log('current touchpoint id::' + $scope.current_touch_point_id);
@@ -952,9 +963,14 @@ admin_app.controller('touch_point_setup_controller', function ($scope, $http, $r
     $scope.setup = function (setup_form) {
 
         console.log('setup is clicked');
-        console.log('touch point setup object::' + $scope.touch_point_setup);
+        console.log('selected tp::'+$scope.selectedtouchpoint);
+        //console.log('touch point setup object::' + $scope.setup);
+
+        //console.log('create setup for TouchPoint::'+$scope.setup.touchPoint.id);
 
         <!-- setup the touch point -->
+
+        $scope.tpsetup.touchPoint=$scope.selectedtouchpoint;
         $http({
             url: 'http://localhost:8080/api/tp/setup',
             method: 'post',
@@ -962,7 +978,7 @@ admin_app.controller('touch_point_setup_controller', function ($scope, $http, $r
                 'Content-Type': 'application/json',
                 'Authorization': $cookieStore.get("auth")
             },
-            data: $scope.touch_point_setup
+            data: $scope.tpsetup
         }).
             success(function (data, status) {
                 if (status == 201) {

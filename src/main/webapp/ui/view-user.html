@@ -5,7 +5,7 @@
         <div class="btn-group btn-group-sm">
             <a ng-href="#users/reset/{{user_detail.id}}/password"  class="btn btn-primary" ng-disabled="can_reset_password">Password</a>
             <a ng-href="#users/update/{{user_detail.id}}"  class="btn btn-primary" ng-disabled="can_edit">Edit</a>
-            <a ng-href="#users/{{user_detail.id}}/update/status/{{user_detail.userStatus.status}}"  class="btn btn-primary">Disable</a>
+            <a ng-href="#users/{{user_detail.id}}/update/status/{{user_detail.userStatus.value}}"  class="btn btn-primary">Disable</a>
             <a ng-href="#users/list"  class="btn btn-primary">Back</a>
         </div>
     </div>
@@ -31,12 +31,12 @@
             </tr>
             <tr>
                 <td style="text-align: right"><b>Status</b></td>
-                <td>{{user_detail.userStatus.status}}</td>
+                <td>{{user_detail.userStatus.value}}</td>
             </tr>
 
             <tr>
                 <td style="text-align: right"><b>Role</b></td>
-                <td>{{user_detail.userType.type}}</td>
+                <td>{{user_detail.userType.value}}</td>
             </tr>
 
             <tr>

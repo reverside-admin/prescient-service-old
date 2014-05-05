@@ -59,9 +59,9 @@ insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, 
 insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (5, 1002, 1, 1.7, 6.2, '2010-04-01 00:05:00');
 
 insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (6, 1003, 2, 8.1, 4.2, '2010-04-02 00:00:00');
-insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (7, 1004, 2, 5.1, 3.2, '2010-04-01 00:00:00');
+-- insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (7, 1004, 2, 5.1, 3.2, '2010-04-01 00:00:00');
 
-insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (8, 1005, 3, 9.1, 9.2, '2010-04-01 00:00:00');
+-- insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (8, 1005, 3, 9.1, 9.2, '2010-04-01 00:00:00');
 
 insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (9, 1000, 2, 1.14, 1.24, '2010-04-01 00:08:05');
 insert into itcs_tag_read (id, guest_card, zone_id, x_coord_read, y_coord_read, tag_read_datetime) values (10, 1000, 2, 1.88, 1.29, '2010-04-01 00:08:14');

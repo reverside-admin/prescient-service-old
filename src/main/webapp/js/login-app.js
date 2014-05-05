@@ -35,7 +35,7 @@ login_app.controller("login_app_controller", function ($scope, $http, $cookieSto
                 if (status == 200) {
                     <!--  var redirect_url = $window.location.search.replace('?','') + $window.location.hash;-->
 
-                    if (data.userStatus.status != 'enable') {
+                    if (data.userStatus.value != 'enable') {
                         $scope.error = 'Please contact to the Administrator';
                         return;
                     }
@@ -51,18 +51,19 @@ login_app.controller("login_app_controller", function ($scope, $http, $cookieSto
                     $cookieStore.put("user", data);
                     $cookieStore.put("auth", token);
 
-                    if (data.userType.type == 'ROLE_ADMIN') {
+                    if (data.userType.value == 'ROLE_ADMIN') {
                         redirect_url = "admin-app.html";
                     }
-                    if (data.userType.type == 'ROLE_STAFF') {
+                    if (data.userType.value == 'ROLE_STAFF') {
                         redirect_url = "staff-app.html";
                     }
-                    if (data.userType.type == 'ROLE_MANAGER') {
+                    if (data.userType.value == 'ROLE_MANAGER') {
                         redirect_url = "manager-app.html";
                     }
                     $window.location.replace(redirect_url);
 
-                    console.log("Redirect To URL : " + redirect_url);
+
+                    // console.log("Redirect To URL : " + redirect_url);
 
 
                 }
@@ -119,13 +120,13 @@ login_app.controller("login_app_controller", function ($scope, $http, $cookieSto
                     $cookieStore.put("user", $scope.user);
                     $cookieStore.put("auth", token);
 
-                    if ($scope.user.userType.type == 'ROLE_ADMIN')
+                    if ($scope.user.userType.value == 'ROLE_ADMIN')
                         $window.location.replace("admin-app.html");
 
-                    if ($scope.user.userType.type == 'ROLE_STAFF')
+                    if ($scope.user.userType.value == 'ROLE_STAFF')
                         $window.location.replace("staff-app.html");
 
-                    if ($scope.user.userType.type == 'ROLE_MANAGER')
+                    if ($scope.user.userType.value == 'ROLE_MANAGER')
                         $window.location.replace("manager-app.html");
 
                 }

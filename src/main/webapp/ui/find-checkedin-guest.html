@@ -32,15 +32,15 @@
             </tr>
 
             <tr ng-repeat="guest in checkedin_guest_list | filter:search">
-                <td style="text-align: center">{{guest.guestProfileDetail.title}}</td>
-                <td style="text-align: center">{{guest.guestProfileDetail.firstName}}</td>
-                <td style="text-align: center">{{guest.guestProfileDetail.surname}}</td>
-                <td style="text-align: center">{{guest.guestProfileDetail.preferredName}}</td>
+                <td style="text-align: center">{{guest.guest.title}}</td>
+                <td style="text-align: center">{{guest.guest.firstName}}</td>
+                <td style="text-align: center">{{guest.guest.surname}}</td>
+                <td style="text-align: center">{{guest.guest.preferredName}}</td>
                 <td style="text-align: center">{{guest.roomId}}</td>
 
                 <td style="text-align: center">{{guest.arrivalTime |date:'yyyy-MM-dd HH:mm:ss'}}</td>
 
-                <td><a ng-href="#hotels/guests/{{guest.guestId}}/position">Detail</a>
+                <td><a ng-href="#hotels/guests/{{guest.guest.id}}/position">Detail</a>
                 </td>
             </tr>
         </table>

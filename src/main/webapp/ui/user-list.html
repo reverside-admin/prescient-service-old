@@ -39,8 +39,8 @@
             <tr ng-repeat="user in user_list | filter:search">
                  <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
-                <td>{{user.userStatus.status}}</td>
-                <td>{{user.userType.type}}</td>
+                <td>{{user.userStatus.value}}</td>
+                <td>{{user.userType.value}}</td>
                 <td>
                     <a ng-href="#users/view/{{user.id}}">view</a>
                   </td>

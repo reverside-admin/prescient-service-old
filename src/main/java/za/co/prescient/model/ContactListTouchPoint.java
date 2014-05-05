@@ -1,5 +1,6 @@
 package za.co.prescient.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ public class ContactListTouchPoint {
     Long id;
 
     @ManyToOne
+    @JsonIgnore
     ContactList contactList;
 
     @ManyToOne

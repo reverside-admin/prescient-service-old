@@ -14,6 +14,7 @@ public class UserStatus {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
+
     @Column
     String value;
 }

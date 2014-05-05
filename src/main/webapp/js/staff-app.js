@@ -53,7 +53,7 @@ staff_app.controller('staff_app_controller', function ($scope, $http, $location,
     } else {
         console.log("User is authenticated");
         $scope.user = $cookieStore.get("user");
-        if ($scope.user.userType.type != "ROLE_STAFF") {
+        if ($scope.user.userType.value != "ROLE_STAFF") {
             $window.location.replace("index.html");
         }
     }

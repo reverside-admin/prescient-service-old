@@ -23,6 +23,7 @@ public class TouchPoint {
     @JsonIgnore
     Department department;
 
+    @JsonIgnore
     @OneToMany
     @JoinColumn(name = "touch_point_id", referencedColumnName = "id")
     List<Setup> setups;

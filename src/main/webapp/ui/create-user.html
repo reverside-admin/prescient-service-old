@@ -36,7 +36,7 @@
                     <td>Status</td>
                     <td>
                         <select ng-model="user.userStatus.id"
-                                ng-options="obj.id as obj.status for obj in user_status_list" required>
+                                ng-options="obj.id as obj.value for obj in user_status_list" required>
                             <option value="">Select Status</option>
                         </select>
                     </td>
@@ -46,7 +46,7 @@
                     <td>Role</td>
                     <td>
                         <select ng-model="user.userType.id"
-                                ng-options="obj.id as obj.type for obj in user_type_list" required>
+                                ng-options="obj.id as obj.value for obj in user_type_list" required>
                             <option value="">Select Role</option>
                         </select>
                     </td>

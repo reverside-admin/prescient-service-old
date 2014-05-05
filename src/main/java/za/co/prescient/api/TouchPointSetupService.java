@@ -22,7 +22,9 @@ public class TouchPointSetupService {
 
         Setup tpSetup = setupRepository.findOne(id);
 
-        tpSetup.setName(setup.getName());
+        //tpSetup.setName(setup.getName());
+
+        tpSetup.setSetupName(setup.getSetupName());
         tpSetup.setDescription(setup.getDescription());
         tpSetup.setImageName(setup.getImageName());
         tpSetup.setFileName(setup.getFileName());
@@ -42,6 +44,13 @@ public class TouchPointSetupService {
     @RequestMapping(value = "api/tp/{tpid}/setups")
     public List<Setup> getAll(@PathVariable("tpid") Long tpid) {
         return setupRepository.findByTouchPointId(tpid);
+    }
+
+
+//testing
+    @RequestMapping(value = "api/tp/setups")
+    public List<Setup> getAllll() {
+        return setupRepository.findAll();
     }
 
     @RequestMapping(value = "api/tpsetup/{setupId}")

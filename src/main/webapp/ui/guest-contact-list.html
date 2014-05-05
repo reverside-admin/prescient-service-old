@@ -28,7 +28,8 @@
             </tr>
 
             <tr ng-repeat="contact in contact_list | filter:search">
-                <td>{{contact.guestContactListName}}</td>
+                <td>{{contact.name}}</td>
+                <td>{{contact.owner.id}}</td>
 
                 <td>
                     <a ng-href="#">view</a>

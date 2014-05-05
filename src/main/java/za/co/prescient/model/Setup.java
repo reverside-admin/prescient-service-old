@@ -15,8 +15,9 @@ public class Setup {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
+    //TODO:name is changed to setupName bcoz form does not bind name attribute bcoz name is a build in property of form
     @Column
-    String name;
+    String setupName;
 
     @Column
     String description;
@@ -40,6 +41,7 @@ public class Setup {
     String filePath;
 
     @ManyToOne
+
     TouchPoint touchPoint;
 
 }

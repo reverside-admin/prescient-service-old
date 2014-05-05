@@ -27,10 +27,10 @@ public class GuestContactService {
     ContactListGuestRepository contactListGuestRepository;
 
 
-    @RequestMapping(value = "api/guest/contacts")
-    public List<ContactList> getContacts() {
+    @RequestMapping(value = "api/users/{userId}/guest/contacts")
+    public List<ContactList> getContacts(@PathVariable("userId") Long userId) {
         log.info("Get All guest contact List service");
-        List<ContactList> contacts = contactListRepository.findAll();
+        List<ContactList> contacts = contactListRepository.findContactsByOwner(userId);
         return contacts;
     }
 
@@ -40,26 +40,19 @@ public class GuestContactService {
 
     public void createContact(@RequestBody ContactList contactList) {
         log.info("Get All guest contact List service");
-        /*GuestContactListTouchPoint tp=new GuestContactListTouchPoint();
-        tp.setId(111L);
-        List tplist=new ArrayList();
-        tplist.add(tp);*/
-        //guestContactListHeader.setGuestContactListTouchPoint(tplist);
-         contactListRepository.save(contactList);
+        contactListRepository.save(contactList);
     }
 
-    @RequestMapping(value="api/manager/contacts/touchpoints")
-   public List<ContactListTouchPoint> findTouchPoints()
-   {
-       log.info("Get All guest contact List touch point service");
-       return  contactListTouchPointRepository.findAll();
-   }
+    @RequestMapping(value = "api/manager/contacts/touchpoints")
+    public List<ContactListTouchPoint> findTouchPoints() {
+        log.info("Get All guest contact List touch point service");
+        return contactListTouchPointRepository.findAll();
+    }
 
-    @RequestMapping(value="api/manager/contacts/guests")
-    public List<ContactListGuest> findGuests()
-    {
+    @RequestMapping(value = "api/manager/contacts/guests")
+    public List<ContactListGuest> findGuests() {
         log.info("Get All guest contact List guest service");
-        return  contactListGuestRepository.findAll();
+        return contactListGuestRepository.findAll();
     }
 
 }
