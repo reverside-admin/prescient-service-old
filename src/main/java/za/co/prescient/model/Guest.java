@@ -1,48 +1,46 @@
 package za.co.prescient.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "guest")
 @Data
 // TODO : Make it unique (add hotel id to constraint if necessary) (confirm from business)
 public class Guest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     Long id;
 
-    @Column
+    @Column(name = "passport_number")
     String passportNumber;
 
-    @Column
+    @Column(name = "first_name")
     String firstName;
 
-    @Column
+    @Column(name = "preferred_name")
     String preferredName;
 
-    @Column
+    @Column(name = "surname")
     String surname;
 
-    @Column
+    @Column(name = "gender")
     String gender;
 
-    @Column
+    @Column(name = "title")
     String title;
 
-    @Column
+    @Column(name = "nationality_id")
     String nationalityId;
 
-    @Column
+    @Column(name = "dob")
     Date dob;
 
     @ManyToOne
+    @JoinColumn(name = "hotel_id")
     Hotel hotel;
-
-
 }

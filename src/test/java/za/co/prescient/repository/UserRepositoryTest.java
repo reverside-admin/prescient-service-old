@@ -1,7 +1,6 @@
 package za.co.prescient.repository;
 
 import org.junit.Test;
-import org.junit.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -12,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import za.co.prescient.Application;
 import za.co.prescient.model.User;
+import za.co.prescient.repository.local.UserRepository;
 
 import javax.sql.DataSource;
 
@@ -61,8 +61,6 @@ public class UserRepositoryTest {
         assertNull(user);
     }
 
-
-
     @Test
     public void shouldFindUserByUserNameAndPassword()
     {
@@ -92,10 +90,6 @@ public class UserRepositoryTest {
         User user=userRepository.findByUserNameAndPassword("invalid","invalid");
         assertNull(user);
     }
-
-
-
-
 
     @After
     public void clean()

@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import za.co.prescient.model.Department;
 import za.co.prescient.model.TouchPoint;
-import za.co.prescient.repository.TouchPointRepository;
-import za.co.prescient.repository.UserRepository;
+import za.co.prescient.repository.local.TouchPointRepository;
+import za.co.prescient.repository.local.UserRepository;
 
 import java.security.Principal;
 import java.util.ArrayList;

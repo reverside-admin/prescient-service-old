@@ -3,9 +3,12 @@ package za.co.prescient.api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import za.co.prescient.model.Setup;
-import za.co.prescient.repository.SetupRepository;
+import za.co.prescient.model.TouchPoint;
+import za.co.prescient.repository.local.SetupRepository;
+import za.co.prescient.repository.local.TouchPointRepository;
 
 import java.util.List;
 
@@ -15,6 +18,9 @@ public class TouchPointSetupService {
 
     @Autowired
     SetupRepository setupRepository;
+
+    @Autowired
+    TouchPointRepository touchPointRepository;
 
     @RequestMapping(value = "api/tpsetup/{id}", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
@@ -41,13 +47,15 @@ public class TouchPointSetupService {
         setupRepository.save(setup);
     }
 
-    @RequestMapping(value = "api/tp/{tpid}/setups")
-    public List<Setup> getAll(@PathVariable("tpid") Long tpid) {
-        return setupRepository.findByTouchPointId(tpid);
+    // TODO : Fix the url in angular ui app
+    @RequestMapping(value = "api/touchpoint/{touchPointId}/setups")
+    public List<Setup> get(@PathVariable("touchPointId") Long touchPointId) {
+        TouchPoint touchPoint = touchPointRepository.findOne(touchPointId);
+        return setupRepository.findByTouchPoint(touchPoint);
     }
 
 
-//testing
+    //testing
     @RequestMapping(value = "api/tp/setups")
     public List<Setup> getAllll() {
         return setupRepository.findAll();
@@ -65,20 +73,30 @@ public class TouchPointSetupService {
     }
 
 
-    @RequestMapping(value = "api/touchpoint/{tpid}/setup/{setupid}", method = RequestMethod.GET)
+    @RequestMapping(value = "api/touchpoint/{touchPointId}/setup/{setupId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public void setCurrentSetup(@PathVariable("tpid") Long tpId,@PathVariable("setupid") Long setupId) {
-        setupRepository.resetIndicatorForTouchPointId(tpId);
-        setupRepository.setIndicator(setupId);
+    @Transactional
+    public void updateCurrentSetupOfTouchPoint(@PathVariable("touchPointId") Long touchPointId, @PathVariable("setupId") Long setupId) {
+        TouchPoint touchPoint = touchPointRepository.findOne(touchPointId);
+
+        List<Setup> setups = setupRepository.findByTouchPoint(touchPoint);
+        for (Setup aSetup : setups) {
+            aSetup.setIndicator(null);
+        }
+        setupRepository.save(setups);
+
+        Setup setup = setupRepository.findOne(setupId);
+        setup.setIndicator(true);
+        setupRepository.save(setup);
     }
 
 
-    @RequestMapping(value = "api/touchpoint/{tpid}/currentsetup", method = RequestMethod.GET)
+    //TODO : Fix the URL in the angular ui code
+    @RequestMapping(value = "api/touchpoint/{touchPointId}/setups/current", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public Setup getCurrentSetup(@PathVariable("tpid") Long tpId) {
-        Setup tps= setupRepository.findCurrentSetupOfATouchPoint(tpId);
-        return tps;
-
+    public Setup getCurrentSetup(@PathVariable("touchPointId") Long touchPointId) {
+        TouchPoint touchPoint = touchPointRepository.findOne(touchPointId);
+        return setupRepository.findByTouchPointAndIndicator(touchPoint, true);
     }
 
 }

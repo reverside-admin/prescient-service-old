@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import za.co.prescient.Application;
 import za.co.prescient.model.Hotel;
-import za.co.prescient.repository.HotelRepository;
+import za.co.prescient.repository.local.HotelRepository;
 import za.co.prescient.repository.itcs.ItcsTagReadRepository;
 
 import java.util.Arrays;

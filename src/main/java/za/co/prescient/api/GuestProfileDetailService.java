@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import za.co.prescient.model.Guest;
 import za.co.prescient.model.GuestCard;
-import za.co.prescient.repository.GuestCardRepository;
-import za.co.prescient.repository.GuestRepository;
-import za.co.prescient.repository.UserRepository;
+import za.co.prescient.repository.local.GuestCardRepository;
+import za.co.prescient.repository.local.GuestRepository;
+import za.co.prescient.repository.local.UserRepository;
 import za.co.prescient.repository.itcs.ItcsTagReadRepository;
 
 import java.util.ArrayList;

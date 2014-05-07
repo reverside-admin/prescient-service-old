@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+                                 http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+
+    <persistence-unit name="prescient">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>za.co.prescient.model.Card</class>
+        <class>za.co.prescient.model.ContactList</class>
+        <class>za.co.prescient.model.ContactListGuest</class>
+        <class>za.co.prescient.model.ContactListTouchPoint</class>
+        <class>za.co.prescient.model.Department</class>
+        <class>za.co.prescient.model.Guest</class>
+        <class>za.co.prescient.model.GuestCard</class>
+        <class>za.co.prescient.model.GuestStayHistory</class>
+        <class>za.co.prescient.model.Hotel</class>
+        <class>za.co.prescient.model.Setup</class>
+        <class>za.co.prescient.model.TouchPoint</class>
+        <class>za.co.prescient.model.User</class>
+        <class>za.co.prescient.model.UserStatus</class>
+        <class>za.co.prescient.model.UserType</class>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.DefaultComponentSafeNamingStrategy"/>
+            <!--<property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.EJB3NamingStrategy"/>-->
+        </properties>
+    </persistence-unit>
+
+    <persistence-unit name="itcs">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>za.co.prescient.model.itcs.ItcsSystemZone</class>
+        <class>za.co.prescient.model.itcs.ItcsTagRead</class>
+        <class>za.co.prescient.model.itcs.ItcsTagReadHistory</class>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import za.co.prescient.model.Card;
-import za.co.prescient.repository.CardRepository;
+import za.co.prescient.repository.local.CardRepository;
 
 import java.util.LinkedHashMap;
 import java.util.List;

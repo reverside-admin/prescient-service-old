@@ -1,36 +1,38 @@
 package za.co.prescient.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "guest_stay_history")
 @Data
 public class GuestStayHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     Long id;
 
     @ManyToOne
+    @JoinColumn(name = "guest_id")
     Guest guest;
 
-    @Column
+    @Column(name = "room_id")
     String roomId;
 
-    @Column
+    @Column(name = "arrival_time")
     Date arrivalTime;
 
-    @Column
+    @Column(name = "departure_time")
     Date departureTime;
 
-    @Column
+    @Column(name = "current_stay_indicator")
     Boolean currentStayIndicator;
 
     @ManyToOne
+    @JoinColumn(name = "hotel_id")
     Hotel hotel;
 
 }

@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import za.co.prescient.model.*;
 import za.co.prescient.model.itcs.ItcsTagRead;
 import za.co.prescient.model.itcs.ItcsTagReadHistory;
-import za.co.prescient.repository.*;
 import za.co.prescient.repository.itcs.ItcsTagReadHistoryRepository;
 import za.co.prescient.repository.itcs.ItcsTagReadRepository;
+import za.co.prescient.repository.local.*;
 
 import java.util.List;
 

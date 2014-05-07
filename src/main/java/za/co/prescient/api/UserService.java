@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import za.co.prescient.model.User;
-import za.co.prescient.repository.UserRepository;
+import za.co.prescient.repository.local.UserRepository;
 
 import java.security.Principal;
 import java.util.List;

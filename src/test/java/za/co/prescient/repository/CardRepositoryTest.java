@@ -1,19 +1,17 @@
 package za.co.prescient.repository;
 
-import junit.framework.Assert;
-import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationContextLoader;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import za.co.prescient.Application;
 import za.co.prescient.model.Card;
+import za.co.prescient.repository.local.CardRepository;
 
 import javax.sql.DataSource;
 

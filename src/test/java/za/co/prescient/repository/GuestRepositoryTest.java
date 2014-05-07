@@ -11,13 +11,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import za.co.prescient.Application;
 import za.co.prescient.model.Guest;
+import za.co.prescient.repository.local.GuestRepository;
 
 import javax.sql.DataSource;
 import java.util.List;
 
-import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = Application.class, loader = SpringApplicationContextLoader.class)
@@ -39,11 +38,7 @@ public class GuestRepositoryTest {
         jdbcTemplate.execute("insert into guest(id,passport_number,first_name,preferred_name,surname,gender,title,nationality_id,dob,hotel_id) values(100,'INDPSNO001','santosh','k','kunnath','Male','Mr','Indian','1982-04-01 00:00:00',1)");
         jdbcTemplate.execute("insert into guest(id,passport_number,first_name,preferred_name,surname,gender,title,nationality_id,dob,hotel_id) values(101,'INDPSNO002','subhash','subha','Goel','Male','Mr','Indian','1983-04-01 00:00:00',1)");
         jdbcTemplate.execute("insert into guest(id,passport_number,first_name,preferred_name,surname,gender,title,nationality_id,dob,hotel_id) values(102,'INDPSNO003','suman','sumi','Goel','Female','Mrs','Indian','1984-04-01 00:00:00',1)");
-
-
-
     }
-
 
     @Test
     public void shouldReturnAllGuestsOfAHotel()

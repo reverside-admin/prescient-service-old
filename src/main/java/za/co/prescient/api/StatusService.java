@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import za.co.prescient.model.UserStatus;
-import za.co.prescient.repository.UserStatusRepository;
+import za.co.prescient.repository.local.UserStatusRepository;
 
 import java.util.List;
 

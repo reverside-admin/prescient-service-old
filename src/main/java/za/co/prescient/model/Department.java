@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -14,14 +13,15 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     Long id;
 
-    @Column
+    @Column(name = "name")
     String name;
 
-    @ManyToOne
     @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="hotel_id")
     Hotel hotel;
-
 
 }

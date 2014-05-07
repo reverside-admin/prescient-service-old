@@ -14,10 +14,12 @@ public class ContactListTouchPoint {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @ManyToOne
     @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "contact_list_id")
     ContactList contactList;
 
     @ManyToOne
+    @JoinColumn(name = "touch_point_id")
     TouchPoint touchPoint;
 }

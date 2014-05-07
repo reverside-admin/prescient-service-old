@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import za.co.prescient.model.Department;
 import za.co.prescient.model.User;
-import za.co.prescient.repository.DepartmentRepository;
-import za.co.prescient.repository.UserRepository;
+import za.co.prescient.repository.local.DepartmentRepository;
+import za.co.prescient.repository.local.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;

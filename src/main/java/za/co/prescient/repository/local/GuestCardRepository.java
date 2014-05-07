@@ -1,4 +1,4 @@
-package za.co.prescient.repository;
+package za.co.prescient.repository.local;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +12,7 @@ import java.util.List;
 public interface GuestCardRepository extends JpaRepository<GuestCard, Long> {
 
     @Query("select gc.guest from GuestCard gc where gc.card.id in (?1)")
-    public List<Guest> findGuestsWithTags(List<Integer> tags);
+    public List<Guest> findGuestsWithTags(List<Long> tags);
 
     @Query("select gca.guest from GuestCard gca where gca.card.id in (?1) and gca.status = true")
     public List<GuestCard> findByCardIdListWithStatusActive(List<Long> cardIdList);

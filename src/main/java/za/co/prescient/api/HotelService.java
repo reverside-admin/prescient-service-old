@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import za.co.prescient.model.Hotel;
-import za.co.prescient.repository.HotelRepository;
+import za.co.prescient.repository.local.HotelRepository;
 
 import java.util.List;
 

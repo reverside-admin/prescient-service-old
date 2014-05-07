@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import za.co.prescient.model.ContactList;
 import za.co.prescient.model.ContactListGuest;
 import za.co.prescient.model.ContactListTouchPoint;
-import za.co.prescient.repository.ContactListGuestRepository;
-import za.co.prescient.repository.ContactListTouchPointRepository;
-import za.co.prescient.repository.ContactListRepository;
+import za.co.prescient.repository.local.ContactListGuestRepository;
+import za.co.prescient.repository.local.ContactListTouchPointRepository;
+import za.co.prescient.repository.local.ContactListRepository;
 
 import java.util.List;
 

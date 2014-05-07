@@ -1,47 +1,46 @@
 package za.co.prescient.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
+@Table(name = "setup")
 @Data
 public class Setup {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     Long id;
 
     //TODO:name is changed to setupName bcoz form does not bind name attribute bcoz name is a build in property of form
-    @Column
+    @Column(name = "setup_name")
     String setupName;
 
-    @Column
+    @Column(name = "description")
     String description;
 
-    @Column
+    @Column(name = "indicator")
     Boolean indicator;
 
-    @Column
+    @Column(name = "image_name")
     String imageName;
 
-    @Column
+    @Column(name = "file_name")
     String fileName;
 
-    @Column
+    @Column(name = "length_x")
     Double lengthX;
 
-    @Column
+    @Column(name = "length_y")
     Double lengthY;
 
-    @Column
+    @Column(name = "file_path")
     String filePath;
 
     @ManyToOne
-
+    @JoinColumn(name = "touch_point_id")
     TouchPoint touchPoint;
 
 }

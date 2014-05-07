@@ -1,20 +1,19 @@
 package za.co.prescient.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
+@Table(name = "user_status")
+@Data
 public class UserStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     Long id;
 
-
-    @Column
+    @Column(name = "value")
     String value;
 }

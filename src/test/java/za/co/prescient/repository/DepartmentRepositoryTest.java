@@ -1,7 +1,6 @@
 package za.co.prescient.repository;
 
 import org.junit.Test;
-import org.junit.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -12,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import za.co.prescient.Application;
 import za.co.prescient.model.*;
+import za.co.prescient.repository.local.DepartmentRepository;
 
 import javax.sql.DataSource;
 
@@ -43,14 +43,11 @@ public class DepartmentRepositoryTest {
 
     }
 
-
     @Test
-    public void shouldReturnAllDepartmentsOfAHotel()
-    {
-        List<Department> departments=departmentRepository.findByHotelId(1L);
-        assertEquals(3,departments.size());
+    public void shouldReturnAllDepartmentsOfAHotel() {
+        List<Department> departments = departmentRepository.findByHotelId(1L);
+        assertEquals(3, departments.size());
     }
-
 
     @After
     public void clear() {

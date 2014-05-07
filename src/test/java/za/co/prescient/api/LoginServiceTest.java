@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import za.co.prescient.model.User;
-import za.co.prescient.repository.UserRepository;
+import za.co.prescient.repository.local.UserRepository;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -27,7 +27,7 @@ public class LoginServiceTest {
         userName = "testUserName";
         password = "testPassword";
         loginService = new LoginService();
-        setField(loginService, "userDetailRepository", userRepository);
+        setField(loginService, "userRepository", userRepository);
     }
 
     @Test
